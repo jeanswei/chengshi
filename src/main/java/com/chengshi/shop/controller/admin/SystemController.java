@@ -19,4 +19,14 @@ public class SystemController {
         return new ModelAndView("admin/index");
     }
 
+    @RequestMapping(value = "/user")
+    public ModelAndView user(){
+        return new ModelAndView("admin/system/user");
+    }
+
+    @RequestMapping(value = "/menu")
+    public ModelAndView menu(){
+        return new ModelAndView("admin/system/menu");
+    }
+
 }
