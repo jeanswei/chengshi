@@ -19,7 +19,7 @@
 	<script src="/lib/ieonly/excanvas.js"></script>
     <![endif]-->
 </head>
-<body class="view-double ad-mzui compact-mode compact-mode-in page-open page-show page-show-in" data-page-accent="green" data-page="control-icon">
+<body class="view-double compact-mode compact-mode-in " data-page-accent="green" data-page="control-icon">
 <header id="header" class="bg-primary">
     <div class="navbar navbar-inverse navbar-fixed-top" id="navbar" role="banner">
         <div class="container">
@@ -47,8 +47,8 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li><i class="icon icon-home"></i>首页</li>
-                <li>系统管理</a></li>
-                <li class="active">用户管理</li>
+                <li></li>
+                <li class="active"></li>
             </ol>
             <button data-toggle="tooltip" type="button" class="btn btn-link path-close-btn path-btn" id="pageCloseBtn" data-original-title="关闭（ESC）"><i class="path-1"></i></button>
         </div>
@@ -59,9 +59,6 @@
         </div>
     </div>
 </div>
-
-<!-- 远程内容加载图标 -->
-<div class="text-muted loader"><i class="icon icon-spin icon-spinner-indicator"></i> 加载中...</div>
 
 <!-- 内容目录 -->
 <div id="grid" class="scrollbar-hover">
