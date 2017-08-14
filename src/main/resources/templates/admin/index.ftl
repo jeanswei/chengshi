@@ -1,24 +1,5 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>ZUI-ADMIN 一款开源HTML5跨屏后台管理框架</title>
-
-    <link href="/css/zui.min.css" rel="stylesheet">
-    <link href="/css/index.css" rel="stylesheet">
-    <style id="themeStyle"></style>
-
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-
-    <!--[if lt IE 9]>
-	<script src="/lib/ieonly/html5shiv.js"></script>
-	<script src="/lib/ieonly/respond.js"></script>
-	<script src="/lib/ieonly/excanvas.js"></script>
-    <![endif]-->
-</head>
+<#include "/admin/common/header.ftl">
+<link href="/css/page/index.css" rel="stylesheet">
 <body class="view-double compact-mode compact-mode-in " data-page-accent="green" data-page="control-icon">
 <header id="header" class="bg-primary">
     <div class="navbar navbar-inverse navbar-fixed-top" id="navbar" role="banner">
@@ -90,19 +71,13 @@
         </div>
     </div>
 </div>
-
 <footer>
     <div class="container">
         <hr>
         <p class="text-muted small text-center">Copyright © 2015-2017 版权所有</p>
     </div>
 </footer>
-
-<!-- jQuery (ZUI中的Javascript组件依赖于jQuery) -->
-<script src="/lib/jquery/jquery.js"></script>
-
-<!-- ZUI Javascript组件 -->
-<script src="/js/zui.min.js"></script>
+<#include "/admin/common/footer.ftl">
 <script src="/js/index.js"></script>
 
 </body>
