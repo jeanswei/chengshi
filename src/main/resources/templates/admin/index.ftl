@@ -23,7 +23,7 @@
 </header>
 
 <!-- 新开子页面 -->
-<div id="page" class="">
+<div id="page">
     <div id="pageHeader">
         <div class="container">
             <ol class="breadcrumb">
@@ -35,9 +35,7 @@
         </div>
     </div>
     <div id="pageBody" class="scrollbar-hover">
-        <div class="container">
-            <iframe id="iframe" frameborder="0"></iframe>
-        </div>
+        <iframe id="iframe" frameborder="0"></iframe>
     </div>
 </div>
 

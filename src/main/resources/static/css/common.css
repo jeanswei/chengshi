@@ -1,0 +1,7 @@
+#toolbar .btn-link{
+    color: #444;
+}
+.btn-link.disabled{
+    border-color: transparent;
+    background-color: transparent;
+}

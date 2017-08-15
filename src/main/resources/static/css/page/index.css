@@ -1628,8 +1628,7 @@ body.query-enabled[data-query='icons'] #grid .card.open.section-preview-show .se
     top: 60px;
     bottom: 0;
     width: 100%;
-    padding: 15px 0;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
 body.compact-mode #header {

@@ -7,6 +7,7 @@
     <title>ZUI-ADMIN 一款开源HTML5跨屏后台管理框架</title>
 
     <link href="/css/zui.min.css" rel="stylesheet">
+    <link href="/css/common.css" rel="stylesheet">
     <style id="themeStyle"></style>
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
