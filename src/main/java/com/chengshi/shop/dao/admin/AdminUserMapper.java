@@ -25,4 +25,10 @@ public interface AdminUserMapper {
      * @return
      */
     List<AdminUser> getUserList();
+
+    /**
+     * 逻辑删除用户
+     * @param userId
+     */
+    void deleteByUserId(Short userId);
 }

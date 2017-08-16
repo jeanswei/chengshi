@@ -2,16 +2,15 @@ package com.chengshi.shop.controller.admin;
 
 import com.chengshi.shop.model.admin.AdminUser;
 import com.chengshi.shop.service.admin.SystemService;
+import com.chengshi.shop.util.MessageUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -76,5 +75,37 @@ public class SystemController {
         }
         mav.addObject("user", user);
         return mav;
+    }
+
+    /**
+     * 保存用户信息
+     * @param adminUser
+     * @return
+     */
+    @PostMapping(value = "saveUser")
+    public HashMap<String,Object> saveUser(@ModelAttribute AdminUser adminUser){
+        HashMap<String,Object> retMap = MessageUtils.success();
+        try {
+            systemService.saveUser(adminUser);
+        } catch (Exception e){
+            retMap = MessageUtils.error();
+        }
+        return retMap;
+    }
+
+    /**
+     * 删除用户
+     * @param userId
+     * @return
+     */
+    @PostMapping(value = "deleteUser")
+    public HashMap<String,Object> deleteUser(@RequestParam Short userId){
+        HashMap<String,Object> retMap = MessageUtils.success();
+        try {
+            systemService.deleteUser(userId);
+        } catch (Exception e){
+            retMap = MessageUtils.error();
+        }
+        return retMap;
     }
 }

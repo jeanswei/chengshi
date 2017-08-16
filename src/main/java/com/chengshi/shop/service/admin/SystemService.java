@@ -23,4 +23,16 @@ public interface SystemService {
      * @return
      */
     AdminUser findAdminUser(Short userId);
+
+    /**
+     * 保存用户信息
+     * @param adminUser
+     */
+    void saveUser(AdminUser adminUser);
+
+    /**
+     * 删除用户
+     * @param userId
+     */
+    void deleteUser(Short userId);
 }

@@ -1,16 +1,16 @@
 <#include "/admin/common/header.ftl">
 <link href="/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
-<body>
+<body class="with-padding">
 <div id="toolbar" class="toolbox btn-group">
     <button class="btn btn-link" onclick="add()"><i class="icon icon-plus"></i> 添加</button>
     <button class="btn btn-link need-choose disabled" onclick="update()"><i class="icon icon-edit"></i> 修改</button>
-    <button class="btn btn-link need-choose disabled" onclick="delete()"><i class="icon icon-remove text-danger"></i> 删除</button>
+    <button class="btn btn-link need-choose disabled" onclick="del()"><i class="icon icon-remove text-danger"></i> 删除</button>
 </div>
 <table id="dataGrid" class="table datatable"></table>
 <#include "/admin/common/footer.ftl">
 <script src="/lib/bootstrap-table/bootstrap-table.min.js"></script>
 <script src="/lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-<script src="/lib/bootstrap-table/extensions/mobile/bootstrap-table-mobile.min.js"></script>
+<#--<script src="/lib/bootstrap-table/extensions/mobile/bootstrap-table-mobile.min.js"></script>-->
 <script>
     var dg = $('#dataGrid').bootstrapTable({
         method: "get",//请求方式
@@ -54,9 +54,38 @@
             }
         ]
     });
-    
+
+    var dlg = new $.zui.ModalTrigger({
+        backdrop: 'static'
+    });
+
     function add() {
-        (new $.zui.ModalTrigger({url: '/admin/userForm.html'})).show();
+        dlg.show({remote: '/admin/userForm.html'});
+    }
+
+    function update() {
+        var rows = dg.bootstrapTable('getSelections');
+        dlg.show({remote: '/admin/userForm.html?userId=' + rows[0].userId});
+    }
+
+    function del() {
+        var rows = dg.bootstrapTable('getSelections');
+        bootbox.confirm({
+            title: "操作提示",
+            size: "small",
+            message: "你确定要删除选择的数据吗？",
+            callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        type: 'post',
+                        url: '/admin/deleteUser.do?userId=' + rows[0].userId,
+                        success: function (data) {
+                            successTip(data, dg);
+                        }
+                    });
+                }
+            }
+        })
     }
 </script>
 </body>
