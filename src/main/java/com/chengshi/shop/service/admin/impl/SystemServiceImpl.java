@@ -8,6 +8,7 @@ import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -53,7 +54,7 @@ public class SystemServiceImpl implements SystemService {
         } else {
             String newPassword = "888888";
             adminUser.setPassword(MD5Encoder.encode(newPassword.getBytes()));
-            adminUser.setCreateTime(DateFormatUtil.currentTimeStamp());
+            adminUser.setCreateTime(new Date());
             adminUserMapper.insertSelective(adminUser);
         }
     }

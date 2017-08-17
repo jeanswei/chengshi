@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chengshi.shop.dao.admin.AdminUserMapper">
     <resultMap id="BaseResultMap" type="com.chengshi.shop.model.admin.AdminUser">
-        <id column="user_id" property="userId" jdbcType="SMALLINT"/>
-        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
-        <result column="password" property="password" jdbcType="VARCHAR"/>
-        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
-        <result column="email" property="email" jdbcType="VARCHAR"/>
-        <result column="create_time" property="createTime" jdbcType="INTEGER"/>
-        <result column="last_login" property="lastLogin" jdbcType="INTEGER"/>
-        <result column="last_ip" property="lastIp" jdbcType="VARCHAR"/>
-        <result column="status" property="status" jdbcType="TINYINT"/>
+        <id column="user_id" jdbcType="SMALLINT" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="last_login" jdbcType="TIMESTAMP" property="lastLogin"/>
+        <result column="last_ip" jdbcType="VARCHAR" property="lastIp"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
     </resultMap>
     <sql id="Base_Column_List">
         user_id, user_name, password, mobile, email, create_time, last_login, last_ip, status
     </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Short">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from cs_admin_user
@@ -31,8 +31,8 @@
                                    last_login, last_ip, status
         )
         VALUES (#{userId,jdbcType=SMALLINT}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-                #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=INTEGER},
-                #{lastLogin,jdbcType=INTEGER}, #{lastIp,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}
+                #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+                #{lastLogin,jdbcType=TIMESTAMP}, #{lastIp,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}
         )
     </insert>
     <insert id="insertSelective" parameterType="com.chengshi.shop.model.admin.AdminUser">
@@ -83,10 +83,10 @@
                 #{email,jdbcType=VARCHAR},
             </if>
             <if test="createTime != null">
-                #{createTime,jdbcType=INTEGER},
+                #{createTime,jdbcType=TIMESTAMP},
             </if>
             <if test="lastLogin != null">
-                #{lastLogin,jdbcType=INTEGER},
+                #{lastLogin,jdbcType=TIMESTAMP},
             </if>
             <if test="lastIp != null">
                 #{lastIp,jdbcType=VARCHAR},
@@ -112,10 +112,10 @@
                 email = #{email,jdbcType=VARCHAR},
             </if>
             <if test="createTime != null">
-                create_time = #{createTime,jdbcType=INTEGER},
+                create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
             <if test="lastLogin != null">
-                last_login = #{lastLogin,jdbcType=INTEGER},
+                last_login = #{lastLogin,jdbcType=TIMESTAMP},
             </if>
             <if test="lastIp != null">
                 last_ip = #{lastIp,jdbcType=VARCHAR},
@@ -132,8 +132,8 @@
             password    = #{password,jdbcType=VARCHAR},
             mobile      = #{mobile,jdbcType=VARCHAR},
             email       = #{email,jdbcType=VARCHAR},
-            create_time = #{createTime,jdbcType=INTEGER},
-            last_login  = #{lastLogin,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            last_login  = #{lastLogin,jdbcType=TIMESTAMP},
             last_ip     = #{lastIp,jdbcType=VARCHAR},
             status      = #{status,jdbcType=TINYINT}
         WHERE user_id = #{userId,jdbcType=SMALLINT}

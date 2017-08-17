@@ -4,126 +4,40 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 时间转化工具类
+ *
+ * @author xuxinlong
+ * @version 2017年07月10日
+ */
 public class DateFormatUtil {
 
-    /**
-     * 时间戳转日期
-     *
-     * @param ms
-     * @return
-     */
-    public static Date transForDate(Integer ms) throws ParseException {
-        if (ms == null) {
-            ms = 0;
-        }
-        long msl = (long) ms * 1000;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String str = sdf.format(msl);
-        return sdf.parse(str);
-    }
-
-    public static String transForString(Integer ms) {
-        String str = "";
-        if (ms != null) {
-            long msl = (long) ms * 1000;
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            str = sdf.format(msl);
-        }
-        return str;
-    }
-
-    public static String transForString(Integer ms, String format) {
-        String str = "";
-        if (ms != null) {
-            long msl = (long) ms * 1000;
-            SimpleDateFormat sdf = new SimpleDateFormat(format);
-            str = sdf.format(msl);
-        }
-        return str;
-    }
-
-    public static String transForDateInChinese(Integer ms) {
-        String str = "";
-        if (ms != null) {
-            long msl = (long) ms * 1000;
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-            str = sdf.format(msl);
-        }
-        return str;
-    }
-
-    public static String transForDateInChinese(Integer ms, String format) {
-        String str = "";
-        if (ms != null) {
-            long msl = (long) ms * 1000;
-            SimpleDateFormat sdf = new SimpleDateFormat(format);
-            str = sdf.format(msl);
-        }
-        return str;
-    }
+    public static String FULL_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     /**
-     * 日期转时间戳
+     * 日期转字符串 如:yyyy-MM-dd HH:mm:ss
      *
      * @param date
+     * @param format
      * @return
      */
-    public static Integer transForMilliSecond(Date date) {
-        if (date == null)
-            return null;
-        return (int) (date.getTime() / 1000);
+    public static String formatDate(Date date, String format) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(format);
+            return sdf.format(date);
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     /**
-     * 获取当前时间戳
-     *
-     * @return
-     */
-    public static Integer currentTimeStamp() {
-        return (int) (System.currentTimeMillis() / 1000);
-    }
-
-    /**
-     * 日期字符串转时间戳
+     * 日期字符串转date
      *
      * @param dateStr
      * @return
      */
-    public static Integer transForMilliSecond(String dateStr) throws ParseException {
-        Date date = DateFormatUtil.formatDate(dateStr);
-        return date == null ? null : DateFormatUtil.transForMilliSecond(date);
-    }
-
-    /**
-     * 日期字符串转时间戳
-     *
-     * @param dateStr
-     * @return
-     */
-    public static Integer transForMilliSecond(String dateStr, String format) {
-        Date date = DateFormatUtil.formatDate(dateStr, format);
-        return date == null ? null : DateFormatUtil.transForMilliSecond(date);
-    }
-
-    /**
-     * 字符串转日期，格式为："yyyy-MM-dd HH:mm:ss"
-     *
-     * @param dateStr
-     * @return
-     */
-    public static Date formatDate(String dateStr) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.parse(dateStr);
-    }
-
-    /**
-     * 字符串转日期，格式为："yyyy-MM-dd HH:mm:ss"
-     *
-     * @param dateStr
-     * @return
-     */
-    public static Date formatDate(String dateStr, String format) {
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
+    public static Date formatDate(String dateStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat(FULL_DATE_FORMAT);
         Date result = null;
         try {
             result = sdf.parse(dateStr);
@@ -134,25 +48,12 @@ public class DateFormatUtil {
     }
 
     /**
-     * 日期转字符串
+     * 获取当前时间戳
      *
-     * @param date
      * @return
      */
-    public static String formatDate(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(date);
-    }
-
-    /**
-     * 日期转字符串
-     *
-     * @param date
-     * @return
-     */
-    public static String formatDate(Date date, String format) {
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
-        return sdf.format(date);
+    public static Integer currentTimeStamp() {
+        return (int) (System.currentTimeMillis() / 1000);
     }
 
     /**
@@ -168,7 +69,11 @@ public class DateFormatUtil {
             long msl = (long) ms * 1000;
             SimpleDateFormat sdf = new SimpleDateFormat(format);
             if (!ms.equals(0)) {
-                str = sdf.format(msl);
+                try {
+                    str = sdf.format(msl);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
         return str;
@@ -180,11 +85,11 @@ public class DateFormatUtil {
      * @param second
      * @return
      */
-    public static String transSecond(int second) {
-        int h = 0;
-        int d = 0;
-        int s = 0;
-        int temp = second % 3600;
+    public static String transSecond(long second) {
+        long h = 0;
+        long d = 0;
+        long s = 0;
+        long temp = second % 3600;
         if (second > 3600) {
             h = second / 3600;
             if (temp != 0) {
@@ -221,5 +126,4 @@ public class DateFormatUtil {
             return h + "小时" + d + "分钟" + s + "秒";
         }
     }
-
 }

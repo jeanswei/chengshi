@@ -1,5 +1,7 @@
 package com.chengshi.shop.model.admin;
 
+import java.util.Date;
+
 public class AdminUser {
     private Short userId;
 
@@ -11,9 +13,9 @@ public class AdminUser {
 
     private String email;
 
-    private Integer createTime;
+    private Date createTime;
 
-    private Integer lastLogin;
+    private Date lastLogin;
 
     private String lastIp;
 
@@ -59,19 +61,19 @@ public class AdminUser {
         this.email = email == null ? null : email.trim();
     }
 
-    public Integer getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Integer createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public Integer getLastLogin() {
+    public Date getLastLogin() {
         return lastLogin;
     }
 
-    public void setLastLogin(Integer lastLogin) {
+    public void setLastLogin(Date lastLogin) {
         this.lastLogin = lastLogin;
     }
 
