@@ -6,7 +6,7 @@
     <button class="btn btn-link need-choose disabled" onclick="update()"><i class="icon icon-edit"></i> 修改</button>
     <button class="btn btn-link need-choose disabled" onclick="del()"><i class="icon icon-remove text-danger"></i> 删除</button>
 </div>
-<table id="dataGrid" class="table datatable"></table>
+<table id="dataGrid" class="table"></table>
 <#include "/admin/common/footer.ftl">
 <script src="/lib/bootstrap-table/bootstrap-table.min.js"></script>
 <script src="/lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
@@ -15,7 +15,7 @@
     var dg = $('#dataGrid').bootstrapTable({
         method: "get",//请求方式
         url: "/admin/getUserList.do",//数据源
-        idField: "userId",
+        uniqueId: "userId",
         dataField: "list",
         search: true,
         pagination: true,//是否分页

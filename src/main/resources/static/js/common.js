@@ -3,7 +3,7 @@
  * @version 2017年08月15日
  */
 (function ($) {
-    $("#dataGrid").on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
+    $("#dataGrid").on('all.bs.table', function () {
         if ($("#dataGrid").bootstrapTable('getSelections').length) {
             $("#toolbar .need-choose").removeClass('disabled');
         } else {
@@ -22,7 +22,8 @@ var successTip = function (data, dg, dlg) {
 
     new $.zui.Messager('提示消息：' + data.errorText, {
         icon: icon,
-        type: type
+        type: type,
+        time: 1000
     }).show();
 
     if (dg) {
