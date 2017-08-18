@@ -43,7 +43,8 @@
         rules: {
             userName: {
                 required: true,
-                rangelength:[2,11]
+                rangelength:[2,11],
+	            remote:'/admin/checkUserName?userId=${user.userId!}'
             },
             mobile: {
                 maxlength: 20
@@ -56,12 +57,14 @@
         messages: {
             userName: {
                 required: "请输入用户名",
-                rangelength: "用户名必需由两个以上字母组成"
+                rangelength: "用户名必需由两个以上字母组成",
+                remote: "用户名已存在"
             },
             mobile: "请输入一个正确的手机号码",
             email: "请输入一个正确的邮箱"
         }
     });
+
     $('.save').click(function () {
         if ($("#infoFrom").valid()) {
             $.ajax({

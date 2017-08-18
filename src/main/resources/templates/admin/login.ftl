@@ -29,24 +29,24 @@
 </div>
 <#include "/admin/common/footer.ftl">
 <script>
-	$(".doLogin").click(function () {
-		$.ajax({
-			type: 'post',
-			url: '/admin/doLogin',
-			data: $("#loginForm").serialize(),
-			success: function (data) {
-			    console.log(data);
-				if (data.errorCode === 'y'){
+    $(".doLogin").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '/admin/doLogin',
+            data: $("#loginForm").serialize(),
+            success: function (data) {
+                console.log(data);
+                if (data.errorCode === 'y') {
                     location.href = "/admin/index";
-				} else {
+                } else {
                     new $.zui.Messager('提示消息：' + data.errorText, {
                         icon: 'exclamation-sign',
                         type: 'danger',
                         time: 2000
                     }).show();
-				}
+                }
             }
-		})
+        })
     })
 </script>
 </body>

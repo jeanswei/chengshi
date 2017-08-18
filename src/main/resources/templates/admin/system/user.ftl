@@ -10,7 +10,6 @@
 <#include "/admin/common/footer.ftl">
 <script src="/lib/bootstrap-table/bootstrap-table.min.js"></script>
 <script src="/lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-<script src="/lib/bootstrap-table/extensions/mobile/bootstrap-table-mobile.min.js"></script>
 <script>
     var dg = $('#dataGrid').bootstrapTable({
         method: "get",//请求方式

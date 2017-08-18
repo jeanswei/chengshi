@@ -159,6 +159,23 @@ public class SystemController {
     }
 
     /**
+     * 检查用户名是否存在
+     *
+     * @param userName
+     * @return
+     */
+    @GetMapping(value = "checkUserName")
+    public Boolean checkUserName(@RequestParam Short userId, @RequestParam String userName) {
+        AdminUser user = systemService.findByUsername(userName);
+        if (userId != null) {
+            AdminUser adminUser = systemService.findAdminUser(userId);
+            return adminUser.getUserName().equals(userName) || user == null;
+        } else {
+            return user == null;
+        }
+    }
+
+    /**
      * 删除用户
      *
      * @param userId
