@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chengshi.shop.dao.admin.AdminMenuMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.admin.AdminMenu">
+        <id column="menu_id" property="menuId" jdbcType="SMALLINT"/>
+        <result column="pid" property="pid" jdbcType="SMALLINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="menu_url" property="menuUrl" jdbcType="VARCHAR"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR"/>
+        <result column="sort_no" property="sortNo" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        menu_id, pid, name, menu_url, icon, sort_no
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Short">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_admin_menu
+        where menu_id = #{menuId,jdbcType=SMALLINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+        DELETE FROM cs_admin_menu
+        WHERE menu_id = #{menuId,jdbcType=SMALLINT}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.admin.AdminMenu">
+        INSERT INTO cs_admin_menu (menu_id, pid, name,
+                                   menu_url, icon, sort_no
+        )
+        VALUES (#{menuId,jdbcType=SMALLINT}, #{pid,jdbcType=SMALLINT}, #{name,jdbcType=VARCHAR},
+                #{menuUrl,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{sortNo,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.admin.AdminMenu">
+        insert into cs_admin_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="menuId != null">
+                menu_id,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="menuUrl != null">
+                menu_url,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+            <if test="sortNo != null">
+                sort_no,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="menuId != null">
+                #{menuId,jdbcType=SMALLINT},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=SMALLINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="menuUrl != null">
+                #{menuUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="sortNo != null">
+                #{sortNo,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.admin.AdminMenu">
+        update cs_admin_menu
+        <set>
+            <if test="pid != null">
+                pid = #{pid,jdbcType=SMALLINT},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="menuUrl != null">
+                menu_url = #{menuUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="sortNo != null">
+                sort_no = #{sortNo,jdbcType=INTEGER},
+            </if>
+        </set>
+        where menu_id = #{menuId,jdbcType=SMALLINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.admin.AdminMenu">
+        UPDATE cs_admin_menu
+        SET pid      = #{pid,jdbcType=SMALLINT},
+            name     = #{name,jdbcType=VARCHAR},
+            menu_url = #{menuUrl,jdbcType=VARCHAR},
+            icon     = #{icon,jdbcType=VARCHAR},
+            sort_no  = #{sortNo,jdbcType=INTEGER}
+        WHERE menu_id = #{menuId,jdbcType=SMALLINT}
+    </update>
+    <select id="getMenuListByUserId" resultMap="BaseResultMap" parameterType="java.lang.Short">
+        SELECT a.*
+        FROM cs_admin_menu a, cs_admin_user_menu b
+        WHERE a.menu_id = b.menu_id
+              AND b.user_id = #{userId,jdbcType=SMALLINT}
+    </select>
+</mapper>
