@@ -150,4 +150,10 @@
         SET status = 2
         WHERE user_id = #{userId,jdbcType=SMALLINT}
     </update>
+    <select id="findByUsername" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT *
+        FROM cs_admin_user
+        WHERE user_name = #{userName,jdbcType=VARCHAR}
+        LIMIT 1
+    </select>
 </mapper>

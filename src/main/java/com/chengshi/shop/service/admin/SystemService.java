@@ -1,5 +1,6 @@
 package com.chengshi.shop.service.admin;
 
+import com.chengshi.shop.model.admin.AdminMenu;
 import com.chengshi.shop.model.admin.AdminUser;
 
 import java.util.List;
@@ -35,4 +36,18 @@ public interface SystemService {
      * @param userId
      */
     void deleteUser(Short userId);
+
+    /**
+     * 根据用户查询用户
+     * @param userName
+     * @return
+     */
+    AdminUser findByUsername(String userName);
+
+    /**
+     * 用户拥有的菜单
+     * @param userId
+     * @return
+     */
+    List<AdminMenu> getMenuList(Short userId);
 }

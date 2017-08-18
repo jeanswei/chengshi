@@ -47,7 +47,7 @@
             },
             {
                 title: "上次登录",
-                field: "lastTime"
+                field: "lastLogin"
             },
             {
                 title: "上次登录IP",

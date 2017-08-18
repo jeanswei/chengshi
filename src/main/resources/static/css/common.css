@@ -5,3 +5,11 @@
     border-color: transparent;
     background-color: transparent;
 }
+
+.form-control.error{
+    border: 1px solid #ea644a;
+}
+
+label.error{
+    color: #ea644a;
+}

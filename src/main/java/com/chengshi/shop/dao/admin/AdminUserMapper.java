@@ -1,9 +1,11 @@
 package com.chengshi.shop.dao.admin;
 
 import com.chengshi.shop.model.admin.AdminUser;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface AdminUserMapper {
     int deleteByPrimaryKey(Short userId);
 
@@ -28,4 +30,11 @@ public interface AdminUserMapper {
      * @param userId
      */
     void deleteByUserId(Short userId);
+
+    /**
+     * 根据用户名查询用户
+     * @param userName
+     * @return
+     */
+    AdminUser findByUsername(String userName);
 }

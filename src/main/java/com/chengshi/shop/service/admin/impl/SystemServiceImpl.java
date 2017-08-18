@@ -1,10 +1,10 @@
 package com.chengshi.shop.service.admin.impl;
 
+import com.chengshi.shop.dao.admin.AdminMenuMapper;
 import com.chengshi.shop.dao.admin.AdminUserMapper;
+import com.chengshi.shop.model.admin.AdminMenu;
 import com.chengshi.shop.model.admin.AdminUser;
 import com.chengshi.shop.service.admin.SystemService;
-import com.chengshi.shop.util.DateFormatUtil;
-import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -13,11 +13,14 @@ import java.util.List;
 
 /**
  * 后台系统相关接口
+ *
  * @author xuxinlong
  * @version 2017年08月15日
  */
 @Service
 public class SystemServiceImpl implements SystemService {
+    @Resource
+    private AdminMenuMapper adminMenuMapper;
     @Resource
     private AdminUserMapper adminUserMapper;
 
@@ -53,7 +56,7 @@ public class SystemServiceImpl implements SystemService {
             adminUserMapper.updateByPrimaryKeySelective(adminUser);
         } else {
             String newPassword = "888888";
-            adminUser.setPassword(MD5Encoder.encode(newPassword.getBytes()));
+            adminUser.setPassword(newPassword);
             adminUser.setCreateTime(new Date());
             adminUserMapper.insertSelective(adminUser);
         }
@@ -67,5 +70,27 @@ public class SystemServiceImpl implements SystemService {
     @Override
     public void deleteUser(Short userId) {
         adminUserMapper.deleteByUserId(userId);
+    }
+
+    /**
+     * 根据用户名查询用户
+     *
+     * @param userName
+     * @return
+     */
+    @Override
+    public AdminUser findByUsername(String userName) {
+        return adminUserMapper.findByUsername(userName);
+    }
+
+    /**
+     * 用户拥有的菜单
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<AdminMenu> getMenuList(Short userId) {
+        return adminMenuMapper.getMenuListByUserId(userId);
     }
 }

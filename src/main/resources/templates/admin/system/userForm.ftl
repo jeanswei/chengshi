@@ -12,19 +12,19 @@
                         <div class="form-group">
                             <label class="col-md-2 control-label">用户名：</label>
                             <div class="col-md-4">
-                                <input type="text" name="userName" value="${user.userName!}" class="form-control" required>
+                                <input type="text" name="userName" value="${user.userName!}" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label">联系号码：</label>
                             <div class="col-md-4">
-                                <input type="text" name="mobile" value="${user.mobile!}" class="form-control">
+                                <input type="tel" name="mobile" value="${user.mobile!}" class="form-control" maxlength="20">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label">邮箱：</label>
                             <div class="col-md-4">
-                                <input type="text" name="email" value="${user.email!}" class="form-control">
+                                <input type="email" name="email" value="${user.email!}" class="form-control" maxlength="30">
                             </div>
                         </div>
                     </form>
@@ -39,6 +39,29 @@
 
 </div>
 <script>
+    $("#infoFrom").validate({
+        rules: {
+            userName: {
+                required: true,
+                rangelength:[2,11]
+            },
+            mobile: {
+                maxlength: 20
+            },
+            email: {
+                email: true,
+                maxlength: 30
+            }
+        },
+        messages: {
+            userName: {
+                required: "请输入用户名",
+                rangelength: "用户名必需由两个以上字母组成"
+            },
+            mobile: "请输入一个正确的手机号码",
+            email: "请输入一个正确的邮箱"
+        }
+    });
     $('.save').click(function () {
         if ($("#infoFrom").valid()) {
             $.ajax({
