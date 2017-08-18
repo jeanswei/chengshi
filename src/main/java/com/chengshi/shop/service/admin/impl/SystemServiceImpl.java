@@ -5,6 +5,7 @@ import com.chengshi.shop.dao.admin.AdminUserMapper;
 import com.chengshi.shop.model.admin.AdminMenu;
 import com.chengshi.shop.model.admin.AdminUser;
 import com.chengshi.shop.service.admin.SystemService;
+import com.chengshi.shop.util.MD5Util;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -55,8 +56,7 @@ public class SystemServiceImpl implements SystemService {
         if (adminUser.getUserId() != null) {
             adminUserMapper.updateByPrimaryKeySelective(adminUser);
         } else {
-            String newPassword = "888888";
-            adminUser.setPassword(newPassword);
+            adminUser.setPassword(MD5Util.MD5Encode("888888"));
             adminUser.setCreateTime(new Date());
             adminUserMapper.insertSelective(adminUser);
         }

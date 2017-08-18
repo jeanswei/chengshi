@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
-                <form class="form-horizontal" action="/admin/index" method="post">
+                <form id="loginForm" class="form-horizontal">
                     <span class="heading">用户登录</span>
                     <div class="form-group">
                         <input type="text" class="form-control" name="username" placeholder="用户名">
@@ -20,7 +20,7 @@
                             <input type="checkbox" value="1" name="rememberMe">
                             <span class="text">记住密码</span>
                         </div>
-                        <button type="submit" class="btn btn-primary">登录</button>
+                        <button type="button" class="btn btn-primary doLogin">登录</button>
                     </div>
                 </form>
             </div>
@@ -29,6 +29,25 @@
 </div>
 <#include "/admin/common/footer.ftl">
 <script>
+	$(".doLogin").click(function () {
+		$.ajax({
+			type: 'post',
+			url: '/admin/doLogin',
+			data: $("#loginForm").serialize(),
+			success: function (data) {
+			    console.log(data);
+				if (data.errorCode === 'y'){
+                    location.href = "/admin/index";
+				} else {
+                    new $.zui.Messager('提示消息：' + data.errorText, {
+                        icon: 'exclamation-sign',
+                        type: 'danger',
+                        time: 2000
+                    }).show();
+				}
+            }
+		})
+    })
 </script>
 </body>
 </html>

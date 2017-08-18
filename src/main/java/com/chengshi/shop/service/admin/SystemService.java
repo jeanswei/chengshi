@@ -2,6 +2,7 @@ package com.chengshi.shop.service.admin;
 
 import com.chengshi.shop.model.admin.AdminMenu;
 import com.chengshi.shop.model.admin.AdminUser;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

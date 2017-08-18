@@ -4,6 +4,7 @@ package com.chengshi.shop.config;
 import com.chengshi.shop.model.admin.AdminMenu;
 import com.chengshi.shop.model.admin.AdminUser;
 import com.chengshi.shop.service.admin.SystemService;
+import com.chengshi.shop.util.MD5Util;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -17,6 +18,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 自定义验证权限登录
+ *
  * @author xuxinlong
  * @version 2017年08月18日
  */
@@ -26,7 +29,6 @@ public class MyShiroRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        System.out.println("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         AdminUser adminUser = (AdminUser) principals.getPrimaryPrincipal();
         List<AdminMenu> menuList = systemService.getMenuList(adminUser.getUserId());
@@ -38,18 +40,16 @@ public class MyShiroRealm extends AuthorizingRealm {
 
     /*主要是用来进行身份认证的，也就是说验证用户输入的账号和密码是否正确。*/
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken)
             throws AuthenticationException {
-        System.out.println("身份认证方法：MyShiroRealm.doGetAuthenticationInfo()");
+        UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
 
-        String username = (String) token.getPrincipal();
-        AdminUser user = systemService.findByUsername(username);
+        AdminUser user = systemService.findByUsername(token.getUsername());
         if (null == user) {
-            throw new AccountException("帐号或密码不正确！");
+            throw new AccountException("用户名不存在！");
+        } else if (!user.getPassword().equals(MD5Util.MD5Encode(new String(token.getPassword())))) {
+            throw new AccountException("密码不正确！");
         } else if (user.getStatus() == 2) {
-            /**
-             * 如果用户的status为禁用。那么就抛出<code>DisabledAccountException</code>
-             */
             throw new DisabledAccountException("帐号已被禁用！");
         } else {
             //更新登录时间 last login time

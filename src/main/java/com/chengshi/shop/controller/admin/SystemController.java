@@ -6,14 +6,12 @@ import com.chengshi.shop.util.MessageUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,60 +33,83 @@ public class SystemController {
      * @return
      */
     @RequestMapping(value = "/login")
-    public ModelAndView login(HttpServletRequest request) {
+    public ModelAndView login() {
         ModelAndView mav = new ModelAndView("admin/login");
-        // 登录失败从request中获取shiro处理的异常信息。
-        // shiroLoginFailure:就是shiro异常类的全类名.
-        String exception = (String) request.getAttribute("shiroLoginFailure");
-        System.out.println("exception=" + exception);
-        String msg = "";
-        if (exception != null) {
-            if (UnknownAccountException.class.getName().equals(exception)) {
-                System.out.println("UnknownAccountException -- > 账号不存在：");
-                msg = "UnknownAccountException -- > 账号不存在：";
-            } else if (IncorrectCredentialsException.class.getName().equals(exception)) {
-                System.out.println("IncorrectCredentialsException -- > 密码不正确：");
-                msg = "IncorrectCredentialsException -- > 密码不正确：";
-            } else if ("kaptchaValidateFailed".equals(exception)) {
-                System.out.println("kaptchaValidateFailed -- > 验证码错误");
-                msg = "kaptchaValidateFailed -- > 验证码错误";
-            } else {
-                msg = "else >> "+exception;
-                System.out.println("else -- >" + exception);
-            }
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated() || subject.isRemembered()) {
+            mav = new ModelAndView("redirect:/admin/index");
         }
-        mav.addObject("msg", msg);
         return mav;
     }
 
-    @GetMapping("/logout")
-    public ModelAndView logout(RedirectAttributes redirectAttributes) {
-        //使用权限管理工具进行用户的退出，跳出登录，给出提示信息
-        SecurityUtils.getSubject().logout();
-        redirectAttributes.addFlashAttribute("message", "您已安全退出");
-        return new ModelAndView("redirect:/login");
+    /**
+     * 登录接口
+     *
+     * @param username
+     * @param password
+     * @param rememberMe
+     * @return
+     */
+    @PostMapping(value = "/doLogin")
+    public HashMap<String, Object> doLogin(@RequestParam String username, @RequestParam String password,
+                                           @RequestParam(required = false) String rememberMe) {
+        HashMap<String, Object> retMap = MessageUtils.success("登录成功");
+        try {
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe != null);
+            SecurityUtils.getSubject().login(token);
+        } catch (Exception e) {
+            retMap = MessageUtils.error(e.getMessage());
+        }
+        return retMap;
     }
 
+    /**
+     * 退出登录
+     *
+     * @return
+     */
+    @GetMapping("/logout")
+    public ModelAndView logout() {
+        SecurityUtils.getSubject().logout();
+        return new ModelAndView("redirect:/admin/login");
+    }
+
+    /**
+     * 后台首页
+     *
+     * @return
+     */
     @RequestMapping(value = "/index")
     public ModelAndView index() {
         return new ModelAndView("admin/index");
     }
 
+    /**
+     * 后台用户管理
+     *
+     * @return
+     */
     @RequestMapping(value = "/user")
     public ModelAndView user() {
         return new ModelAndView("admin/system/user");
     }
 
+    /**
+     * 后台菜单管理
+     *
+     * @return
+     */
     @RequestMapping(value = "/menu")
     public ModelAndView menu() {
         return new ModelAndView("admin/system/menu");
     }
 
     @RequestMapping("/403")
-    public String unauthorizedRole(){
+    public String unauthorizedRole() {
         System.out.println("------没有权限-------");
         return "403";
     }
+
     /**
      * 获取管理后台用户列表
      *

@@ -15,7 +15,7 @@
             <nav class="collapse navbar-collapse zui-navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a title="修改密码" href="#"><i class="icon icon-edit"></i><span> 修改密码</span></a></li>
-                    <li><a title="退出登录" href="#"><i class="icon icon-signout"></i><span> 退出登录</span></a></li>
+                    <li><a title="退出登录" href="/admin/logout"><i class="icon icon-signout"></i><span> 退出登录</span></a></li>
                 </ul>
             </nav>
         </div>
