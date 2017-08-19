@@ -21,7 +21,6 @@
         search: true,
         clickToSelect: true,
         singleSelect: true,
-        dataType: "json",//期待返回数据类型
         toolbar: "#toolbar",//指定工具栏
         columns: [
             {

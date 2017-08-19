@@ -22,7 +22,6 @@
         singleSelect: true,
         sidePagination: "server",//服务端分页
         queryParamsType: "",
-        dataType: "json",//期待返回数据类型
         toolbar: "#toolbar",//指定工具栏
         columns: [
             {

@@ -111,6 +111,7 @@
         <if test="pid!=null and pid!='' or pid ==0">
             AND a.pid = #{pid,jdbcType=SMALLINT}
         </if>
+        order by sort_no
     </select>
     <select id="selectAllMenu" resultMap="BaseResultMap">
         SELECT *
@@ -120,5 +121,6 @@
                 AND pid = #{pid,jdbcType=SMALLINT}
             </if>
         </where>
+        order by sort_no
     </select>
 </mapper>
