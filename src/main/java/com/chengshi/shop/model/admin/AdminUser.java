@@ -1,25 +1,29 @@
 package com.chengshi.shop.model.admin;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class AdminUser {
-    private Short userId;
+public class AdminUser implements Serializable{
 
-    private String userName;
+    private static final long serialVersionUID = -4873308109521780554L;
 
-    private String password;
+    public Short userId;
 
-    private String mobile;
+    public String userName;
 
-    private String email;
+    public String password;
 
-    private Date createTime;
+    public String mobile;
 
-    private Date lastLogin;
+    public String email;
 
-    private String lastIp;
+    public Date createTime;
 
-    private Byte status;
+    public Date lastLogin;
+
+    public String lastIp;
+
+    public Byte status;
 
     public Short getUserId() {
         return userId;

@@ -1,8 +1,10 @@
 package com.chengshi.shop.controller.admin;
 
+import com.chengshi.shop.model.admin.AdminMenu;
 import com.chengshi.shop.model.admin.AdminUser;
 import com.chengshi.shop.service.admin.SystemService;
 import com.chengshi.shop.util.MessageUtils;
+import com.chengshi.shop.util.SessionUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.shiro.SecurityUtils;
@@ -104,10 +106,14 @@ public class SystemController {
         return new ModelAndView("admin/system/menu");
     }
 
+    /**
+     * 无权限提示页面
+     * @return
+     */
     @RequestMapping("/403")
     public String unauthorizedRole() {
         System.out.println("------没有权限-------");
-        return "403";
+        return "/admin/403";
     }
 
     /**
@@ -186,6 +192,48 @@ public class SystemController {
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
             systemService.deleteUser(userId);
+        } catch (Exception e) {
+            retMap = MessageUtils.error();
+        }
+        return retMap;
+    }
+
+    /**
+     * 获取当前用户拥有的菜单
+     * @return
+     */
+    @GetMapping(value = "/getMenuList")
+    public List<AdminMenu> getMenuList() {
+        return systemService.getMenuList(SessionUtils.getUserId());
+    }
+
+    /**
+     * 菜单修改页面
+     * @param menuId
+     * @return
+     */
+    @GetMapping(value = "/menuForm")
+    public ModelAndView menuForm(@RequestParam(required = false) Short menuId) {
+        ModelAndView mav = new ModelAndView("/admin/system/menuForm");
+        AdminMenu menu = new AdminMenu();
+        if (menuId != null) {
+            menu = systemService.findAdminMenu(menuId);
+        }
+        mav.addObject("menu", menu);
+        return mav;
+    }
+
+    /**
+     * 保存用户信息
+     *
+     * @param adminMenu
+     * @return
+     */
+    @PostMapping(value = "saveMenu")
+    public HashMap<String, Object> saveMenu(@ModelAttribute AdminMenu adminMenu) {
+        HashMap<String, Object> retMap = MessageUtils.success();
+        try {
+            systemService.saveMenu(adminMenu);
         } catch (Exception e) {
             retMap = MessageUtils.error();
         }

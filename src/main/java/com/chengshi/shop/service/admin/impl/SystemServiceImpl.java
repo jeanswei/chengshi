@@ -93,4 +93,29 @@ public class SystemServiceImpl implements SystemService {
     public List<AdminMenu> getMenuList(Short userId) {
         return adminMenuMapper.getMenuListByUserId(userId);
     }
+
+    /**
+     * 查询菜单
+     *
+     * @param menuId
+     * @return
+     */
+    @Override
+    public AdminMenu findAdminMenu(Short menuId) {
+        return adminMenuMapper.selectByPrimaryKey(menuId);
+    }
+
+    /**
+     * 保存菜单
+     *
+     * @param adminMenu
+     */
+    @Override
+    public void saveMenu(AdminMenu adminMenu) {
+        if (adminMenu.getMenuId() != null) {
+            adminMenuMapper.updateByPrimaryKeySelective(adminMenu);
+        } else {
+            adminMenuMapper.insertSelective(adminMenu);
+        }
+    }
 }

@@ -2,30 +2,29 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
-            <h4 class="modal-title">用户信息</h4>
+            <h4 class="modal-title">菜单修改</h4>
         </div>
         <div class="modal-body">
             <div class="container">
                 <div class="row">
-                    <div class="alert alert-warning">温馨提示：新建用户的默认密码是888888，为保证账户安全，请登陆系统后自行修改密码</div>
                     <form id="infoFrom" class="form-horizontal" data-toggle="validator">
-                        <input type="hidden" name="userId" value="${user.userId!}">
+                        <input type="hidden" name="menuId" value="${menu.menuId!}">
                         <div class="form-group">
-                            <label class="col-md-2 control-label">用户名：</label>
+                            <label class="col-md-2 control-label">菜单名称：</label>
                             <div class="col-md-4">
-                                <input type="text" name="userName" value="${user.userName!}" class="form-control">
+                                <input type="text" name="name" value="${menu.name!}" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label">联系号码：</label>
+                            <label class="col-md-2 control-label">菜单链接：</label>
                             <div class="col-md-4">
-                                <input type="tel" name="mobile" value="${user.mobile!}" class="form-control">
+                                <input type="url" name="url" value="${menu.url!}" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label">邮箱：</label>
+                            <label class="col-md-2 control-label">排序：</label>
                             <div class="col-md-4">
-                                <input type="email" name="email" value="${user.email!}" class="form-control">
+                                <input type="number" name="sortNo" value="${menu.sortNo!}" class="form-control">
                             </div>
                         </div>
                     </form>

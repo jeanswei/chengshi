@@ -29,6 +29,8 @@
 </div>
 <#include "/admin/common/footer.ftl">
 <script>
+    if (window != top)
+        top.location.href = location.href;
     $(".doLogin").click(function () {
         $.ajax({
             type: 'post',

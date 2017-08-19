@@ -13,7 +13,7 @@
 <script>
     var dg = $('#dataGrid').bootstrapTable({
         method: "get",//请求方式
-        url: "/admin/getUserList.do",//数据源
+        url: "/admin/getUserList",//数据源
         uniqueId: "userId",
         dataField: "list",
         search: true,
@@ -60,12 +60,12 @@
     });
 
     function add() {
-        dlg.show({remote: '/admin/userForm.html'});
+        dlg.show({remote: '/admin/userForm'});
     }
 
     function update() {
         var rows = dg.bootstrapTable('getSelections');
-        dlg.show({remote: '/admin/userForm.html?userId=' + rows[0].userId});
+        dlg.show({remote: '/admin/userForm?userId=' + rows[0].userId});
     }
 
     function del() {
@@ -78,7 +78,7 @@
                 if (result) {
                     $.ajax({
                         type: 'post',
-                        url: '/admin/deleteUser.do?userId=' + rows[0].userId,
+                        url: '/admin/deleteUser?userId=' + rows[0].userId,
                         success: function (data) {
                             successTip(data, dg);
                         }

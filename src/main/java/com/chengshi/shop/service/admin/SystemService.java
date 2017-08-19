@@ -2,7 +2,6 @@ package com.chengshi.shop.service.admin;
 
 import com.chengshi.shop.model.admin.AdminMenu;
 import com.chengshi.shop.model.admin.AdminUser;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -51,4 +50,17 @@ public interface SystemService {
      * @return
      */
     List<AdminMenu> getMenuList(Short userId);
+
+    /**
+     * 查询菜单
+     * @param menuId
+     * @return
+     */
+    AdminMenu findAdminMenu(Short menuId);
+
+    /**
+     * 保存菜单
+     * @param adminMenu
+     */
+    void saveMenu(AdminMenu adminMenu);
 }

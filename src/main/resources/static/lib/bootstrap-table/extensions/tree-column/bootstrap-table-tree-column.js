@@ -10,7 +10,7 @@
 
     $.extend($.fn.bootstrapTable.defaults, {
         treeShowField: null,
-        idField: 'id',
+        idField: 'menuId',
         parentIdField: 'pid',
         treeVerticalcls: 'vertical',
         treeVerticalLastcls: 'vertical last',
