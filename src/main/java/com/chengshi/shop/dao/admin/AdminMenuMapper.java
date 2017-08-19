@@ -32,5 +32,5 @@ public interface AdminMenuMapper {
      * 所有菜单
      * @return
      */
-    List<AdminMenu> selectAllMenu();
+    List<AdminMenu> selectAllMenu(@Param("pid")Short pid);
 }

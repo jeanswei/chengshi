@@ -125,8 +125,8 @@ public class SystemServiceImpl implements SystemService {
      * @return
      */
     @Override
-    public List<AdminMenu> selectAllMenu() {
-        return adminMenuMapper.selectAllMenu();
+    public List<AdminMenu> selectAllMenu(Short pid) {
+        return adminMenuMapper.selectAllMenu(pid);
     }
 
     /**

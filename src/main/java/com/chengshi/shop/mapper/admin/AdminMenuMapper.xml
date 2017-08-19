@@ -115,5 +115,10 @@
     <select id="selectAllMenu" resultMap="BaseResultMap">
         SELECT *
         FROM cs_admin_menu
+        <where>
+            <if test="pid!=null and pid!='' or pid ==0">
+                AND pid = #{pid,jdbcType=SMALLINT}
+            </if>
+        </where>
     </select>
 </mapper>

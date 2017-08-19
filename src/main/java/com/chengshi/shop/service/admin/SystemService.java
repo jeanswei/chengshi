@@ -68,7 +68,7 @@ public interface SystemService {
      * 获取所有菜单
      * @return
      */
-    List<AdminMenu> selectAllMenu();
+    List<AdminMenu> selectAllMenu(Short pid);
 
     /**
      * 删除菜单

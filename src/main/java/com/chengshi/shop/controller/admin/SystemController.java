@@ -204,7 +204,7 @@ public class SystemController {
      */
     @GetMapping(value = "/getMenuList")
     public List<AdminMenu> getMenuList() {
-        return systemService.getMenuList(SessionUtils.getUserId());
+        return systemService.selectAllMenu(null);
     }
 
     /**
@@ -219,7 +219,7 @@ public class SystemController {
         if (menuId != null) {
             menu = systemService.findAdminMenu(menuId);
         }
-        mav.addObject("pMenuList", systemService.getMenuList(SessionUtils.getUserId(), (short) 0));
+        mav.addObject("pMenuList", systemService.selectAllMenu((short) 0));
         mav.addObject("menu", menu);
         return mav;
     }

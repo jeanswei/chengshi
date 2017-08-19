@@ -31,7 +31,7 @@ public class ShiroService {
     public Map<String, String> loadFilterChainDefinitions() {
         // 权限控制map.从数据库获取
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        List<AdminMenu> list = systemService.selectAllMenu();
+        List<AdminMenu> list = systemService.selectAllMenu(null);
 
         for (AdminMenu menu : list) {
             filterChainDefinitionMap.put(menu.getMenuUrl(), "authc");
