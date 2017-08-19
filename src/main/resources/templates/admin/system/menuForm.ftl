@@ -16,15 +16,30 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-md-2 control-label">父级菜单：</label>
+                            <div class="col-md-4">
+                                <select name="pid" value="${menu.pid!}" class="form-control">
+                                    <option value="0">父级菜单</option>
+								<#list pMenuList as pMenu>
+									<#if menu.pid?? && pMenu.menuId == menu.pid>
+                                        <option value="${pMenu.menuId}" selected>${pMenu.name}</option>
+									<#else>
+                                        <option value="${pMenu.menuId}">${pMenu.name}</option>
+									</#if>
+								</#list>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-md-2 control-label">菜单链接：</label>
                             <div class="col-md-4">
-                                <input type="url" name="url" value="${menu.url!}" class="form-control">
+                                <input type="text" name="menuUrl" value="${menu.menuUrl!}" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label">排序：</label>
                             <div class="col-md-4">
-                                <input type="number" name="sortNo" value="${menu.sortNo!}" class="form-control">
+                                <input type="text" name="sortNo" value="${menu.sortNo!}" class="form-control">
                             </div>
                         </div>
                     </form>
@@ -41,27 +56,20 @@
 <script>
     $("#infoFrom").validate({
         rules: {
-            userName: {
+            name: {
                 required: true,
-                rangelength:[2,11],
-	            remote:'/admin/checkUserName?userId=${user.userId!}'
+                rangelength: [2, 6]
             },
-            mobile: {
-                maxlength: 20
-            },
-            email: {
-                email: true,
-                maxlength: 30
+            sortNo: {
+                number: true
             }
         },
         messages: {
-            userName: {
-                required: "请输入用户名",
-                rangelength: "用户名必需由两个以上字母组成",
-                remote: "用户名已存在"
+            name: {
+                required: "请输入菜单名称",
+                rangelength: "菜单名称只能2到6个字符"
             },
-            mobile: "请输入一个正确的手机号码",
-            email: "请输入一个正确的邮箱"
+            sortNo: "请输入正确的排序号"
         }
     });
 
@@ -69,7 +77,7 @@
         if ($("#infoFrom").valid()) {
             $.ajax({
                 type: 'POST',
-                url: '/admin/saveUser',
+                url: '/admin/saveMenu',
                 data: $("#infoFrom").serialize(),
                 success: function (data) {
                     successTip(data, dg, dlg);

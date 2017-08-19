@@ -63,4 +63,24 @@ public interface SystemService {
      * @param adminMenu
      */
     void saveMenu(AdminMenu adminMenu);
+
+    /**
+     * 获取所有菜单
+     * @return
+     */
+    List<AdminMenu> selectAllMenu();
+
+    /**
+     * 删除菜单
+     * @param menuId
+     */
+    void deleteMenu(Short menuId);
+
+    /**
+     * 用户拥有的父级菜单
+     * @param userId
+     * @param pid
+     * @return
+     */
+    List<AdminMenu> getMenuList(Short userId, Short pid);
 }

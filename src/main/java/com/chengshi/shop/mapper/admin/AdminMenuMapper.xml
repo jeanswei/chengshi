@@ -107,6 +107,13 @@
         SELECT a.*
         FROM cs_admin_menu a, cs_admin_user_menu b
         WHERE a.menu_id = b.menu_id
-              AND b.user_id = #{userId,jdbcType=SMALLINT}
+        AND b.user_id = #{userId,jdbcType=SMALLINT}
+        <if test="pid!=null and pid!='' or pid ==0">
+            AND a.pid = #{pid,jdbcType=SMALLINT}
+        </if>
+    </select>
+    <select id="selectAllMenu" resultMap="BaseResultMap">
+        SELECT *
+        FROM cs_admin_menu
     </select>
 </mapper>

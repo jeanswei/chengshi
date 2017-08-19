@@ -33,11 +33,11 @@
             },
             {
                 title: "链接地址",
-                field: "url"
+                field: "menuUrl"
             },
             {
                 title: "排序",
-                field: "sort_no"
+                field: "sortNo"
             }
         ]
     });

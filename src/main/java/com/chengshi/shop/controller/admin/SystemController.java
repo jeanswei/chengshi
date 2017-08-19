@@ -219,12 +219,13 @@ public class SystemController {
         if (menuId != null) {
             menu = systemService.findAdminMenu(menuId);
         }
+        mav.addObject("pMenuList", systemService.getMenuList(SessionUtils.getUserId(), (short) 0));
         mav.addObject("menu", menu);
         return mav;
     }
 
     /**
-     * 保存用户信息
+     * 保存菜单
      *
      * @param adminMenu
      * @return
@@ -234,6 +235,23 @@ public class SystemController {
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
             systemService.saveMenu(adminMenu);
+        } catch (Exception e) {
+            retMap = MessageUtils.error();
+        }
+        return retMap;
+    }
+
+    /**
+     * 删除菜单
+     *
+     * @param menuId
+     * @return
+     */
+    @PostMapping(value = "deleteMenu")
+    public HashMap<String, Object> deleteMenu(@RequestParam Short menuId) {
+        HashMap<String, Object> retMap = MessageUtils.success();
+        try {
+            systemService.deleteMenu(menuId);
         } catch (Exception e) {
             retMap = MessageUtils.error();
         }

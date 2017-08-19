@@ -91,7 +91,7 @@ public class SystemServiceImpl implements SystemService {
      */
     @Override
     public List<AdminMenu> getMenuList(Short userId) {
-        return adminMenuMapper.getMenuListByUserId(userId);
+        return adminMenuMapper.getMenuListByUserId(userId, null);
     }
 
     /**
@@ -117,5 +117,37 @@ public class SystemServiceImpl implements SystemService {
         } else {
             adminMenuMapper.insertSelective(adminMenu);
         }
+    }
+
+    /**
+     * 获取所有菜单
+     *
+     * @return
+     */
+    @Override
+    public List<AdminMenu> selectAllMenu() {
+        return adminMenuMapper.selectAllMenu();
+    }
+
+    /**
+     * 删除菜单
+     *
+     * @param menuId
+     */
+    @Override
+    public void deleteMenu(Short menuId) {
+        adminMenuMapper.deleteByPrimaryKey(menuId);
+    }
+
+    /**
+     * 用户拥有的父级菜单
+     *
+     * @param userId
+     * @param pid
+     * @return
+     */
+    @Override
+    public List<AdminMenu> getMenuList(Short userId, Short pid) {
+        return adminMenuMapper.getMenuListByUserId(userId, pid);
     }
 }
