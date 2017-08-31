@@ -45,13 +45,4 @@ public class RedisConfig extends CachingConfigurerSupport {
         jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
         return new JedisPool(jedisPoolConfig, host, port, timeout, password, database);
     }
-
-    @Bean
-    public CookieSerializer cookieSerializer() {
-        DefaultCookieSerializer serializer = new DefaultCookieSerializer();
-        serializer.setCookieName("JSESSIONID");
-        serializer.setCookiePath("/");
-        serializer.setDomainNamePattern("^.+?\\.(\\w+\\.[a-z]+)$");
-        return serializer;
-    }
 }
