@@ -8,8 +8,7 @@
             <div class="container">
                 <div class="row">
                     <div class="alert alert-warning">温馨提示：当为父级菜单链接可以不填，默认为#</div>
-                    <ul class="tree tree-lines" data-ride="tree">
-                    </ul>
+                    <div id="menuTree" class="ztree"></div>
                 </div>
             </div>
         </div>
@@ -21,17 +20,74 @@
 
 </div>
 <script>
+    var setting = {
+        data: {
+            simpleData: {
+                enable: true,
+                idKey: "menuId",
+                pIdKey: "pid",
+                rootPId: 0
+            },
+            key: {
+                url: "nourl"
+            }
+        },
+        callback: {
+            onNodeCreated: zTreeOnNodeCreated
+        },
+        check: {
+            enable: true,
+            nocheckInherit: true
+        }
+    };
+
+    var ztree;
+
+    function zTreeOnNodeCreated(event, treeId, treeNode) {
+        $('#' + treeNode.tId + '_ico').removeAttr("style");
+    }
+
+    function getUserMenu(userId) {
+        $.get("/admin/getUserMenuIds.do?userId=" + userId, function (r) {
+            //勾选角色所拥有的菜单
+            var menuIds = r;
+            for (var i = 0; i < menuIds.length; i++) {
+                var node = ztree.getNodeByParam("menuId", menuIds[i]);
+                if (null != node) {
+                    ztree.checkNode(node, true, false);
+                }
+            }
+        });
+    }
+
+    function getMenuTree(userId) {
+        //加载菜单树
+        $.get("/admin/getAllMenuList.do", function (r) {
+            ztree = $.fn.zTree.init($("#menuTree"), setting, r);
+            //展开所有节点
+            ztree.expandAll(true);
+            getUserMenu(userId);
+        });
+    }
+
+    $(function () {
+        getMenuTree(${userId});
+    });
 
     $('.save').click(function () {
-        if ($("#infoFrom").valid()) {
-            $.ajax({
-                type: 'POST',
-                url: '/admin/saveMenu',
-                data: $("#infoFrom").serialize(),
-                success: function (data) {
-                    successTip(data, dg, dlg);
-                }
-            })
+        //获取选择的菜单
+        var nodes = ztree.getCheckedNodes(true);
+        var menuIdList = new Array();
+        for (var i = 0; i < nodes.length; i++) {
+            menuIdList.push(nodes[i].menuId);
         }
+        $.ajax({
+            type: "POST",
+            url: "/admin/saveUserMenu",
+            data: {userId: ${userId}, menuIdList: JSON.stringify(menuIdList)},
+            success: function (data) {
+                successTip(data, dg, dlg);
+            }
+        });
     });
 </script>

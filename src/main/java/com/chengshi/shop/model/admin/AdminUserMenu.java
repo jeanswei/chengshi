@@ -7,6 +7,11 @@ public class AdminUserMenu {
 
     private Short menuId;
 
+    public AdminUserMenu(Short userId, Short menuId) {
+        this.userId = userId;
+        this.menuId = menuId;
+    }
+
     public Integer getId() {
         return id;
     }

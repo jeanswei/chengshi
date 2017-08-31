@@ -1,71 +1,81 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.chengshi.shop.dao.admin.AdminUserMenuMapper" >
-  <resultMap id="BaseResultMap" type="com.chengshi.shop.model.admin.AdminUserMenu" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="user_id" property="userId" jdbcType="SMALLINT" />
-    <result column="menu_id" property="menuId" jdbcType="SMALLINT" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, user_id, menu_id
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from cs_admin_user_menu
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from cs_admin_user_menu
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.chengshi.shop.model.admin.AdminUserMenu" >
-    insert into cs_admin_user_menu (id, user_id, menu_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=SMALLINT}, #{menuId,jdbcType=SMALLINT}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.chengshi.shop.model.admin.AdminUserMenu" >
-    insert into cs_admin_user_menu
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="menuId != null" >
-        menu_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=SMALLINT},
-      </if>
-      <if test="menuId != null" >
-        #{menuId,jdbcType=SMALLINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.admin.AdminUserMenu" >
-    update cs_admin_user_menu
-    <set >
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=SMALLINT},
-      </if>
-      <if test="menuId != null" >
-        menu_id = #{menuId,jdbcType=SMALLINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.admin.AdminUserMenu" >
-    update cs_admin_user_menu
-    set user_id = #{userId,jdbcType=SMALLINT},
-      menu_id = #{menuId,jdbcType=SMALLINT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+<mapper namespace="com.chengshi.shop.dao.admin.AdminUserMenuMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.admin.AdminUserMenu">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="SMALLINT"/>
+        <result column="menu_id" property="menuId" jdbcType="SMALLINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, menu_id
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_admin_user_menu
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_admin_user_menu
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.admin.AdminUserMenu">
+        INSERT INTO cs_admin_user_menu (id, user_id, menu_id
+        )
+        VALUES (#{id,jdbcType=INTEGER}, #{userId,jdbcType=SMALLINT}, #{menuId,jdbcType=SMALLINT}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.admin.AdminUserMenu">
+        insert into cs_admin_user_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="menuId != null">
+                menu_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=SMALLINT},
+            </if>
+            <if test="menuId != null">
+                #{menuId,jdbcType=SMALLINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.admin.AdminUserMenu">
+        update cs_admin_user_menu
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=SMALLINT},
+            </if>
+            <if test="menuId != null">
+                menu_id = #{menuId,jdbcType=SMALLINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.admin.AdminUserMenu">
+        UPDATE cs_admin_user_menu
+        SET user_id = #{userId,jdbcType=SMALLINT},
+            menu_id = #{menuId,jdbcType=SMALLINT}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="getMenuIdsByUserId" resultType="java.lang.Short">
+        SELECT menu_id
+        FROM cs_admin_user_menu
+        WHERE user_id = #{userId,jdbcType=SMALLINT}
+    </select>
+    <delete id="deleteUserMenu">
+        DELETE * FROM cs_admin_user_menu
+        WHERE user_id = #{userId,jdbcType=SMALLINT}
+              AND menu_id = #{menuId,jdbcType=SMALLINT}
+    </delete>
 </mapper>

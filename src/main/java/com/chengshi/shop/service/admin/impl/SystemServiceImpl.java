@@ -2,10 +2,13 @@ package com.chengshi.shop.service.admin.impl;
 
 import com.chengshi.shop.dao.admin.AdminMenuMapper;
 import com.chengshi.shop.dao.admin.AdminUserMapper;
+import com.chengshi.shop.dao.admin.AdminUserMenuMapper;
 import com.chengshi.shop.model.admin.AdminMenu;
 import com.chengshi.shop.model.admin.AdminUser;
+import com.chengshi.shop.model.admin.AdminUserMenu;
 import com.chengshi.shop.service.admin.SystemService;
 import com.chengshi.shop.util.MD5Util;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,6 +27,8 @@ public class SystemServiceImpl implements SystemService {
     private AdminMenuMapper adminMenuMapper;
     @Resource
     private AdminUserMapper adminUserMapper;
+    @Resource
+    private AdminUserMenuMapper adminUserMenuMapper;
 
     /**
      * 获取管理后台用户列表
@@ -149,5 +154,45 @@ public class SystemServiceImpl implements SystemService {
     @Override
     public List<AdminMenu> getMenuList(Short userId, Short pid) {
         return adminMenuMapper.getMenuListByUserId(userId, pid);
+    }
+
+    /**
+     * 获取用户拥有菜单id的集合
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Short> getUserMenuIds(Short userId) {
+        return adminUserMenuMapper.getMenuIdsByUserId(userId);
+    }
+
+    /**
+     * 给用户授权菜单权限
+     *
+     * @param userId
+     * @param newList
+     */
+    @Override
+    public void saveUserMenu(Short userId, List<Short> newList) {
+        if (CollectionUtils.isEmpty(newList)) {
+            throw new RuntimeException("请先选择资源权限");
+        }
+        List<Short> oldList = getUserMenuIds(userId);
+        //是否删除
+        if (CollectionUtils.isNotEmpty(oldList)) {
+            for (int i = 0, j = oldList.size(); i < j; i++) {
+                if (!newList.contains(oldList.get(i))) {
+                    adminUserMenuMapper.deleteUserMenu(userId, oldList.get(i));
+                }
+            }
+        }
+
+        //是否添加
+        for (int i = 0, j = newList.size(); i < j; i++) {
+            if (!oldList.contains(newList.get(i))) {
+                adminUserMenuMapper.insertSelective(new AdminUserMenu(userId, newList.get(i)));
+            }
+        }
     }
 }

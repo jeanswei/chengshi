@@ -1,7 +1,11 @@
 package com.chengshi.shop.dao.admin;
 
 import com.chengshi.shop.model.admin.AdminUserMenu;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
+@Repository
 public interface AdminUserMenuMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +18,18 @@ public interface AdminUserMenuMapper {
     int updateByPrimaryKeySelective(AdminUserMenu record);
 
     int updateByPrimaryKey(AdminUserMenu record);
+
+    /**
+     * 获取用户拥有菜单id的集合
+     * @param userId
+     * @return
+     */
+    List<Short> getMenuIdsByUserId(Short userId);
+
+    /**
+     * 删除对应的权限
+     * @param userId
+     * @param menuId
+     */
+    void deleteUserMenu(Short userId, Short menuId);
 }

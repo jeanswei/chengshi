@@ -83,4 +83,18 @@ public interface SystemService {
      * @return
      */
     List<AdminMenu> getMenuList(Short userId, Short pid);
+
+    /**
+     * 获取用户拥有菜单id的集合
+     * @param userId
+     * @return
+     */
+    List<Short> getUserMenuIds(Short userId);
+
+    /**
+     * 给用户授权菜单权限
+     * @param userId
+     * @param menuIdList
+     */
+    void saveUserMenu(Short userId, List<Short> menuIdList);
 }

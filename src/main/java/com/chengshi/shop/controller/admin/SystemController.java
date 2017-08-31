@@ -1,11 +1,14 @@
 package com.chengshi.shop.controller.admin;
 
+import com.alibaba.fastjson.JSON;
 import com.chengshi.shop.model.admin.AdminMenu;
 import com.chengshi.shop.model.admin.AdminUser;
 import com.chengshi.shop.service.admin.SystemService;
 import com.chengshi.shop.util.MessageUtils;
+import com.chengshi.shop.util.SessionUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -14,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -108,6 +112,7 @@ public class SystemController {
 
     /**
      * 无权限提示页面
+     *
      * @return
      */
     @RequestMapping("/403")
@@ -200,15 +205,17 @@ public class SystemController {
 
     /**
      * 获取当前用户拥有的菜单
+     *
      * @return
      */
     @GetMapping(value = "/getMenuList")
     public List<AdminMenu> getMenuList() {
-        return systemService.selectAllMenu(null);
+        return systemService.getMenuList(SessionUtils.getUserId());
     }
 
     /**
      * 菜单修改页面
+     *
      * @param menuId
      * @return
      */
@@ -260,6 +267,7 @@ public class SystemController {
 
     /**
      * 用户授权页面
+     *
      * @param userId
      * @return
      */
@@ -268,26 +276,45 @@ public class SystemController {
         ModelAndView mav = new ModelAndView("/admin/system/userMenuForm");
         List<AdminMenu> menuList = systemService.selectAllMenu(null);
         mav.addObject("menuList", menuList);
+        mav.addObject("userId", userId);
         return mav;
     }
 
-    @RequestMapping(value = "setSession")
-    public HashMap<String, Object> setSession(HttpServletRequest request) {
-        HashMap<String, Object> retMap = MessageUtils.success();
-        try {
-            request.getSession().setAttribute("mallId",1);
-        } catch (Exception e) {
-            retMap = MessageUtils.error();
-        }
-        return retMap;
+    /**
+     * 获取所有菜单
+     *
+     * @return
+     */
+    @GetMapping(value = "getAllMenuList")
+    public List<AdminMenu> getAllMenuList() {
+        return systemService.selectAllMenu(null);
     }
 
-    @RequestMapping(value = "getSession")
-    public HashMap<String, Object> getSession(HttpServletRequest request) {
+    /**
+     * 获取某用户所拥有菜单
+     *
+     * @return
+     */
+    @GetMapping(value = "getUserMenuIds")
+    public List<Short> getUserMenuIds(@RequestParam Short userId) {
+        return systemService.getUserMenuIds(userId);
+    }
+
+    /**
+     * 保存用户菜单权限
+     * @param userId
+     * @return
+     */
+    @PostMapping(value = "saveUserMenu")
+    public HashMap<String, Object> saveUserMenu(@RequestParam Short userId, HttpServletRequest request) {
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
-            retMap.put("sessionId",request.getSession().getId());
-            retMap.put("mallId", request.getSession().getAttribute("mallId"));
+            String menuIdListString = request.getParameter("menuIdList");
+            List<Short> menuIdList = new ArrayList<>();
+            if (StringUtils.isNotBlank(menuIdListString)) {
+                menuIdList = JSON.parseArray(menuIdListString, Short.class);
+            }
+            systemService.saveUserMenu(userId, menuIdList);
         } catch (Exception e) {
             retMap = MessageUtils.error();
         }

@@ -1,5 +1,6 @@
 <#include "/admin/common/header.ftl">
 <link href="/lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="/lib/ztree/css/metroStyle/metroStyle.css" rel="stylesheet">
 <body class="with-padding">
 <div id="toolbar" class="toolbox btn-group">
     <button class="btn btn-link" onclick="add()"><i class="icon icon-plus"></i> 添加</button>
@@ -10,6 +11,7 @@
 <#include "/admin/common/footer.ftl">
 <script src="/lib/bootstrap-table/bootstrap-table.min.js"></script>
 <script src="/lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="/lib/ztree/jquery.ztree.all.min.js"></script>
 <script>
     var dg = $('#dataGrid').bootstrapTable({
         method: "get",//请求方式
@@ -95,6 +97,7 @@
             }
         })
     }
+    
     function accreditMenu(userId) {
         dlg.show({remote: '/admin/userMenuForm?userId=' + userId});
     }
