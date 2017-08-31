@@ -2,21 +2,22 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
-            <h4 class="modal-title">菜单修改</h4>
+            <h4 class="modal-title">菜单信息</h4>
         </div>
         <div class="modal-body">
             <div class="container">
                 <div class="row">
+                    <div class="alert alert-warning">温馨提示：当为父级菜单链接可以不填，默认为#</div>
                     <form id="infoFrom" class="form-horizontal" data-toggle="validator">
                         <input type="hidden" name="menuId" value="${menu.menuId!}">
                         <div class="form-group">
-                            <label class="col-md-2 control-label">菜单名称：</label>
+                            <label class="col-md-2 control-label required">菜单名称</label>
                             <div class="col-md-4">
-                                <input type="text" name="name" value="${menu.name!}" class="form-control">
+                                <input type="text" name="name" value="${menu.name!}" placeholder="请输入菜单名称" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label">父级菜单：</label>
+                            <label class="col-md-2 control-label required">父级菜单</label>
                             <div class="col-md-4">
                                 <select name="pid" value="${menu.pid!}" class="form-control">
                                     <option value="0">父级菜单</option>
@@ -31,15 +32,15 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label">菜单链接：</label>
+                            <label class="col-md-2 control-label">菜单链接</label>
                             <div class="col-md-4">
-                                <input type="text" name="menuUrl" value="${menu.menuUrl!}" class="form-control">
+                                <input type="text" name="menuUrl" value="${menu.menuUrl!}" placeholder="请输入菜单链接" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label">排序：</label>
+                            <label class="col-md-2 control-label">排序</label>
                             <div class="col-md-4">
-                                <input type="text" name="sortNo" value="${menu.sortNo!}" class="form-control">
+                                <input type="text" name="sortNo" value="${menu.sortNo!}" placeholder="请输入排序" class="form-control">
                             </div>
                         </div>
                     </form>
@@ -67,7 +68,7 @@
         messages: {
             name: {
                 required: "请输入菜单名称",
-                rangelength: "菜单名称只能2到6个字符"
+                rangelength: "菜单名称必须2到6个字符"
             },
             sortNo: "请输入正确的排序号"
         }

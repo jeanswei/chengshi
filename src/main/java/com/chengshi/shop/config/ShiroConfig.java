@@ -1,30 +1,21 @@
 package com.chengshi.shop.config;
 
 
-import com.chengshi.shop.model.admin.AdminMenu;
 import com.chengshi.shop.service.admin.SystemService;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
-import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
-import org.crazycake.shiro.RedisCacheManager;
-import org.crazycake.shiro.RedisManager;
-import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * shiro安全框架配置
@@ -95,7 +86,7 @@ public class ShiroConfig {
 //        // 自定义session管理 使用redis
 //        securityManager.setSessionManager(sessionManager());
 //        //注入记住我管理器;
-//        securityManager.setRememberMeManager(rememberMeManager());
+        securityManager.setRememberMeManager(rememberMeManager());
         return securityManager;
     }
 
@@ -164,33 +155,33 @@ public class ShiroConfig {
 //        sessionManager.setSessionDAO(redisSessionDAO());
 //        return sessionManager;
 //    }
-//
-//    /**
-//     * cookie对象;
-//     *
-//     * @return
-//     */
-//    public SimpleCookie rememberMeCookie() {
-//        //这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
-//        SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
-//        //<!-- 记住我cookie生效时间7天 ,单位秒;-->
-//        simpleCookie.setMaxAge(604800);
-//        return simpleCookie;
-//    }
-//
-//    /**
-//     * cookie管理对象;记住我功能
-//     *
-//     * @return
-//     */
-//    public CookieRememberMeManager rememberMeManager() {
-//        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
-//        cookieRememberMeManager.setCookie(rememberMeCookie());
-//        //rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度(128 256 512 位)
-//        cookieRememberMeManager.setCipherKey(Base64.decode("3AvVhmFLUs0KTA3Kprsdag=="));
-//        return cookieRememberMeManager;
-//    }
-//
+
+    /**
+     * cookie对象;
+     *
+     * @return
+     */
+    public SimpleCookie rememberMeCookie() {
+        //这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
+        SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
+        //<!-- 记住我cookie生效时间7天 ,单位秒;-->
+        simpleCookie.setMaxAge(604800);
+        return simpleCookie;
+    }
+
+    /**
+     * cookie管理对象;记住我功能
+     *
+     * @return
+     */
+    public CookieRememberMeManager rememberMeManager() {
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        cookieRememberMeManager.setCookie(rememberMeCookie());
+        //rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度(128 256 512 位)
+        cookieRememberMeManager.setCipherKey(Base64.decode("3AvVhmFLUs0KTA3Kprsdag=="));
+        return cookieRememberMeManager;
+    }
+
 //    /**
 //     * 开启shiro aop注解支持.
 //     * 使用代理方式;所以需要开启代码支持;

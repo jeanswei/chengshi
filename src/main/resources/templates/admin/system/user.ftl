@@ -50,6 +50,15 @@
             {
                 title: "上次登录IP",
                 field: "lastIp"
+            },
+            {
+                title: "操作",
+                field: "",
+                align: "center",
+                formatter: function (val, row) {
+                    return "<button class=\"btn btn-link\" onclick=\"accreditMenu(" + row.userId + ")\" type=\"button\"><i class=\"icon " +
+                            "icon-lock\"></i>授权</button>";
+                }
             }
         ]
     });
@@ -85,6 +94,9 @@
                 }
             }
         })
+    }
+    function accreditMenu(userId) {
+        dlg.show({remote: '/admin/userMenuForm?userId=' + userId});
     }
 </script>
 </body>

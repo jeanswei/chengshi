@@ -4,7 +4,6 @@ import com.chengshi.shop.model.admin.AdminMenu;
 import com.chengshi.shop.model.admin.AdminUser;
 import com.chengshi.shop.service.admin.SystemService;
 import com.chengshi.shop.util.MessageUtils;
-import com.chengshi.shop.util.SessionUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.shiro.SecurityUtils;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
@@ -252,6 +252,42 @@ public class SystemController {
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
             systemService.deleteMenu(menuId);
+        } catch (Exception e) {
+            retMap = MessageUtils.error();
+        }
+        return retMap;
+    }
+
+    /**
+     * 用户授权页面
+     * @param userId
+     * @return
+     */
+    @GetMapping(value = "/userMenuForm")
+    public ModelAndView userMenuForm(@RequestParam Short userId) {
+        ModelAndView mav = new ModelAndView("/admin/system/userMenuForm");
+        List<AdminMenu> menuList = systemService.selectAllMenu(null);
+        mav.addObject("menuList", menuList);
+        return mav;
+    }
+
+    @RequestMapping(value = "setSession")
+    public HashMap<String, Object> setSession(HttpServletRequest request) {
+        HashMap<String, Object> retMap = MessageUtils.success();
+        try {
+            request.getSession().setAttribute("mallId",1);
+        } catch (Exception e) {
+            retMap = MessageUtils.error();
+        }
+        return retMap;
+    }
+
+    @RequestMapping(value = "getSession")
+    public HashMap<String, Object> getSession(HttpServletRequest request) {
+        HashMap<String, Object> retMap = MessageUtils.success();
+        try {
+            retMap.put("sessionId",request.getSession().getId());
+            retMap.put("mallId", request.getSession().getAttribute("mallId"));
         } catch (Exception e) {
             retMap = MessageUtils.error();
         }

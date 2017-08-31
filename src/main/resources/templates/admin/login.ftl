@@ -16,10 +16,10 @@
                         <i class="icon-lock"></i>
                     </div>
                     <div class="form-group">
-                        <div class="checkbox">
-                            <input type="checkbox" value="1" name="rememberMe">
-                            <span class="text">记住密码</span>
-                        </div>
+                        <#--<div class="checkbox">-->
+                            <#--<input type="checkbox" value="1" name="rememberMe">-->
+                            <#--<span class="text">记住密码</span>-->
+                        <#--</div>-->
                         <button type="button" class="btn btn-primary doLogin">登录</button>
                     </div>
                 </form>
