@@ -7,7 +7,7 @@
         <div class="modal-body">
             <div class="container">
                 <div class="row">
-                    <div class="alert alert-warning">温馨提示：当为父级菜单链接可以不填，默认为#</div>
+                    <div class="alert alert-warning">温馨提示：勾选菜单前的多选框，授予用户对应的菜单权限</div>
                     <div id="menuTree" class="ztree"></div>
                 </div>
             </div>
