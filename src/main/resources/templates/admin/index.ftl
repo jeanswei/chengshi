@@ -45,25 +45,26 @@
         <div class="row">
             <div class="col col-md-d5 col-sm-6">
                 <div class="chapter" data-id="control" data-accent="primary">
-                    <div class="chapter-heading fade scale show in">
-                        <h4><i class="icon icon-cog"></i> <span class="name">系统管理</span></h4>
-                    </div>
-                    <div class="chapter-body">
-                        <div class="card section fade scale slide-in-up-100 slide-in-right-50 show in choosed"
-                             data-id="icon" data-chapter="control" data-target="page">
-                            <div class="card-heading">
-                                <i class="icon icon-user"></i>
-                                <h5><a class="name" href="/admin/user">用户管理</a></h5>
-                            </div>
+				<#list menuList as menuA>
+					<#if menuA.pid == 0>
+                        <div class="chapter-heading fade scale show in">
+                            <h4><i class="icon icon-cog"></i> <span class="name">${menuA.name}</span></h4>
                         </div>
-                        <div class="card section fade scale slide-in-up-100 slide-in-right-50 show in"
-                             data-id="icon" data-chapter="control" data-target="page">
-                            <div class="card-heading">
-                                <i class="icon icon-list-ul"></i>
-                                <h5><a class="name" href="/admin/menu">菜单管理</a></h5>
-                            </div>
+                        <div class="chapter-body">
+							<#list menuList as menuB>
+								<#if menuA.menuId == menuB.pid>
+                                    <div class="card section fade scale slide-in-up-100 slide-in-right-50 show in"
+                                         data-id="icon" data-chapter="control" data-target="page">
+                                        <div class="card-heading">
+                                            <i class="icon icon-list-ul"></i>
+                                            <h5><a class="name" href="${menuB.menuUrl}">${menuB.name}</a></h5>
+                                        </div>
+                                    </div>
+								</#if>
+							</#list>
                         </div>
-                    </div>
+					</#if>
+				</#list>
                 </div>
             </div>
         </div>

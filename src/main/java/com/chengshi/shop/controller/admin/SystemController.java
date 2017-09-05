@@ -87,7 +87,10 @@ public class SystemController {
      */
     @RequestMapping(value = "/index")
     public ModelAndView index() {
-        return new ModelAndView("admin/index");
+        ModelAndView mav = new ModelAndView("admin/index");
+        List<AdminMenu> menuList = systemService.getMenuList(SessionUtils.getUserId());
+        mav.addObject("menuList", menuList);
+        return mav;
     }
 
     /**
@@ -117,7 +120,6 @@ public class SystemController {
      */
     @RequestMapping("/403")
     public String unauthorizedRole() {
-        System.out.println("------没有权限-------");
         return "/admin/403";
     }
 

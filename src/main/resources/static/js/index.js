@@ -78,13 +78,14 @@
         };
 
         var chooseCardHeading = function (cardHeading) {
+            console.log(cardHeading);
             var $card = $(cardHeading).closest('.card'),
                 $a = $(cardHeading).find('h5 > a'),
                 $lastBreadCrumb = $("#pageHeader").find(".breadcrumb li:last");
             $sections.removeClass('choosed');
             $card.addClass('choosed');
             openPageUrl($a.attr('href'));
-            $lastBreadCrumb.text($a.text()).prev().text($(cardHeading).closest('.chapter').find('.chapter-heading h4 .name').text());
+            $lastBreadCrumb.text($a.text()).prev().text($(cardHeading).closest('.chapter-body').prev().find('h4 .name').text());
         };
 
         var openPage = function () {
