@@ -1,5 +1,10 @@
 <#include "/admin/common/header.ftl">
-<link href="/lib/uploader/zui.uploader.min.css" rel="stylesheet">
+<link href="/css/page/pictureSpace.css" rel="stylesheet">
+<style type="text/css">
+    .panel-group{
+        margin: 10px;
+    }
+</style>
 <body>
 <div class="panel-group">
     <form id="infoFrom" class="form-horizontal" data-toggle="validator">
@@ -63,22 +68,9 @@
         <div class="panel">
             <div class="panel-heading">商品图片</div>
             <div class="panel-body">
-                <div id='uploader' class="uploader" data-ride="uploader">
-                    <div class="uploader-message text-center">
-                        <div id="console" class="content"></div>
-                        <button type="button" class="close">×</button>
-                    </div>
-                    <div id="ossfile" class="uploader-files file-list file-list-grid">
-                    </div>
-                    <div id="container">
-                        <div class="uploader-status pull-right text-muted"></div>
-                        <button id="selectfiles" type="button" class="btn uploader-btn-browse"><i class="icon icon-plus"></i> 选择图片</button>
-                        <button id="postfiles" type="button" class="btn uploader-btn-start"><i class="icon icon-cloud-upload"></i> 开始上传</button>
-                    </div>
-                </div>
-                <div class="alert alert-warning">提示：上传商品图片，<span class="text-red">第一张图片将作为商品主图</span>,支持同时上传多张图片,
-                    多张图片之间可随意调整位置；支持jpg、gif、png格式上传或从图片空间中选择，建议使用尺寸800x800像素以上、
-                    大小不超过1M的正方形图片，上传后的图片将会自动保存在图片空间的默认分类中。
+                <button class="btn open-picture-space" type="button">选择图片</button>
+                <div class="alert alert-warning">提示：上传商品图片，<span class="text-red">第一张图片将作为商品主图</span>
+	                ,支持同时上传多张图片,支持jpg、gif、png格式上传或从图片空间中选择，建议使用尺寸800x800像素以上、大小不超过1M的正方形图片。
                 </div>
             </div>
         </div>
@@ -95,15 +87,10 @@
         </div>
     </form>
 </div>
-<#--<div class="modal-footer">-->
-<#--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
-<#--<button type="button" class="btn btn-primary save">保存</button>-->
-<#--</div>-->
 <#include "/admin/common/footer.ftl">
-<script src="/lib/uploader/zui.uploader.js"></script>
 <script src="/lib/kindeditor/kindeditor.min.js"></script>
-<#--<script src="/lib/uploader/plupload.full.min.js"></script>-->
-<#--<script src="/lib/uploader/upload.js"></script>-->
+<script type="text/javascript" src="/lib/uploader/plupload.full.min.js"></script>
+<script type="text/javascript" src="/lib/uploader/oss-fileupload.js"></script>
 <script>
     KindEditor.create('textarea.kindeditor', {
         basePath: '/lib/kindeditor/',
@@ -148,4 +135,12 @@
             })
         }
     });
+
+    var dlg = new $.zui.ModalTrigger({
+        backdrop: 'static'
+    });
+
+    $(".open-picture-space").click(function (e) {
+        dlg.show({remote: '/admin/pictureSpace'});
+    })
 </script>

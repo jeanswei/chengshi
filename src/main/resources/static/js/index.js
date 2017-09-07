@@ -78,7 +78,6 @@
         };
 
         var chooseCardHeading = function (cardHeading) {
-            console.log(cardHeading);
             var $card = $(cardHeading).closest('.card'),
                 $a = $(cardHeading).find('h5 > a'),
                 $lastBreadCrumb = $("#pageHeader").find(".breadcrumb li:last");
