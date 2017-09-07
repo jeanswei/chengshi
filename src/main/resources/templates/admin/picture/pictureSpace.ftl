@@ -1,4 +1,3 @@
-<#include "/admin/common/header.ftl">
 <style type="text/css">
     .cs-space-tool {
         height: 80px;
@@ -58,6 +57,7 @@
         height: 100%;
     }
 </style>
+<#include "/admin/common/header.ftl">
 <body>
 <div class="cs-picture-space">
     <div class="cs-space-tool">
@@ -150,8 +150,6 @@
     $("#createFolder").on('click', function () {
         dlg.show({remote: '/admin/folderForm'});
     });
-
-
 
     function getPicturePageData(num) {
         var pictureData;

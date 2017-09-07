@@ -186,9 +186,12 @@ function ossUploader(fileParam, filesAddedFunc, uploadCompleteFunc) {
             },
 
             FileUploaded: function (up, file, info) {
-                if (info.status !== 200) {
-                    $('#file' + file.id).find('.weui_uploader_status_content').html(
-                        '<i class="weui_icon_warn"></i>');
+                if (info.status === 200) {
+                    new $.zui.Messager('文件上传成功!', {
+                        icon: 'ok-sign',
+                        type: 'success',
+                        time: 1000
+                    }).show();
                 }
             },
 
@@ -196,13 +199,29 @@ function ossUploader(fileParam, filesAddedFunc, uploadCompleteFunc) {
 
             Error: function (up, err) {
                 if (err.code == -600) {
-                    alert('请上传小于3M的' + fileParam.title);
+                    new $.zui.Messager('请上传小于3M的' + fileParam.title, {
+                        icon: 'exclamation-sign',
+                        type: 'danger',
+                        time: 1000
+                    }).show();
                 } else if (err.code == -601) {
-                    alert('只能选择' + fileParam.extensions + '格式的' + fileParam.title);
+                    new $.zui.Messager('只能选择' + fileParam.extensions + '格式的' + fileParam.title, {
+                        icon: 'exclamation-sign',
+                        type: 'danger',
+                        time: 1000
+                    }).show();
                 } else if (err.code == -602) {
-                    alert('这个文件已经上传过一遍了');
+                    new $.zui.Messager('这个文件已经上传过一遍了', {
+                        icon: 'exclamation-sign',
+                        type: 'danger',
+                        time: 1000
+                    }).show();
                 } else {
-                    alert(err.response);
+                    new $.zui.Messager(err.response, {
+                        icon: 'exclamation-sign',
+                        type: 'danger',
+                        time: 1000
+                    }).show();
                 }
             }
         }
