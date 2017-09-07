@@ -30,6 +30,8 @@ public class PictureController {
     private PictureService pictureService;
     @Value("${img_url}")
     private String IMAGEURL;
+    @Value("${SMALL}")
+    private String SMALLIMG;
 
     /**
      * 图片空间
@@ -105,7 +107,7 @@ public class PictureController {
         PageHelper.startPage(pageNumber, pageSize);
         List<AlbumPicture> pictureList = pictureService.getPictureList(albumId);
         for (AlbumPicture picture : pictureList) {
-            picture.setPicUrl(IMAGEURL + picture.getPicUrl());
+            picture.setPicUrl(IMAGEURL + picture.getPicUrl() + SMALLIMG);
         }
         return new PageInfo<>(pictureList);
     }

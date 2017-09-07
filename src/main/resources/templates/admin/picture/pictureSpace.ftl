@@ -11,8 +11,9 @@
     }
 
     .cs-space-left {
+        overflow: auto;
         padding: 0;
-        min-height: 500px;
+        height: 450px;
         background-color: #f5f5f5;
     }
 
@@ -50,6 +51,12 @@
     .card-heading input {
         margin-right: 5px;
     }
+
+    .none_info {
+        line-height: 250px;
+        text-align: center;
+        height: 100%;
+    }
 </style>
 <body>
 <div class="cs-picture-space">
@@ -60,7 +67,7 @@
         </div>
     </div>
     <div class="cs-space-body">
-        <div class="cs-space-left col-md-2">
+        <div class="cs-space-left col-md-2 scrollbar-hover">
 		<#list folderList as folder>
 			<#if folder_index==0>
                 <a href="#" data-id="${folder.albumId}" class="list-navbar active">${folder.albumName}<span class="label label-badge pull-right">${folder.picNum}</span></a>
@@ -74,21 +81,13 @@
         </div>
         <div class="clearfix"></div>
     </div>
-    <div class="cs-space-footer pull-right">
-        <ul class="pager">
-            <li class="previous"><a href="your/nice/url">« 上一页</a></li>
-            <li><a href="your/nice/url">1</a></li>
-            <li class="active"><a href="your/nice/url">2</a></li>
-            <li><a href="your/nice/url">3</a></li>
-            <li><a href="your/nice/url">4</a></li>
-            <li><a href="your/nice/url">5</a></li>
-            <li class="next"><a href="your/nice/url">上一页 »</a></li>
-        </ul>
+    <div id="page" class="cs-space-footer pull-right">
     </div>
 </div>
 <#include "/admin/common/footer.ftl">
 <script type="text/javascript" src="/lib/uploader/plupload.full.min.js"></script>
 <script type="text/javascript" src="/lib/uploader/oss-fileupload.js"></script>
+<script type="text/javascript" src="/lib/page/page.js"></script>
 <script type="text/javascript">
     loadUpload();
 
@@ -132,6 +131,7 @@
             data: data,
             success: function (data) {
                 successTip(data);
+                getPictureList(1);
             }
         });
     }
@@ -140,6 +140,7 @@
         var $this = $(this);
         $('.list-navbar.active').removeClass('active');
         $this.addClass('active');
+        getPictureList();
     });
 
     var dlg = new $.zui.ModalTrigger({
@@ -150,31 +151,58 @@
         dlg.show({remote: '/admin/folderForm'});
     });
 
-    getPictureList();
+    var pageData = {
+        pageNumber: 1,
+        pageSize: 12
+    };
 
-    function getPictureList() {
-        var albumId = $('.list-navbar.active').attr('data-id');
+    getPictureList(1);
+
+    function getPicturePageData(num) {
+        pageData.pageNumber = num;
+        pageData.albumId = $('.list-navbar.active').attr('data-id');
+        var pictureData;
         $.ajax({
-            url: "/admin/getPictureList.do",
             type: "get",
-            data: {pageNumber: 1, pageSize: 10, albumId: albumId},
+            url: "/admin/getPictureList.do",
+            data: pageData,
+	        async: false,
             success: function (data) {
-                var html = "";
-                $.each(data.list, function (index, item) {
-                    html += "<div class=\"col-lg-2 col-md-2 col-sm-3 col-xs-6\">" +
-                            "                <div class=\"card\">" +
-                            "                    <div class=\"media-wrapper\">" +
-                            "                        <img src=\""+item.picUrl+"\" alt=\"\">" +
-                            "                    </div>" +
-                            "                    <div class=\"caption\">" + item.picName + "</div>" +
-                            "                    <div class=\"card-heading text-muted\"><input type=\"checkbox\" name=\"picId\" value=\"+item.picId+\">" + item.picName + "</div>" +
-                            "                </div>" +
-                            "            </div>"
-                });
-                $(".cards").html(html)
+                pictureData = data;
             }
         });
+        return pictureData;
     }
+
+    function getPictureList(num) {
+        var html = "";
+        var data = getPicturePageData(num);
+        $.each(data.list, function (index, item) {
+            html += "<div class=\"col-lg-2 col-md-2 col-sm-3 col-xs-6\">" +
+                    "   <div class=\"card\">" +
+                    "       <div class=\"media-wrapper\">" +
+                    "           <img src=\"" + item.picUrl + "\" alt=\"\">" +
+                    "       </div>" +
+                    "       <div class=\"caption\">" + item.picName + "</div>" +
+                    "       <div class=\"card-heading text-muted\"><input type=\"checkbox\" name=\"picId\" value=\"+item.picId+\">" + item.picName + "</div>" +
+                    "   </div>" +
+                    "</div>"
+        });
+        if (data.total === 0) {
+            html = "<div class=\"none_info\">暂无符合条件的数据记录！</div>";
+        }
+        $(".cards").html(html);
+    }
+
+    //分页
+    var pageInfo = getPicturePageData(1)
+    $("#page").paging({
+        totalPage: pageInfo.pages,
+        totalSize: pageInfo.total,
+        callback: function (num) {
+            getPictureList(num);
+        }
+    })
 </script>
 </body>
 </html>

@@ -117,5 +117,6 @@
     <select id="getPictureList" resultMap="BaseResultMap">
         SELECT * FROM cs_album_picture
         WHERE album_id = #{albumId,jdbcType=INTEGER}
+        ORDER BY pic_id DESC
     </select>
 </mapper>
