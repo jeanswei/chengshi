@@ -87,7 +87,7 @@
         //添加页面操作事件
         bindEvent: function() {
             var me = this;
-            me.element.on('click', 'a', function() {
+            me.element.off().on('click', 'a', function() {
                 var num = $(this).html();
                 var id=$(this).attr("id");
                 if(id == "prePage") {

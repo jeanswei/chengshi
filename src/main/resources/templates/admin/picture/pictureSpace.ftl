@@ -140,7 +140,7 @@
         var $this = $(this);
         $('.list-navbar.active').removeClass('active');
         $this.addClass('active');
-        getPictureList();
+        getPageInfo();
     });
 
     var dlg = new $.zui.ModalTrigger({
@@ -151,22 +151,15 @@
         dlg.show({remote: '/admin/folderForm'});
     });
 
-    var pageData = {
-        pageNumber: 1,
-        pageSize: 12
-    };
 
-    getPictureList(1);
 
     function getPicturePageData(num) {
-        pageData.pageNumber = num;
-        pageData.albumId = $('.list-navbar.active').attr('data-id');
         var pictureData;
         $.ajax({
             type: "get",
             url: "/admin/getPictureList.do",
-            data: pageData,
-	        async: false,
+            data: {pageNumber: num, pageSize: 12, albumId: $('.list-navbar.active').attr('data-id')},
+            async: false,
             success: function (data) {
                 pictureData = data;
             }
@@ -192,17 +185,23 @@
             html = "<div class=\"none_info\">暂无符合条件的数据记录！</div>";
         }
         $(".cards").html(html);
+
+        return data
     }
 
+    getPageInfo();
+
     //分页
-    var pageInfo = getPicturePageData(1)
-    $("#page").paging({
-        totalPage: pageInfo.pages,
-        totalSize: pageInfo.total,
-        callback: function (num) {
-            getPictureList(num);
-        }
-    })
+    function getPageInfo() {
+        var pageInfo = getPictureList(1);
+        $("#page").paging({
+            totalPage: pageInfo.pages,
+            totalSize: pageInfo.total,
+            callback: function (num) {
+                getPictureList(num);
+            }
+        })
+    }
 </script>
 </body>
 </html>
