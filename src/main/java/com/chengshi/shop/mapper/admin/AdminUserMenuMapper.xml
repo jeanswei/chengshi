@@ -73,8 +73,8 @@
         FROM cs_admin_user_menu
         WHERE user_id = #{userId,jdbcType=SMALLINT}
     </select>
-    <delete id="deleteUserMenu">
-        DELETE * FROM cs_admin_user_menu
+    <delete id="deleteUserMenu" parameterType="java.lang.Short">
+        DELETE FROM cs_admin_user_menu
         WHERE user_id = #{userId,jdbcType=SMALLINT}
               AND menu_id = #{menuId,jdbcType=SMALLINT}
     </delete>

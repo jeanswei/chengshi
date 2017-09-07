@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chengshi.shop.dao.picture.AlbumPictureMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.picture.AlbumPicture">
+        <id column="pic_id" property="picId" jdbcType="INTEGER"/>
+        <result column="album_id" property="albumId" jdbcType="INTEGER"/>
+        <result column="pic_name" property="picName" jdbcType="VARCHAR"/>
+        <result column="pic_url" property="picUrl" jdbcType="VARCHAR"/>
+        <result column="pic_size" property="picSize" jdbcType="INTEGER"/>
+        <result column="pic_type" property="picType" jdbcType="VARCHAR"/>
+        <result column="upload_time" property="uploadTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        pic_id, album_id, pic_name, pic_url, pic_size, pic_type, upload_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_album_picture
+        where pic_id = #{picId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_album_picture
+        WHERE pic_id = #{picId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.picture.AlbumPicture">
+        INSERT INTO cs_album_picture (pic_id, album_id, pic_name,
+                                      pic_url, pic_size, pic_type,
+                                      upload_time)
+        VALUES (#{picId,jdbcType=INTEGER}, #{albumId,jdbcType=INTEGER}, #{picName,jdbcType=VARCHAR},
+                #{picUrl,jdbcType=VARCHAR}, #{picSize,jdbcType=INTEGER}, #{picType,jdbcType=VARCHAR},
+                #{uploadTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.picture.AlbumPicture">
+        insert into cs_album_picture
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="picId != null">
+                pic_id,
+            </if>
+            <if test="albumId != null">
+                album_id,
+            </if>
+            <if test="picName != null">
+                pic_name,
+            </if>
+            <if test="picUrl != null">
+                pic_url,
+            </if>
+            <if test="picSize != null">
+                pic_size,
+            </if>
+            <if test="picType != null">
+                pic_type,
+            </if>
+            <if test="uploadTime != null">
+                upload_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="picId != null">
+                #{picId,jdbcType=INTEGER},
+            </if>
+            <if test="albumId != null">
+                #{albumId,jdbcType=INTEGER},
+            </if>
+            <if test="picName != null">
+                #{picName,jdbcType=VARCHAR},
+            </if>
+            <if test="picUrl != null">
+                #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="picSize != null">
+                #{picSize,jdbcType=INTEGER},
+            </if>
+            <if test="picType != null">
+                #{picType,jdbcType=VARCHAR},
+            </if>
+            <if test="uploadTime != null">
+                #{uploadTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.picture.AlbumPicture">
+        update cs_album_picture
+        <set>
+            <if test="albumId != null">
+                album_id = #{albumId,jdbcType=INTEGER},
+            </if>
+            <if test="picName != null">
+                pic_name = #{picName,jdbcType=VARCHAR},
+            </if>
+            <if test="picUrl != null">
+                pic_url = #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="picSize != null">
+                pic_size = #{picSize,jdbcType=INTEGER},
+            </if>
+            <if test="picType != null">
+                pic_type = #{picType,jdbcType=VARCHAR},
+            </if>
+            <if test="uploadTime != null">
+                upload_time = #{uploadTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where pic_id = #{picId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.picture.AlbumPicture">
+        UPDATE cs_album_picture
+        SET album_id    = #{albumId,jdbcType=INTEGER},
+            pic_name    = #{picName,jdbcType=VARCHAR},
+            pic_url     = #{picUrl,jdbcType=VARCHAR},
+            pic_size    = #{picSize,jdbcType=INTEGER},
+            pic_type    = #{picType,jdbcType=VARCHAR},
+            upload_time = #{uploadTime,jdbcType=TIMESTAMP}
+        WHERE pic_id = #{picId,jdbcType=INTEGER}
+    </update>
+    <select id="getPictureList" resultMap="BaseResultMap">
+        SELECT * FROM cs_album_picture
+        WHERE album_id = #{albumId,jdbcType=INTEGER}
+    </select>
+</mapper>

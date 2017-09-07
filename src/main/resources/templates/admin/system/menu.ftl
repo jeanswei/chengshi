@@ -15,7 +15,7 @@
 <script>
     var dg = $('#dataGrid').bootstrapTable({
         method: "get",//请求方式
-        url: "/admin/getMenuList",//数据源
+        url: "/admin/getAllMenuList",//数据源
         uniqueId: "menuId",
         treeShowField: 'name',
         search: true,

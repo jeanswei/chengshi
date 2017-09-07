@@ -1,6 +1,7 @@
 package com.chengshi.shop.dao.admin;
 
 import com.chengshi.shop.model.admin.AdminUserMenu;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,5 +32,5 @@ public interface AdminUserMenuMapper {
      * @param userId
      * @param menuId
      */
-    void deleteUserMenu(Short userId, Short menuId);
+    void deleteUserMenu(@Param("userId") Short userId,@Param("menuId") Short menuId);
 }

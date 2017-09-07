@@ -1,0 +1,197 @@
+@charset "utf-8";
+
+/*左侧导航栏*/
+
+#img-manage {
+    position: absolute;
+}
+
+.img-manage-navBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    background: #EEEEEE;
+    color: #5f626b;
+    font-size: 16px;
+    line-height: 45px;
+    text-align: center;
+    height: 100%;
+    overflow: auto;
+}
+
+.img-manage-navBar .navbar-left {
+    background-color: #F2F2F2;
+}
+
+.img-manage-navBar ul li:last-child {
+    padding-bottom: 40px;
+}
+
+.img-manage-navBar ul li a {
+    display: block;
+    color: #13151a;
+    line-height: 50px;
+}
+
+.img-manage-navBar ul li a:hover {
+    color: dodgerblue;
+}
+
+.img-manage-navBar ul li a.active {
+    background-color: white;
+    color: black;
+}
+
+/*右侧*/
+
+.img-manage-right {
+    margin-left: 150px;
+    height: 100%;
+}
+
+.img-manage-right-box {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.img-manage-right .top {
+    background-color: #F2F2F2;
+    margin-bottom: 15px;
+}
+
+.img-manage-right .top .top-content {
+    height: 50px;
+}
+
+.img-manage-right .top .top-right {
+    float: right;
+    margin-top: -44px;
+    margin-right: 10px;
+}
+
+.img-manage-right .top .top-content form {
+    padding-left: 20px;
+    padding-top: 16px;
+}
+
+.img-manage-right .top .top-content form .layui-form-item .layui-form-checkbox[lay-skin=primary] {
+    margin-top: -3px;
+}
+
+.img-manage-right .top .top-content form span a {
+    color: #1E9FFF;
+    margin-right: 10px;
+}
+
+.img-manage-right .top .top-content form span a:hover {
+    cursor: pointer;
+    color: #000000;
+}
+
+.img-manage-right .content {
+    background-color: #ffffff;
+    position: absolute;
+    overflow: auto;
+    top: 50px;
+    bottom: 40px;
+    width: 100%;
+}
+
+img {
+    box-sizing: border-box;
+    padding: 15px;
+    width: 150px;
+    height: 150px;
+}
+
+.img-manage-right .content .img-wrapper {
+    background-color: #ffffff;
+}
+
+.img-manage-right .content .img-wrapper .img {
+    width: 150px;
+    padding: 0;
+    margin: 15px;
+    display: inline-block;
+    background-color: #f2f2f2;
+}
+
+.img-manage-right .page-footer #pg-footer {
+    padding-right: 15px;
+}
+
+.img-manage-right .content .img-wrapper .img .img-msg span a {
+    color: #1E9FFF;
+    margin-right: 10px;
+}
+
+.img-manage-right .content .img-wrapper .img .img-msg span a:hover {
+    cursor: pointer;
+}
+
+.img-manage-right .content .img-wrapper .img .img-border {
+    border: 1px solid #F2F2F2;
+    background-color: #f2f2f2;
+    border-top-color: #E2E2E2;
+    padding-left: 15px;
+    padding-bottom: 5px;
+}
+
+#img-manage .layui-laypage {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 3px;
+    font-size: 0;
+}
+
+.img-manage-right .page-footer {
+    position: absolute;
+    height: 40px;
+    width: 100%;
+    right: 0;
+    bottom: 0;
+    background-color: #f2f2f2;
+    text-align: right;
+    line-height: 40px;
+}
+
+.img-manage-right .layui-laypage > :last-child {
+    margin-right: 7px;
+}
+
+.img-manage-navBar .img-manage-navBar-btn {
+    position: absolute;
+    bottom: 0px;
+    height: 38px;
+    width: 140px;
+}
+
+.img-manage-navBar .img-manage-navBar-btn button {
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 10px;
+}
+
+.img-manage-navBar ul li {
+    height: 50px;
+    text-overflow: ellipsis;
+}
+
+#img-manage {
+    width: 100%;
+    height: 100%;
+}
+
+.layui-form-checkbox[lay-skin=primary] span {
+    width: 80px;
+}
+
+.layui-form-radio span {
+    position: absolute;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 80px;
+    white-space: nowrap;
+}
