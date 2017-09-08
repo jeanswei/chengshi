@@ -2,7 +2,7 @@
  * @author xuxinlong
  * @version 2017年09月07日
  */
-(function ($, window, document, undefined) {
+$(function () {
     //定义分页类
     function Paging(element, options) {
         this.element = element;
@@ -201,13 +201,17 @@
         var data = getPicturePageData(num);
         $.each(data.list, function (index, item) {
             html += "<div class=\"col-lg-2 col-md-2 col-sm-3 col-xs-6\">" +
-                "   <div class=\"card\">" +
-                "       <div class=\"media-wrapper\">" +
-                "           <img src=\"" + item.picUrl + "\" alt=\"\">" +
-                "       </div>" +
-                "       <div class=\"card-heading text-muted\"><input type=\"checkbox\" name=\"picId\" value=\"" + item.picId + "\">" + item.picName + "</div>" +
-                "   </div>" +
-                "</div>"
+                    "   <div class=\"card\">" +
+                    "       <div class=\"media-wrapper\">" +
+                    "           <img src=\"" + item.thumbnail + "\">" +
+                    "       </div>" +
+                    "       <div class=\"card-heading text-muted checkbox\">" +
+                    "           <label>" +
+                    "               <input type=\"checkbox\" data-src=\"" + item.picUrl + "\" name=\"picId\" value=\"" + item.picId + "\">" + item.picName +
+                    "           </lable>" +
+                    "       </div>" +
+                    "   </div>" +
+                    "</div>";
         });
         if (data.total === 0) {
             html = "<div class=\"none_info\">暂无符合条件的数据记录！</div>";
@@ -230,4 +234,13 @@
             }
         })
     }
-})(jQuery, window, document);
+
+    //选择图片回调
+    $('.choosePicture').click(function () {
+        var pictureData = $.map($("input[name=picId]:checked"), function (e) {
+            return $(e).attr("data-src");
+        });
+        //选择图片带回
+        returnPicture(pictureData);
+    });
+});

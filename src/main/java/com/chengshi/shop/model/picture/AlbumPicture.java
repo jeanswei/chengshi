@@ -17,6 +17,9 @@ public class AlbumPicture {
 
     private Date uploadTime;
 
+    /************************/
+    private String thumbnail;
+
     public Integer getPicId() {
         return picId;
     }
@@ -71,5 +74,13 @@ public class AlbumPicture {
 
     public void setUploadTime(Date uploadTime) {
         this.uploadTime = uploadTime;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }

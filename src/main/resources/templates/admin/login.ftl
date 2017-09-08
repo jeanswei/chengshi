@@ -31,7 +31,7 @@
 <script>
     if (window != top)
         top.location.href = location.href;
-    $(".doLogin").click(function () {
+    $(".doLogin").on("click", function () {
         $.ajax({
             type: 'post',
             url: '/admin/doLogin',

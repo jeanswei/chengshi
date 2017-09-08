@@ -1,0 +1,40 @@
+.panel-group {
+    margin: 10px;
+}
+
+.img-box {
+    overflow: auto;
+    min-height: 120px;
+    background-size: 120px 120px;
+    background-image: url("/image/default_img.gif");
+    background-repeat: no-repeat;
+}
+
+.delete-file {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    right: 5px;
+    top: 5px;
+    line-height: 18px;
+    background-color: #ddd;
+    cursor: pointer;
+    text-align: center;
+}
+
+.file-thumb {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    float: left;
+    position: relative;
+}
+
+.file-thumb img {
+    width: 120px !important;
+    height: 120px !important;
+}
+
+.footer{
+    text-align: center;
+    margin: 20px;
+}

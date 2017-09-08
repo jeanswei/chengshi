@@ -5,6 +5,7 @@ import com.chengshi.shop.service.goods.GoodsService;
 import com.chengshi.shop.util.MessageUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,7 +24,8 @@ import java.util.List;
 public class GoodsController {
     @Resource
     private GoodsService goodsService;
-
+    @Value("${img_url}")
+    private String img_url;
 
     /**
      * 获取商品列表
@@ -52,6 +54,7 @@ public class GoodsController {
 
     /**
      * 商品编辑页面
+     *
      * @return
      */
     @GetMapping(value = "goodsForm")
@@ -61,12 +64,14 @@ public class GoodsController {
         if (goodsId != null) {
             goods = goodsService.getGoodsByGoodsId(goodsId);
         }
+        mav.addObject("img_url", img_url);
         mav.addObject("goods", goods);
         return mav;
     }
 
     /**
      * 逻辑删除商品
+     *
      * @param goodsId
      * @return
      */
@@ -75,7 +80,7 @@ public class GoodsController {
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
             goodsService.deleteGoods(goodsId);
-        } catch (Exception e){
+        } catch (Exception e) {
             retMap = MessageUtils.error();
         }
         return retMap;

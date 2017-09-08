@@ -46,7 +46,7 @@
         }
     });
 
-    $('.save').click(function () {
+    $('.save').on("click", function () {
         if ($("#infoFrom").valid()) {
             $.ajax({
                 type: 'POST',

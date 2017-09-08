@@ -107,7 +107,7 @@ public class PictureController {
         PageHelper.startPage(pageNumber, pageSize);
         List<AlbumPicture> pictureList = pictureService.getPictureList(albumId);
         for (AlbumPicture picture : pictureList) {
-            picture.setPicUrl(IMAGEURL + picture.getPicUrl() + SMALLIMG);
+            picture.setThumbnail(IMAGEURL + picture.getPicUrl() + SMALLIMG);
         }
         return new PageInfo<>(pictureList);
     }

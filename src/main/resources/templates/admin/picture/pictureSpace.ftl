@@ -33,7 +33,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary save">确认</button>
+        <button type="button" class="btn btn-primary choosePicture">确认</button>
     </div>
 </div>
-<script type="text/javascript" src="/js/page/page.js"></script>
+<script type="text/javascript" src="/js/page/pictureSpace.js"></script>

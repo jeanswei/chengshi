@@ -74,7 +74,7 @@
         getMenuTree(${userId});
     });
 
-    $('.save').click(function () {
+    $('.save').on("click", function () {
         //获取选择的菜单
         var nodes = ztree.getCheckedNodes(true);
         var menuIdList = new Array();
