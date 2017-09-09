@@ -85,4 +85,20 @@ public class GoodsController {
         }
         return retMap;
     }
+
+    /**
+     * 保存商品信息
+     * @param goods
+     * @return
+     */
+    @PostMapping(value = "saveGoods")
+    public HashMap<String, Object> saveGoods(@ModelAttribute Goods goods) {
+        HashMap<String, Object> retMap = MessageUtils.success();
+        try {
+            goodsService.saveGoods(goods);
+        } catch (Exception e) {
+            retMap = MessageUtils.error();
+        }
+        return retMap;
+    }
 }

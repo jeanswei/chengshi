@@ -2,22 +2,22 @@
 <link href="/css/page/goods.css" rel="stylesheet">
 <link href="/css/page/pictureSpace.css" rel="stylesheet">
 <body>
-<div class="panel-group">
-    <form id="infoFrom" class="form-horizontal" data-toggle="validator">
-        <input type="hidden" name="goodsId" value="${goods.goodsId!}">
+<form id="infoFrom" class="form-horizontal" data-toggle="validator">
+    <input type="hidden" name="goodsId" value="${goods.goodsId!}">
+    <div class="panel-group">
         <div class="panel">
             <div class="panel-heading">基本信息</div>
             <div class="panel-body">
                 <div class="form-group">
                     <label class="col-md-2 control-label required">商品名称：</label>
                     <div class="col-md-4">
-                        <input type="text" name="goodsName" maxlength="30" value="${goods.goodsName!}" placeholder="请输入商品名称，不超过30个字符" class="form-control">
+                        <input type="text" name="goodsName" required maxlength="60" value="${goods.goodsName!}" placeholder="请输入商品名称，不超过60个字符" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">商品促销语：</label>
                     <div class="col-md-4">
-                        <input type="text" name="goodsBrief" maxlength="30" value="${goods.goodsBrief!}" placeholder="请输入商品促销语，不超过30个字符" class="form-control">
+                        <input type="text" name="goodsBrief" maxlength="60" value="${goods.goodsBrief!}" placeholder="请输入商品促销语，不超过60个字符" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -30,7 +30,7 @@
                     <label class="col-md-2 control-label required">市场价：</label>
                     <div class="col-md-2">
                         <div class="input-group">
-                            <input type="number" required money name="marketPrice" value="${goods.marketPrice!}" placeholder="请输入市场价" class="form-control">
+                            <input type="number" required money="true" name="marketPrice" value="${goods.marketPrice!}" placeholder="请输入市场价" class="form-control">
                             <span class="input-group-addon">元</span>
                         </div>
                     </div>
@@ -38,8 +38,8 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label required">销售价：</label>
                     <div class="col-md-2">
-                        <div class=" input-group">
-                            <input type="number" required money name="shopPrice" value="${goods.shopPrice!}" placeholder="请输入销售价" class="form-control">
+                        <div class="input-group">
+                            <input type="number" required money name="price" value="${goods.price!}" placeholder="请输入销售价" class="form-control">
                             <span class="input-group-addon">元</span>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label required">商品描述：</label>
                     <div class="col-md-10">
-                        <textarea id="content" required name="content" class="form-control kindeditor" style="height:500px;">${goods.goodsDesc!}</textarea>
+                        <textarea required name="goodsDesc" class="form-control kindeditor" style="height:500px;">${goods.goodsDesc!}</textarea>
                     </div>
                 </div>
             </div>
@@ -86,44 +86,50 @@
                     <label class="col-md-2 control-label required">是否上架：</label>
                     <div class="col-md-6">
                         <label class="radio-inline">
-                            <input type="radio" name="isOnSale"> 立即上架
+                            <input type="radio" name="isOnSale" value="1" required <#if goods.isOnSale?? && goods.isOnSale>checked</#if>>立即上架
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="isOnSale"> 暂不上架
+                            <input type="radio" name="isOnSale" value="0" required <#if goods.isOnSale?? && !goods.isOnSale>checked</#if>>暂不上架
                         </label>
                     </div>
                 </div>
             </div>
         </div>
-</div>
+    </div>
+    <div class="footer">
+        <button type="submit" class="btn btn-primary">保存</button>
+    </div>
 </form>
-</div>
-<div class="footer">
-    <button type="button" class="btn btn-primary save">保存</button>
-</div>
 <#include "/admin/common/footer.ftl">
-<script src="/lib/kindeditor/kindeditor.min.js"></script>
+<script type="text/javascript" src="/lib/kindeditor/kindeditor.min.js"></script>
 <script type="text/javascript" src="/lib/uploader/plupload.full.min.js"></script>
 <script type="text/javascript" src="/lib/uploader/oss-fileupload.js"></script>
-<script>
+<script type="text/javascript">
     KindEditor.create('textarea.kindeditor', {
         basePath: '/lib/kindeditor/',
         allowFileManager: true,
         bodyClass: 'article-content'
     });
 
-    $("#infoFrom").validate();
-
-    $('.save').on("click", function () {
-        if ($("#infoFrom").valid()) {
-            $.ajax({
+    $("#infoFrom").validate({
+        errorPlacement: function (error, element) {
+            if (element.parent(".input-group").length === 0) {
+                error.appendTo(element.parent());
+            } else {
+                error.appendTo(element.parent(".input-group").parent());
+            }
+        },
+        submitHandler: function (form) {
+            $(form).ajaxSubmit({
                 type: 'POST',
-                url: '/admin/saveUser',
-                data: $("#infoFrom").serialize(),
+                url: '/admin/saveGoods',
                 success: function (data) {
-                    successTip(data, dg, dlg);
+                    successTip(data);
+                    if (data.errorCode == 'y') {
+                        setTimeout("location.href = '/admin/goodsList'", 1000);
+                    }
                 }
-            })
+            });
         }
     });
 

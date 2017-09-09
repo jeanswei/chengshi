@@ -6,6 +6,7 @@ import com.chengshi.shop.service.goods.GoodsService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,5 +50,21 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public void deleteGoods(Integer goodsId) {
         goodsMapper.deleteByGoodsId(goodsId);
+    }
+
+    /**
+     * 保存商品信息
+     *
+     * @param goods
+     */
+    @Override
+    public void saveGoods(Goods goods) {
+        if (goods.getGoodsId()!=null){
+            goods.setLastUpdate(new Date());
+            goodsMapper.updateByPrimaryKeySelective(goods);
+        } else {
+            goods.setCreateTime(new Date());
+            goodsMapper.insertSelective(goods);
+        }
     }
 }

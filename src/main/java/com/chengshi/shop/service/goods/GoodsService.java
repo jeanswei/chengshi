@@ -31,4 +31,10 @@ public interface GoodsService {
      * @param goodsId
      */
     void deleteGoods(Integer goodsId);
+
+    /**
+     * 保存商品
+     * @param goods
+     */
+    void saveGoods(Goods goods);
 }

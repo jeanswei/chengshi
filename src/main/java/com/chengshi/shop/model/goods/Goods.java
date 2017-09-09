@@ -16,13 +16,11 @@ public class Goods {
 
     private Short brandId;
 
-    private Integer store;
-
     private BigDecimal marketPrice;
 
-    private BigDecimal shopPrice;
+    private BigDecimal price;
 
-    private BigDecimal promotePrice;
+    private Integer store;
 
     private String keywords;
 
@@ -32,21 +30,17 @@ public class Goods {
 
     private Boolean isOnSale;
 
-    private Boolean isShipping;
+    private Date createTime;
 
-    private Date addTime;
-
-    private Boolean isDelete;
-
-    private Boolean isBest;
+    private Boolean isRecommend;
 
     private Boolean isNew;
 
     private Boolean isHot;
 
-    private Boolean isPromote;
-
     private Date lastUpdate;
+
+    private Boolean isDelete;
 
     private String goodsDesc;
 
@@ -98,14 +92,6 @@ public class Goods {
         this.brandId = brandId;
     }
 
-    public Integer getStore() {
-        return store;
-    }
-
-    public void setStore(Integer store) {
-        this.store = store;
-    }
-
     public BigDecimal getMarketPrice() {
         return marketPrice;
     }
@@ -114,20 +100,20 @@ public class Goods {
         this.marketPrice = marketPrice;
     }
 
-    public BigDecimal getShopPrice() {
-        return shopPrice;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setShopPrice(BigDecimal shopPrice) {
-        this.shopPrice = shopPrice;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
-    public BigDecimal getPromotePrice() {
-        return promotePrice;
+    public Integer getStore() {
+        return store;
     }
 
-    public void setPromotePrice(BigDecimal promotePrice) {
-        this.promotePrice = promotePrice;
+    public void setStore(Integer store) {
+        this.store = store;
     }
 
     public String getKeywords() {
@@ -162,36 +148,20 @@ public class Goods {
         this.isOnSale = isOnSale;
     }
 
-    public Boolean getIsShipping() {
-        return isShipping;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setIsShipping(Boolean isShipping) {
-        this.isShipping = isShipping;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public Date getAddTime() {
-        return addTime;
+    public Boolean getIsRecommend() {
+        return isRecommend;
     }
 
-    public void setAddTime(Date addTime) {
-        this.addTime = addTime;
-    }
-
-    public Boolean getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(Boolean isDelete) {
-        this.isDelete = isDelete;
-    }
-
-    public Boolean getIsBest() {
-        return isBest;
-    }
-
-    public void setIsBest(Boolean isBest) {
-        this.isBest = isBest;
+    public void setIsRecommend(Boolean isRecommend) {
+        this.isRecommend = isRecommend;
     }
 
     public Boolean getIsNew() {
@@ -210,20 +180,20 @@ public class Goods {
         this.isHot = isHot;
     }
 
-    public Boolean getIsPromote() {
-        return isPromote;
-    }
-
-    public void setIsPromote(Boolean isPromote) {
-        this.isPromote = isPromote;
-    }
-
     public Date getLastUpdate() {
         return lastUpdate;
     }
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public Boolean getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Boolean isDelete) {
+        this.isDelete = isDelete;
     }
 
     public String getGoodsDesc() {
