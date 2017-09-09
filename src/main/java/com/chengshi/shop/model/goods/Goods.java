@@ -2,6 +2,7 @@ package com.chengshi.shop.model.goods;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class Goods {
     private Integer goodsId;
@@ -43,6 +44,11 @@ public class Goods {
     private Boolean isDelete;
 
     private String goodsDesc;
+
+    /***********************/
+    private List<GoodsImage> imageList;
+
+    private String thumbnail;
 
     public Integer getGoodsId() {
         return goodsId;
@@ -202,5 +208,29 @@ public class Goods {
 
     public void setGoodsDesc(String goodsDesc) {
         this.goodsDesc = goodsDesc == null ? null : goodsDesc.trim();
+    }
+
+    public Boolean getOnSale() {
+        return isOnSale;
+    }
+
+    public void setOnSale(Boolean onSale) {
+        isOnSale = onSale;
+    }
+
+    public List<GoodsImage> getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(List<GoodsImage> imageList) {
+        this.imageList = imageList;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }

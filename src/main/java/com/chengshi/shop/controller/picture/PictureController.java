@@ -28,6 +28,7 @@ import java.util.List;
 public class PictureController {
     @Resource
     private PictureService pictureService;
+
     @Value("${img_url}")
     private String IMAGEURL;
     @Value("${SMALL}")

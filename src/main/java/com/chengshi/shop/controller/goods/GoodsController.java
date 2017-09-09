@@ -1,6 +1,8 @@
 package com.chengshi.shop.controller.goods;
 
 import com.chengshi.shop.model.goods.Goods;
+import com.chengshi.shop.model.goods.GoodsImage;
+import com.chengshi.shop.service.goods.GoodsImageService;
 import com.chengshi.shop.service.goods.GoodsService;
 import com.chengshi.shop.util.MessageUtils;
 import com.github.pagehelper.PageHelper;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,8 +27,13 @@ import java.util.List;
 public class GoodsController {
     @Resource
     private GoodsService goodsService;
+    @Resource
+    private GoodsImageService goodsImageService;
+
     @Value("${img_url}")
     private String img_url;
+    @Value("${SMALL}")
+    private String SMALLIMG;
 
     /**
      * 获取商品列表
@@ -39,6 +47,9 @@ public class GoodsController {
         PageHelper.startPage(pageNumber, pageSize);
         HashMap<String, Object> inMap = new HashMap<>();
         List<Goods> goodsList = goodsService.getGoodsList(inMap);
+        for (Goods goods : goodsList){
+            goods.setThumbnail(img_url + goods.getGoodsImg() + SMALLIMG);
+        }
         return new PageInfo<>(goodsList);
     }
 
@@ -63,6 +74,11 @@ public class GoodsController {
         Goods goods = new Goods();
         if (goodsId != null) {
             goods = goodsService.getGoodsByGoodsId(goodsId);
+            List<GoodsImage> imageList = goodsImageService.getImageList(goodsId);
+            for (GoodsImage image : imageList){
+                image.setThumbnail(img_url + image.getImgUrl() + SMALLIMG);
+            }
+            goods.setImageList(imageList);
         }
         mav.addObject("img_url", img_url);
         mav.addObject("goods", goods);
@@ -95,6 +111,9 @@ public class GoodsController {
     public HashMap<String, Object> saveGoods(@ModelAttribute Goods goods) {
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
+            if (goods.getImageList().isEmpty()){
+                return MessageUtils.error("请上传商品图片");
+            }
             goodsService.saveGoods(goods);
         } catch (Exception e) {
             retMap = MessageUtils.error();

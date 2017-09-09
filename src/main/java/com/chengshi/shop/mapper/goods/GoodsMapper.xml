@@ -45,7 +45,7 @@
         DELETE FROM cs_goods
         WHERE goods_id = #{goodsId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.chengshi.shop.model.goods.Goods">
+    <insert id="insert" parameterType="com.chengshi.shop.model.goods.Goods" keyProperty="goodsId" useGeneratedKeys="true">
         INSERT INTO cs_goods (goods_id, cat_id, goods_sn,
                               goods_name, click_count, brand_id,
                               market_price, price, store,
@@ -61,7 +61,7 @@
                 #{isNew,jdbcType=BIT}, #{isHot,jdbcType=BIT}, #{lastUpdate,jdbcType=TIMESTAMP},
                 #{isDelete,jdbcType=BIT}, #{goodsDesc,jdbcType=LONGVARCHAR})
     </insert>
-    <insert id="insertSelective" parameterType="com.chengshi.shop.model.goods.Goods">
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.goods.Goods" keyProperty="goodsId" useGeneratedKeys="true">
         insert into cs_goods
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="goodsId != null">

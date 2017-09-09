@@ -58,7 +58,18 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label required">商品图片：</label>
                     <div class="col-md-10">
-                        <div class="img-box"></div>
+                        <div class="img-box">
+                            <#if goods.imageList??>
+                                <#list goods.imageList as image>
+                                    <div class="file-thumb">
+                                        <img src="${image.thumbnail}" class="img-thumbnail">
+                                        <input type="hidden" name="imageList[${image_index}].imgUrl" value="${image.imgUrl}">
+                                        <input type="hidden" name="imageList[${image_index}].imgId" value="${image.imgId}">
+                                        <div onclick="deleteFile(this)" class="delete-file"><i class="icon icon-trash text-danger"></i></div>
+                                    </div>
+                                </#list>
+                            </#if>
+                        </div>
                         <div class="clearfix"></div>
                         <div class="alert alert-warning">提示：上传商品图片，<span class="text-red">第一张图片将作为商品主图</span>
                             ,支持jpg、gif、png格式上传或直接从图片空间中选择，建议使用尺寸800x800像素以上、大小不超过1M的正方形图片。
@@ -143,12 +154,13 @@
     });
 
     function returnPicture(pictureData) {
+        var len = $(".img-box .file-thumb").length;
         var img_url = "${img_url!}";
         $.each(pictureData, function (index, item) {
             $(".img-box").append(
                     "<div class=\"file-thumb\">" +
                     "<img src=\"" + img_url + item + "\" class=\"img-thumbnail\">" +
-                    "<input type=\"hidden\" name=\"goodsImage\" value=\"" + item + "\">" +
+                    "<input type=\"hidden\" name=\"imageList[" + (len + index) + "].imgUrl\" value=\"" + item + "\">" +
                     "<div onclick=\"deleteFile(this)\" class=\"delete-file\"><i class=\"icon icon-trash text-danger\"></i></div>" +
                     "</div>");
         });

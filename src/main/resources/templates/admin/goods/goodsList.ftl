@@ -29,7 +29,7 @@
             },
             {
                 title: "商品图片",
-                field: "goodsImg",
+                field: "thumbnail",
                 formatter: function (val) {
                     return "<img data-toggle=\"lightbox\" class=\"img-thumbnail\"  width=\"60px\" height=\"60px\" src=\""+val+"\">"
                 }
@@ -44,7 +44,7 @@
             },
             {
                 title: "销售价",
-                field: "shopPrice"
+                field: "price"
             },
             {
                 title: "库存",
@@ -52,7 +52,7 @@
             },
             {
                 title: "创建时间",
-                field: "addTime"
+                field: "createTime"
             },
             {
                 title: "状态",
