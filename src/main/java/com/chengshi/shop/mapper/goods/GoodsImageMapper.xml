@@ -88,6 +88,6 @@
     <delete id="deleteNotInImgIds">
         DELETE FROM cs_goods_image
         WHERE goods_id = #{goodsId,jdbcType=INTEGER}
-        and img_id NOT IN (#{imgIds})
+        and img_id NOT IN (${imgIds})
     </delete>
 </mapper>

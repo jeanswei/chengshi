@@ -89,6 +89,6 @@ public class GoodsServiceImpl implements GoodsService {
             imgIds.append(",").append(image.getImgId());
         }
 
-        goodsImageService.deleteNotInImgIds(goods.getGoodsId(), imgIds.length() > 0 ? imgIds.substring(1) : imgIds.toString());
+        goodsImageService.deleteNotInImgIds(goods.getGoodsId(), imgIds.length() > 0 ? imgIds.substring(1) : "0");
     }
 }

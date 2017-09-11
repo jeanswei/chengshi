@@ -155,12 +155,11 @@
 
     function returnPicture(pictureData) {
         var len = $(".img-box .file-thumb").length;
-        var img_url = "${img_url!}";
         $.each(pictureData, function (index, item) {
             $(".img-box").append(
                     "<div class=\"file-thumb\">" +
-                    "<img src=\"" + img_url + item + "\" class=\"img-thumbnail\">" +
-                    "<input type=\"hidden\" name=\"imageList[" + (len + index) + "].imgUrl\" value=\"" + item + "\">" +
+                    "<img src=\"" + item.thumbnail + "\" class=\"img-thumbnail\">" +
+                    "<input type=\"hidden\" name=\"imageList[" + (len + index) + "].imgUrl\" value=\"" + item.imgUrl + "\">" +
                     "<div onclick=\"deleteFile(this)\" class=\"delete-file\"><i class=\"icon icon-trash text-danger\"></i></div>" +
                     "</div>");
         });

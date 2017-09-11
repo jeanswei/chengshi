@@ -132,7 +132,7 @@ $(function () {
     loadUpload();
 
     function loadUpload() {
-        var imagesParam = {type: 0, title: '图片', extensions: 'jpg,jpeg,jfif,gif,png,bmp,webp', fileId: 'images', browse_button: 'selectfiles', multi_selection: true, keyss: [], fileData: []}
+        var imagesParam = {title: '图片', extensions: 'jpg,jpeg,jfif,gif,png,bmp,webp', fileId: 'images', browse_button: 'selectfiles', multi_selection: false, keyss: [], fileData: []}
         var filesAddedFunc = function (up, files) {
             plupload.each(files, function (file) {
                 var ext = file.name.substring(file.name.lastIndexOf(".") + 1);
@@ -149,12 +149,12 @@ $(function () {
 
                 var reader = new FileReader();
                 reader.readAsDataURL(file.getNative());
-                reader.onload = function (e) {
-                    set_upload_param(uploader, '', false);
+                reader.onload = function () {
+                    set_upload_param(uploader, file);
                 }
             });
         };
-        var uploadCompleteFunc = function (up, files) {
+        var uploadCompleteFunc = function (up) {
             savePicture(up.getOption("fileData"));
         };
         uploader = ossUploader(imagesParam, filesAddedFunc, uploadCompleteFunc);
@@ -169,7 +169,7 @@ $(function () {
             url: "/admin/savePicture.do",
             type: "post",
             data: data,
-            success: function (data) {
+            success: function () {
                 getPictureList(1);
             }
         });
@@ -238,7 +238,7 @@ $(function () {
     //选择图片回调
     $('.choosePicture').click(function () {
         var pictureData = $.map($("input[name=picId]:checked"), function (e) {
-            return $(e).attr("data-src");
+            return {imgUrl: $(e).attr("data-src"), thumbnail: $(e).closest(".card").find("img").attr("src")};
         });
         //选择图片带回
         returnPicture(pictureData);
