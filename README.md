@@ -7,8 +7,7 @@
 3. 开源的前端html5跨屏框架zui，官网地址http://zui.sexy
 4. 数据库mysql，shiro安全登录框架，redis缓存session等信息，便于服务器集群，图片数据使用阿里提供的oss服务
 5. maven相关依赖
-`
-        <!--druid-->
+       `<!--druid-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
