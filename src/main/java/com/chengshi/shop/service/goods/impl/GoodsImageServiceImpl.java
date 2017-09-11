@@ -42,4 +42,15 @@ public class GoodsImageServiceImpl implements GoodsImageService {
     public List<GoodsImage> getImageList(Integer goodsId) {
         return goodsImageMapper.getList(goodsId);
     }
+
+    /**
+     * 删除多余的商品图片
+     *
+     * @param goodsId
+     * @param imgIds
+     */
+    @Override
+    public void deleteNotInImgIds(Integer goodsId, String imgIds) {
+        goodsImageMapper.deleteNotInImgIds(goodsId, imgIds);
+    }
 }

@@ -20,13 +20,13 @@
         DELETE FROM cs_goods_image
         WHERE img_id = #{imgId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.chengshi.shop.model.goods.GoodsImage">
+    <insert id="insert" parameterType="com.chengshi.shop.model.goods.GoodsImage"  useGeneratedKeys="true" keyProperty="imgId">
         INSERT INTO cs_goods_image (img_id, goods_id, img_url,
                                     sort)
         VALUES (#{imgId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{imgUrl,jdbcType=VARCHAR},
                 #{sort,jdbcType=INTEGER})
     </insert>
-    <insert id="insertSelective" parameterType="com.chengshi.shop.model.goods.GoodsImage">
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.goods.GoodsImage" useGeneratedKeys="true" keyProperty="imgId">
         insert into cs_goods_image
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="imgId != null">
@@ -85,4 +85,9 @@
         WHERE goods_id = #{goodsId,jdbcType=INTEGER}
         ORDER BY sort
     </select>
+    <delete id="deleteNotInImgIds">
+        DELETE FROM cs_goods_image
+        WHERE goods_id = #{goodsId,jdbcType=INTEGER}
+        and img_id NOT IN (#{imgIds})
+    </delete>
 </mapper>

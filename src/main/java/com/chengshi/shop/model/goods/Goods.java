@@ -1,6 +1,7 @@
 package com.chengshi.shop.model.goods;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class Goods {
     private String goodsDesc;
 
     /***********************/
-    private List<GoodsImage> imageList;
+    private List<GoodsImage> imageList = new ArrayList<>();
 
     private String thumbnail;
 

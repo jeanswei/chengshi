@@ -1,6 +1,7 @@
 package com.chengshi.shop.service.goods;
 
 import com.chengshi.shop.model.goods.GoodsImage;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,4 +24,11 @@ public interface GoodsImageService {
      * @return
      */
     List<GoodsImage> getImageList(Integer goodsId);
+
+    /**
+     * 删除多余的商品图片
+     * @param goodsId
+     * @param imgIds
+     */
+    void deleteNotInImgIds(Integer goodsId, String imgIds);
 }

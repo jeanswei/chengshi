@@ -1,11 +1,11 @@
 package com.chengshi.shop.service.goods.impl;
 
-import com.chengshi.shop.dao.goods.GoodsImageMapper;
 import com.chengshi.shop.dao.goods.GoodsMapper;
 import com.chengshi.shop.model.goods.Goods;
 import com.chengshi.shop.model.goods.GoodsImage;
 import com.chengshi.shop.service.goods.GoodsImageService;
 import com.chengshi.shop.service.goods.GoodsService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,7 +67,12 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     @Transactional
     public void saveGoods(Goods goods) {
-        goods.setGoodsImg(goods.getImageList().get(0).getImgUrl());
+        if (!goods.getImageList().isEmpty()){
+            goods.setGoodsImg(goods.getImageList().get(0).getImgUrl());
+        } else {
+            goods.setGoodsImg("");
+        }
+
         if (goods.getGoodsId() != null) {
             goods.setLastUpdate(new Date());
             goodsMapper.updateByPrimaryKeySelective(goods);
@@ -75,10 +80,15 @@ public class GoodsServiceImpl implements GoodsService {
             goods.setCreateTime(new Date());
             goodsMapper.insertSelective(goods);
         }
+
+        StringBuilder imgIds = new StringBuilder();
         //保存商品图片
         for (GoodsImage image : goods.getImageList()) {
             image.setGoodsId(goods.getGoodsId());
             goodsImageService.saveGoodsImage(image);
+            imgIds.append(",").append(image.getImgId());
         }
+
+        goodsImageService.deleteNotInImgIds(goods.getGoodsId(), imgIds.length() > 0 ? imgIds.substring(1) : imgIds.toString());
     }
 }
