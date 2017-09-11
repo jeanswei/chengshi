@@ -1,12 +1,10 @@
 package com.chengshi.shop.dao.goods;
 
 import com.chengshi.shop.model.goods.Goods;
-import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
 
-@Repository
 public interface GoodsMapper {
     int deleteByPrimaryKey(Integer goodsId);
 

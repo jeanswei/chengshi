@@ -16,7 +16,9 @@ public class Goods {
 
     private Integer clickCount;
 
-    private Short brandId;
+    private Integer evaluateCount;
+
+    private Integer saleCount;
 
     private BigDecimal marketPrice;
 
@@ -91,12 +93,20 @@ public class Goods {
         this.clickCount = clickCount;
     }
 
-    public Short getBrandId() {
-        return brandId;
+    public Integer getEvaluateCount() {
+        return evaluateCount;
     }
 
-    public void setBrandId(Short brandId) {
-        this.brandId = brandId;
+    public void setEvaluateCount(Integer evaluateCount) {
+        this.evaluateCount = evaluateCount;
+    }
+
+    public Integer getSaleCount() {
+        return saleCount;
+    }
+
+    public void setSaleCount(Integer saleCount) {
+        this.saleCount = saleCount;
     }
 
     public BigDecimal getMarketPrice() {
@@ -209,14 +219,6 @@ public class Goods {
 
     public void setGoodsDesc(String goodsDesc) {
         this.goodsDesc = goodsDesc == null ? null : goodsDesc.trim();
-    }
-
-    public Boolean getOnSale() {
-        return isOnSale;
-    }
-
-    public void setOnSale(Boolean onSale) {
-        isOnSale = onSale;
     }
 
     public List<GoodsImage> getImageList() {

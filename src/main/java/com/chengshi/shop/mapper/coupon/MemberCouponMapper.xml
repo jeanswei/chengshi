@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chengshi.shop.dao.coupon.MemberCouponMapper" >
+  <resultMap id="BaseResultMap" type="com.chengshi.shop.model.coupon.MemberCoupon" >
+    <id column="member_coupon_id" property="memberCouponId" jdbcType="INTEGER" />
+    <result column="coupon_id" property="couponId" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="coupon_name" property="couponName" jdbcType="VARCHAR" />
+    <result column="coupon_type" property="couponType" jdbcType="BIT" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+    <result column="need_money" property="needMoney" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="use_start" property="useStart" jdbcType="TIMESTAMP" />
+    <result column="use_end" property="useEnd" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="get_time" property="getTime" jdbcType="TIMESTAMP" />
+    <result column="get_type" property="getType" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    member_coupon_id, coupon_id, member_id, coupon_name, coupon_type, money, need_money, 
+    status, use_start, use_end, content, get_time, get_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cs_member_coupon
+    where member_coupon_id = #{memberCouponId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cs_member_coupon
+    where member_coupon_id = #{memberCouponId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chengshi.shop.model.coupon.MemberCoupon" >
+    insert into cs_member_coupon (member_coupon_id, coupon_id, member_id, 
+      coupon_name, coupon_type, money, 
+      need_money, status, use_start, 
+      use_end, content, get_time, 
+      get_type)
+    values (#{memberCouponId,jdbcType=INTEGER}, #{couponId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, 
+      #{couponName,jdbcType=VARCHAR}, #{couponType,jdbcType=BIT}, #{money,jdbcType=DECIMAL}, 
+      #{needMoney,jdbcType=DECIMAL}, #{status,jdbcType=BIT}, #{useStart,jdbcType=TIMESTAMP}, 
+      #{useEnd,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}, #{getTime,jdbcType=TIMESTAMP}, 
+      #{getType,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengshi.shop.model.coupon.MemberCoupon" >
+    insert into cs_member_coupon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="memberCouponId != null" >
+        member_coupon_id,
+      </if>
+      <if test="couponId != null" >
+        coupon_id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="couponName != null" >
+        coupon_name,
+      </if>
+      <if test="couponType != null" >
+        coupon_type,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="needMoney != null" >
+        need_money,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="useStart != null" >
+        use_start,
+      </if>
+      <if test="useEnd != null" >
+        use_end,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="getTime != null" >
+        get_time,
+      </if>
+      <if test="getType != null" >
+        get_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="memberCouponId != null" >
+        #{memberCouponId,jdbcType=INTEGER},
+      </if>
+      <if test="couponId != null" >
+        #{couponId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="couponName != null" >
+        #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponType != null" >
+        #{couponType,jdbcType=BIT},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="needMoney != null" >
+        #{needMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="useStart != null" >
+        #{useStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useEnd != null" >
+        #{useEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="getTime != null" >
+        #{getTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="getType != null" >
+        #{getType,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.coupon.MemberCoupon" >
+    update cs_member_coupon
+    <set >
+      <if test="couponId != null" >
+        coupon_id = #{couponId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="couponName != null" >
+        coupon_name = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponType != null" >
+        coupon_type = #{couponType,jdbcType=BIT},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="needMoney != null" >
+        need_money = #{needMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="useStart != null" >
+        use_start = #{useStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useEnd != null" >
+        use_end = #{useEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="getTime != null" >
+        get_time = #{getTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="getType != null" >
+        get_type = #{getType,jdbcType=BIT},
+      </if>
+    </set>
+    where member_coupon_id = #{memberCouponId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.coupon.MemberCoupon" >
+    update cs_member_coupon
+    set coupon_id = #{couponId,jdbcType=INTEGER},
+      member_id = #{memberId,jdbcType=INTEGER},
+      coupon_name = #{couponName,jdbcType=VARCHAR},
+      coupon_type = #{couponType,jdbcType=BIT},
+      money = #{money,jdbcType=DECIMAL},
+      need_money = #{needMoney,jdbcType=DECIMAL},
+      status = #{status,jdbcType=BIT},
+      use_start = #{useStart,jdbcType=TIMESTAMP},
+      use_end = #{useEnd,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=VARCHAR},
+      get_time = #{getTime,jdbcType=TIMESTAMP},
+      get_type = #{getType,jdbcType=BIT}
+    where member_coupon_id = #{memberCouponId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chengshi.shop.dao.coupon.CouponMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.coupon.Coupon">
+        <id column="coupon_id" property="couponId" jdbcType="INTEGER"/>
+        <result column="coupon_name" property="couponName" jdbcType="VARCHAR"/>
+        <result column="coupon_type" property="couponType" jdbcType="BIT"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+        <result column="need_money" property="needMoney" jdbcType="DECIMAL"/>
+        <result column="total_count" property="totalCount" jdbcType="SMALLINT"/>
+        <result column="get_count" property="getCount" jdbcType="SMALLINT"/>
+        <result column="use_start" property="useStart" jdbcType="TIMESTAMP"/>
+        <result column="use_end" property="useEnd" jdbcType="TIMESTAMP"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="limit_grade" property="limitGrade" jdbcType="INTEGER"/>
+        <result column="limit_num" property="limitNum" jdbcType="SMALLINT"/>
+        <result column="is_show" property="isShow" jdbcType="BIT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        coupon_id, coupon_name, coupon_type, money, need_money, total_count, get_count, use_start,
+        use_end, content, limit_grade, limit_num, is_show, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_coupon
+        where coupon_id = #{couponId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_coupon
+        WHERE coupon_id = #{couponId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.coupon.Coupon">
+        INSERT INTO cs_coupon (coupon_id, coupon_name, coupon_type,
+                               money, need_money, total_count,
+                               get_count, use_start, use_end,
+                               content, limit_grade, limit_num,
+                               is_show, create_time)
+        VALUES (#{couponId,jdbcType=INTEGER}, #{couponName,jdbcType=VARCHAR}, #{couponType,jdbcType=BIT},
+                                              #{money,jdbcType=DECIMAL}, #{needMoney,jdbcType=DECIMAL}, #{totalCount,jdbcType=SMALLINT},
+                                              #{getCount,jdbcType=SMALLINT}, #{useStart,jdbcType=TIMESTAMP}, #{useEnd,jdbcType=TIMESTAMP},
+                                              #{content,jdbcType=VARCHAR}, #{limitGrade,jdbcType=INTEGER}, #{limitNum,jdbcType=SMALLINT},
+                #{isShow,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.coupon.Coupon">
+        insert into cs_coupon
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="couponId != null">
+                coupon_id,
+            </if>
+            <if test="couponName != null">
+                coupon_name,
+            </if>
+            <if test="couponType != null">
+                coupon_type,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="needMoney != null">
+                need_money,
+            </if>
+            <if test="totalCount != null">
+                total_count,
+            </if>
+            <if test="getCount != null">
+                get_count,
+            </if>
+            <if test="useStart != null">
+                use_start,
+            </if>
+            <if test="useEnd != null">
+                use_end,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="limitGrade != null">
+                limit_grade,
+            </if>
+            <if test="limitNum != null">
+                limit_num,
+            </if>
+            <if test="isShow != null">
+                is_show,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="couponId != null">
+                #{couponId,jdbcType=INTEGER},
+            </if>
+            <if test="couponName != null">
+                #{couponName,jdbcType=VARCHAR},
+            </if>
+            <if test="couponType != null">
+                #{couponType,jdbcType=BIT},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="needMoney != null">
+                #{needMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="totalCount != null">
+                #{totalCount,jdbcType=SMALLINT},
+            </if>
+            <if test="getCount != null">
+                #{getCount,jdbcType=SMALLINT},
+            </if>
+            <if test="useStart != null">
+                #{useStart,jdbcType=TIMESTAMP},
+            </if>
+            <if test="useEnd != null">
+                #{useEnd,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="limitGrade != null">
+                #{limitGrade,jdbcType=INTEGER},
+            </if>
+            <if test="limitNum != null">
+                #{limitNum,jdbcType=SMALLINT},
+            </if>
+            <if test="isShow != null">
+                #{isShow,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.coupon.Coupon">
+        update cs_coupon
+        <set>
+            <if test="couponName != null">
+                coupon_name = #{couponName,jdbcType=VARCHAR},
+            </if>
+            <if test="couponType != null">
+                coupon_type = #{couponType,jdbcType=BIT},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="needMoney != null">
+                need_money = #{needMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="totalCount != null">
+                total_count = #{totalCount,jdbcType=SMALLINT},
+            </if>
+            <if test="getCount != null">
+                get_count = #{getCount,jdbcType=SMALLINT},
+            </if>
+            <if test="useStart != null">
+                use_start = #{useStart,jdbcType=TIMESTAMP},
+            </if>
+            <if test="useEnd != null">
+                use_end = #{useEnd,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="limitGrade != null">
+                limit_grade = #{limitGrade,jdbcType=INTEGER},
+            </if>
+            <if test="limitNum != null">
+                limit_num = #{limitNum,jdbcType=SMALLINT},
+            </if>
+            <if test="isShow != null">
+                is_show = #{isShow,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where coupon_id = #{couponId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.coupon.Coupon">
+        UPDATE cs_coupon
+        SET coupon_name = #{couponName,jdbcType=VARCHAR},
+            coupon_type = #{couponType,jdbcType=BIT},
+            money       = #{money,jdbcType=DECIMAL},
+            need_money  = #{needMoney,jdbcType=DECIMAL},
+            total_count = #{totalCount,jdbcType=SMALLINT},
+            get_count   = #{getCount,jdbcType=SMALLINT},
+            use_start   = #{useStart,jdbcType=TIMESTAMP},
+            use_end     = #{useEnd,jdbcType=TIMESTAMP},
+            content     = #{content,jdbcType=VARCHAR},
+            limit_grade = #{limitGrade,jdbcType=INTEGER},
+            limit_num   = #{limitNum,jdbcType=SMALLINT},
+            is_show     = #{isShow,jdbcType=BIT},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        WHERE coupon_id = #{couponId,jdbcType=INTEGER}
+    </update>
+    <select id="getList" resultMap="BaseResultMap">
+        SELECT *
+        FROM cs_coupon
+    </select>
+</mapper>

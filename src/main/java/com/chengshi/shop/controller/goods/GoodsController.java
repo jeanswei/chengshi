@@ -30,9 +30,9 @@ public class GoodsController {
     private GoodsImageService goodsImageService;
 
     @Value("${img_url}")
-    private String img_url;
+    private String IMG_URL;
     @Value("${SMALL}")
-    private String SMALLIMG;
+    private String SMALL_IMG;
 
     /**
      * 获取商品列表
@@ -47,7 +47,7 @@ public class GoodsController {
         HashMap<String, Object> inMap = new HashMap<>();
         List<Goods> goodsList = goodsService.getGoodsList(inMap);
         for (Goods goods : goodsList){
-            goods.setThumbnail(img_url + goods.getGoodsImg() + SMALLIMG);
+            goods.setThumbnail(IMG_URL + goods.getGoodsImg() + SMALL_IMG);
         }
         return new PageInfo<>(goodsList);
     }
@@ -75,11 +75,10 @@ public class GoodsController {
             goods = goodsService.getGoodsByGoodsId(goodsId);
             List<GoodsImage> imageList = goodsImageService.getImageList(goodsId);
             for (GoodsImage image : imageList){
-                image.setThumbnail(img_url + image.getImgUrl() + SMALLIMG);
+                image.setThumbnail(IMG_URL + image.getImgUrl() + SMALL_IMG);
             }
             goods.setImageList(imageList);
         }
-        mav.addObject("img_url", img_url);
         mav.addObject("goods", goods);
         return mav;
     }

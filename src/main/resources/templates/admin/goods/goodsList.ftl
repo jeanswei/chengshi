@@ -31,7 +31,7 @@
                 title: "商品图片",
                 field: "thumbnail",
                 formatter: function (val) {
-                    return "<img data-toggle=\"lightbox\" class=\"img-thumbnail\"  width=\"60px\" height=\"60px\" src=\""+val+"\">"
+                    return "<img class=\"img-thumbnail\"  width=\"60px\" height=\"60px\" src=\""+val+"\">"
                 }
             },
             {
