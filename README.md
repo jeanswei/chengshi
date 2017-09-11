@@ -5,33 +5,14 @@
 1. springBoot + mybatis 框架
 2. freemarker 页面渲染模板
 3. 开源的前端html5跨屏框架zui，官网地址http://zui.sexy
-4. maven相关依赖
-`<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!--freemarker-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
-        </dependency>
+4. 数据库mysql，shiro安全登录框架，redis缓存session等信息，便于服务器集群，图片数据使用阿里提供的oss服务
+5. maven相关依赖
+`
         <!--druid-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.2</version>
-        </dependency>
-        <!--mybatis-->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>1.3.0</version>
         </dependency>
         <!--pagehelper-->
         <dependency>
