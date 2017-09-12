@@ -78,4 +78,9 @@
         WHERE a.goods_id = b.goods_id
               AND a.coupon_id = #{couponId,jdbcType=INTEGER}
     </select>
+    <delete id="deleteNotInCouponGoodsIds">
+        DELETE FROM cs_coupon_goods
+        WHERE coupon_id = #{couponId,jdbcType=INTEGER}
+              AND id NOT IN (${couponGoodsIds})
+    </delete>
 </mapper>

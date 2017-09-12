@@ -1,7 +1,9 @@
 package com.chengshi.shop.model.coupon;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Coupon {
     private Integer couponId;
@@ -31,6 +33,9 @@ public class Coupon {
     private Boolean isShow;
 
     private Date createTime;
+
+    /**************************/
+    private List<CouponGoods> couponGoodsList = new ArrayList<>();
 
     public Integer getCouponId() {
         return couponId;
@@ -142,5 +147,13 @@ public class Coupon {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public List<CouponGoods> getCouponGoodsList() {
+        return couponGoodsList;
+    }
+
+    public void setCouponGoodsList(List<CouponGoods> couponGoodsList) {
+        this.couponGoodsList = couponGoodsList;
     }
 }

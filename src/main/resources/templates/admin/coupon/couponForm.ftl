@@ -177,7 +177,7 @@
         $(this).prev().val($(this).val());
     });
 
-    $("input[name='couponType']").click(function (e) {
+    $("input[name='couponType']").click(function () {
         if ($(this).val() == 1) {
             $(".dataGrid").hide();
         } else {
@@ -245,9 +245,10 @@
                 title: "操作",
                 field: "",
                 align: "center",
-                formatter: function (val, row) {
-                    return "<button class=\"btn btn-link\" onclick=\"deleteCouponGoods(" + row.goodsId + ")\" type=\"button\"><i class=\"icon " +
-                            "icon-trash\"></i>删除</button>";
+                formatter: function (val, row, index) {
+                    return  "<input type='hidden' name='couponGoodsList[" + index + "].id' value='" + (row.id == null ? "" : row.id) + "'>" +
+                            "<input type='hidden' name='couponGoodsList[" + index + "].goodsId' value='" + row.goodsId + "'>" +
+                            "<button class=\"btn btn-link\" onclick=\"deleteCouponGoods(" + row.goodsId + ")\" type=\"button\"><i class=\"icon icon-trash\"></i>删除</button>";
                 }
             }
         ]
@@ -280,7 +281,7 @@
     function deleteCouponGoods(goodsId) {
         dg.bootstrapTable('remove', {
             field: 'goodsId',
-	        values: [goodsId]
+            values: [goodsId]
         })
     }
 </script>

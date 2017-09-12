@@ -5,7 +5,9 @@ import com.chengshi.shop.dao.coupon.CouponMapper;
 import com.chengshi.shop.model.coupon.Coupon;
 import com.chengshi.shop.model.coupon.CouponGoods;
 import com.chengshi.shop.service.coupon.CouponService;
+import com.chengshi.shop.util.EnumUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -14,6 +16,7 @@ import java.util.List;
 
 /**
  * 优惠券接口
+ *
  * @author xuxinlong
  * @version 2017年09月11日
  */
@@ -41,6 +44,7 @@ public class CouponServiceImpl implements CouponService {
      * @param coupon
      */
     @Override
+    @Transactional
     public void saveCoupon(Coupon coupon) {
         if (coupon.getCouponId() != null) {
             couponMapper.updateByPrimaryKeySelective(coupon);
@@ -48,6 +52,21 @@ public class CouponServiceImpl implements CouponService {
             coupon.setCreateTime(new Date());
             couponMapper.insertSelective(coupon);
         }
+        //保存优惠券适用商品
+        StringBuilder couponGoodsIds = new StringBuilder();
+        if (coupon.getCouponType() == EnumUtil.COUPONTYPE.指定商品.getValue().byteValue()
+                && !coupon.getCouponGoodsList().isEmpty()) {
+            for (CouponGoods couponGoods : coupon.getCouponGoodsList()) {
+                couponGoods.setCouponId(coupon.getCouponId());
+                if (couponGoods.getId() != null) {
+                    couponGoodsMapper.updateByPrimaryKeySelective(couponGoods);
+                } else {
+                    couponGoodsMapper.insertSelective(couponGoods);
+                }
+                couponGoodsIds.append(",").append(couponGoods.getId());
+            }
+        }
+        couponGoodsMapper.deleteNotInCouponGoodsIds(coupon.getCouponId(), couponGoodsIds.length() > 0 ? couponGoodsIds.substring(1) : "0");
     }
 
     /**

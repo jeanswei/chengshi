@@ -31,7 +31,7 @@
         DELETE FROM cs_coupon
         WHERE coupon_id = #{couponId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.chengshi.shop.model.coupon.Coupon">
+    <insert id="insert" parameterType="com.chengshi.shop.model.coupon.Coupon" keyProperty="couponId" useGeneratedKeys="true">
         INSERT INTO cs_coupon (coupon_id, coupon_name, coupon_type,
                                money, need_money, total_count,
                                get_count, use_start, use_end,
@@ -43,7 +43,7 @@
                 #{content,jdbcType=VARCHAR}, #{limitGrade,jdbcType=INTEGER}, #{limitNum,jdbcType=SMALLINT},
                 #{isShow,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.chengshi.shop.model.coupon.Coupon">
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.coupon.Coupon" keyProperty="couponId" useGeneratedKeys="true">
         insert into cs_coupon
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="couponId != null">

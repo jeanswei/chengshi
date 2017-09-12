@@ -1,6 +1,7 @@
 package com.chengshi.shop.dao.coupon;
 
 import com.chengshi.shop.model.coupon.CouponGoods;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,4 +26,11 @@ public interface CouponGoodsMapper {
      * @return
      */
     List<CouponGoods> getList(Integer couponId);
+
+    /**
+     * 删除多余的优惠券商品
+     * @param couponId
+     * @param couponGoodsIds
+     */
+    void deleteNotInCouponGoodsIds(@Param("couponId") Integer couponId,@Param("couponGoodsIds") String couponGoodsIds);
 }
