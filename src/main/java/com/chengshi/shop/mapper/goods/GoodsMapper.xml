@@ -314,6 +314,9 @@
             <if test="goodsName !=null and goodsName !='' ">
                 and goods_name like '%${goodsName}%'
             </if>
+            <if test="isOnSale !=null and isOnSale!='' ">
+                and is_on_sale = #{isOnSale,jdbcType=BIT}
+            </if>
             and is_delete = 0
         </where>
         order by goods_id DESC

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,9 +43,10 @@ public class GoodsController {
      * @return
      */
     @GetMapping(value = "getGoodsList")
-    public PageInfo<Goods> getGoodsList(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+    public PageInfo<Goods> getGoodsList(HttpServletRequest request, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         PageHelper.startPage(pageNumber, pageSize);
         HashMap<String, Object> inMap = new HashMap<>();
+        inMap.put("isOnSale", request.getParameter("isOnSale"));
         List<Goods> goodsList = goodsService.getGoodsList(inMap);
         for (Goods goods : goodsList){
             goods.setThumbnail(IMG_URL + goods.getGoodsImg() + SMALL_IMG);
@@ -117,5 +119,14 @@ public class GoodsController {
             retMap = MessageUtils.error();
         }
         return retMap;
+    }
+
+    /**
+     * 选择商品页面
+     * @return
+     */
+    @GetMapping(value = "goodsChooseList")
+    public ModelAndView goodsChooseList() {
+        return new ModelAndView("admin/goods/goodsChooseList");
     }
 }

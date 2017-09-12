@@ -1,71 +1,81 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.chengshi.shop.dao.coupon.CouponGoodsMapper" >
-  <resultMap id="BaseResultMap" type="com.chengshi.shop.model.coupon.CouponGoods" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="coupon_id" property="couponId" jdbcType="INTEGER" />
-    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, coupon_id, goods_id
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from cs_coupon_goods
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from cs_coupon_goods
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.chengshi.shop.model.coupon.CouponGoods" >
-    insert into cs_coupon_goods (id, coupon_id, goods_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{couponId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.chengshi.shop.model.coupon.CouponGoods" >
-    insert into cs_coupon_goods
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="couponId != null" >
-        coupon_id,
-      </if>
-      <if test="goodsId != null" >
-        goods_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="couponId != null" >
-        #{couponId,jdbcType=INTEGER},
-      </if>
-      <if test="goodsId != null" >
-        #{goodsId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.coupon.CouponGoods" >
-    update cs_coupon_goods
-    <set >
-      <if test="couponId != null" >
-        coupon_id = #{couponId,jdbcType=INTEGER},
-      </if>
-      <if test="goodsId != null" >
-        goods_id = #{goodsId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.coupon.CouponGoods" >
-    update cs_coupon_goods
-    set coupon_id = #{couponId,jdbcType=INTEGER},
-      goods_id = #{goodsId,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+<mapper namespace="com.chengshi.shop.dao.coupon.CouponGoodsMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.coupon.CouponGoods">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="coupon_id" property="couponId" jdbcType="INTEGER"/>
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, coupon_id, goods_id
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_coupon_goods
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_coupon_goods
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.coupon.CouponGoods">
+        INSERT INTO cs_coupon_goods (id, coupon_id, goods_id
+        )
+        VALUES (#{id,jdbcType=INTEGER}, #{couponId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.coupon.CouponGoods">
+        insert into cs_coupon_goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="couponId != null">
+                coupon_id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="couponId != null">
+                #{couponId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.coupon.CouponGoods">
+        update cs_coupon_goods
+        <set>
+            <if test="couponId != null">
+                coupon_id = #{couponId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.coupon.CouponGoods">
+        UPDATE cs_coupon_goods
+        SET coupon_id = #{couponId,jdbcType=INTEGER},
+            goods_id  = #{goodsId,jdbcType=INTEGER}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="getList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+            *,
+            b.goods_name goodsName,
+            b.price,
+            b.store
+        FROM cs_coupon_goods a, cs_goods b
+        WHERE a.goods_id = b.goods_id
+              AND a.coupon_id = #{couponId,jdbcType=INTEGER}
+    </select>
 </mapper>

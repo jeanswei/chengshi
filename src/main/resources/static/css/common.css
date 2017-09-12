@@ -11,5 +11,8 @@
 }
 
 label.error{
+    line-height: 14px;
+    font-size: 12px;
+    font-weight: normal;
     color: #ea644a;
 }

@@ -8,7 +8,7 @@ public class Coupon {
 
     private String couponName;
 
-    private Boolean couponType;
+    private Byte couponType;
 
     private BigDecimal money;
 
@@ -48,11 +48,11 @@ public class Coupon {
         this.couponName = couponName == null ? null : couponName.trim();
     }
 
-    public Boolean getCouponType() {
+    public Byte getCouponType() {
         return couponType;
     }
 
-    public void setCouponType(Boolean couponType) {
+    public void setCouponType(Byte couponType) {
         this.couponType = couponType;
     }
 

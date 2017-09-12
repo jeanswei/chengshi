@@ -1,7 +1,9 @@
 package com.chengshi.shop.dao.coupon;
 
 import com.chengshi.shop.model.coupon.MemberCoupon;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface MemberCouponMapper {
     int deleteByPrimaryKey(Integer memberCouponId);
 

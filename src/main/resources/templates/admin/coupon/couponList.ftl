@@ -33,19 +33,39 @@
             },
             {
                 title: "优惠券面值",
-                field: "money"
+                field: "money",
+                formatter: function (val) {
+                    return val + "元";
+                }
             },
             {
                 title: "使用条件",
-                field: "needMoney"
+                field: "needMoney",
+                formatter: function (val) {
+                    if (val === 0) {
+                        return "无门槛";
+                    } else {
+                        return "满" + val + "元可用";
+                    }
+                }
             },
             {
-                title: "领取条件",
-                field: "limitNum"
+                title: "限制数量",
+                field: "limitNum",
+                formatter: function (val) {
+                    if (val === 0) {
+                        return "不限制";
+                    } else {
+                        return "每人限领" + val + "张";
+                    }
+                }
             },
             {
                 title: "有效期",
-                field: "useStart"
+                field: "useStart",
+                formatter: function (val, row) {
+                    return row.useStart + " 至 " + row.useEnd;
+                }
             },
             {
                 title: "优惠券总数",
@@ -60,13 +80,8 @@
                 field: "",
                 align: "center",
                 formatter: function (val, row) {
-                    if (row.isOnSale){
-                        return "<button class=\"btn btn-link\" onclick=\"sale(" + row.userId + ")\" type=\"button\"><i class=\"icon " +
-                                "icon-double-angle-down\"></i>下架</button>";
-                    } else {
-                        return "<button class=\"btn btn-link\" onclick=\"sale(" + row.userId + ")\" type=\"button\"><i class=\"icon " +
-                                "icon-double-angle-up\"></i>上架</button>";
-                    }
+                    return "<button class=\"btn btn-link\" onclick=\"sale(" + row.userId + ")\" type=\"button\"><i class=\"icon " +
+                            "icon-double-angle-down\"></i>推广链接</button>";
                 }
             }
         ]
@@ -77,12 +92,12 @@
     });
 
     function add() {
-        location.href = "/admin/goodsForm";
+        location.href = "/admin/couponForm";
     }
 
     function update() {
         var rows = dg.bootstrapTable('getSelections');
-        location.href = "/admin/goodsForm?goodsId=" + rows[0].goodsId;
+        location.href = "/admin/couponForm?couponId=" + rows[0].couponId;
     }
 
     function del() {
@@ -95,7 +110,7 @@
                 if (result) {
                     $.ajax({
                         type: 'post',
-                        url: '/admin/deleteGoods?goodsId=' + rows[0].goodsId,
+                        url: '/admin/deleteCoupon?couponId=' + rows[0].couponId,
                         success: function (data) {
                             successTip(data, dg);
                         }
@@ -104,7 +119,7 @@
             }
         })
     }
-    
+
 </script>
 </body>
 </html>

@@ -52,7 +52,6 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
         <button type="button" class="btn btn-primary save">保存</button>
     </div>
-
 </div>
 <script>
     $("#infoFrom").validate({

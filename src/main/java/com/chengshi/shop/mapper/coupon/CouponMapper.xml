@@ -1,27 +1,27 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chengshi.shop.dao.coupon.CouponMapper">
     <resultMap id="BaseResultMap" type="com.chengshi.shop.model.coupon.Coupon">
-        <id column="coupon_id" property="couponId" jdbcType="INTEGER"/>
-        <result column="coupon_name" property="couponName" jdbcType="VARCHAR"/>
-        <result column="coupon_type" property="couponType" jdbcType="BIT"/>
-        <result column="money" property="money" jdbcType="DECIMAL"/>
-        <result column="need_money" property="needMoney" jdbcType="DECIMAL"/>
-        <result column="total_count" property="totalCount" jdbcType="SMALLINT"/>
-        <result column="get_count" property="getCount" jdbcType="SMALLINT"/>
-        <result column="use_start" property="useStart" jdbcType="TIMESTAMP"/>
-        <result column="use_end" property="useEnd" jdbcType="TIMESTAMP"/>
-        <result column="content" property="content" jdbcType="VARCHAR"/>
-        <result column="limit_grade" property="limitGrade" jdbcType="INTEGER"/>
-        <result column="limit_num" property="limitNum" jdbcType="SMALLINT"/>
-        <result column="is_show" property="isShow" jdbcType="BIT"/>
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <id column="coupon_id" jdbcType="INTEGER" property="couponId"/>
+        <result column="coupon_name" jdbcType="VARCHAR" property="couponName"/>
+        <result column="coupon_type" jdbcType="TINYINT" property="couponType"/>
+        <result column="money" jdbcType="DECIMAL" property="money"/>
+        <result column="need_money" jdbcType="DECIMAL" property="needMoney"/>
+        <result column="total_count" jdbcType="SMALLINT" property="totalCount"/>
+        <result column="get_count" jdbcType="SMALLINT" property="getCount"/>
+        <result column="use_start" jdbcType="TIMESTAMP" property="useStart"/>
+        <result column="use_end" jdbcType="TIMESTAMP" property="useEnd"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="limit_grade" jdbcType="INTEGER" property="limitGrade"/>
+        <result column="limit_num" jdbcType="SMALLINT" property="limitNum"/>
+        <result column="is_show" jdbcType="BIT" property="isShow"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
     <sql id="Base_Column_List">
         coupon_id, coupon_name, coupon_type, money, need_money, total_count, get_count, use_start,
         use_end, content, limit_grade, limit_num, is_show, create_time
     </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from cs_coupon
@@ -37,10 +37,10 @@
                                get_count, use_start, use_end,
                                content, limit_grade, limit_num,
                                is_show, create_time)
-        VALUES (#{couponId,jdbcType=INTEGER}, #{couponName,jdbcType=VARCHAR}, #{couponType,jdbcType=BIT},
-                                              #{money,jdbcType=DECIMAL}, #{needMoney,jdbcType=DECIMAL}, #{totalCount,jdbcType=SMALLINT},
-                                              #{getCount,jdbcType=SMALLINT}, #{useStart,jdbcType=TIMESTAMP}, #{useEnd,jdbcType=TIMESTAMP},
-                                              #{content,jdbcType=VARCHAR}, #{limitGrade,jdbcType=INTEGER}, #{limitNum,jdbcType=SMALLINT},
+        VALUES (#{couponId,jdbcType=INTEGER}, #{couponName,jdbcType=VARCHAR}, #{couponType,jdbcType=TINYINT},
+                #{money,jdbcType=DECIMAL}, #{needMoney,jdbcType=DECIMAL}, #{totalCount,jdbcType=SMALLINT},
+                #{getCount,jdbcType=SMALLINT}, #{useStart,jdbcType=TIMESTAMP}, #{useEnd,jdbcType=TIMESTAMP},
+                #{content,jdbcType=VARCHAR}, #{limitGrade,jdbcType=INTEGER}, #{limitNum,jdbcType=SMALLINT},
                 #{isShow,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="com.chengshi.shop.model.coupon.Coupon">
@@ -97,7 +97,7 @@
                 #{couponName,jdbcType=VARCHAR},
             </if>
             <if test="couponType != null">
-                #{couponType,jdbcType=BIT},
+                #{couponType,jdbcType=TINYINT},
             </if>
             <if test="money != null">
                 #{money,jdbcType=DECIMAL},
@@ -141,7 +141,7 @@
                 coupon_name = #{couponName,jdbcType=VARCHAR},
             </if>
             <if test="couponType != null">
-                coupon_type = #{couponType,jdbcType=BIT},
+                coupon_type = #{couponType,jdbcType=TINYINT},
             </if>
             <if test="money != null">
                 money = #{money,jdbcType=DECIMAL},
@@ -182,7 +182,7 @@
     <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.coupon.Coupon">
         UPDATE cs_coupon
         SET coupon_name = #{couponName,jdbcType=VARCHAR},
-            coupon_type = #{couponType,jdbcType=BIT},
+            coupon_type = #{couponType,jdbcType=TINYINT},
             money       = #{money,jdbcType=DECIMAL},
             need_money  = #{needMoney,jdbcType=DECIMAL},
             total_count = #{totalCount,jdbcType=SMALLINT},

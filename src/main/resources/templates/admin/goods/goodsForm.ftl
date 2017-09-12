@@ -11,19 +11,19 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label required">商品名称：</label>
                     <div class="col-md-4">
-                        <input type="text" name="goodsName" required maxlength="60" value="${goods.goodsName!}" placeholder="请输入商品名称，不超过60个字符" class="form-control">
+                        <input name="goodsName" required maxlength="60" value="${goods.goodsName!}" placeholder="请输入商品名称，不超过60个字符" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">商品促销语：</label>
                     <div class="col-md-4">
-                        <input type="text" name="goodsBrief" maxlength="60" value="${goods.goodsBrief!}" placeholder="请输入商品促销语，不超过60个字符" class="form-control">
+                        <input name="goodsBrief" maxlength="60" value="${goods.goodsBrief!}" placeholder="请输入商品促销语，不超过60个字符" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">关键字：</label>
                     <div class="col-md-4">
-                        <input type="text" name="keywords" maxlength="20" value="${goods.keywords!}" placeholder="关键字用于商品搜索" class="form-control">
+                        <input name="keywords" maxlength="20" value="${goods.keywords!}" placeholder="关键字用于商品搜索" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -94,10 +94,10 @@
             <div class="panel-heading">其他信息</div>
             <div class="panel-body">
                 <div class="form-group">
-                    <label class="col-md-2 control-label required">是否上架：</label>
+                    <label class="col-md-2 control-label">是否上架：</label>
                     <div class="col-md-6">
                         <label class="radio-inline">
-                            <input type="radio" name="isOnSale" value="1" required <#if goods.isOnSale?? && goods.isOnSale>checked</#if>>立即上架
+                            <input type="radio" name="isOnSale" value="1" required checked>立即上架
                         </label>
                         <label class="radio-inline">
                             <input type="radio" name="isOnSale" value="0" required <#if goods.isOnSale?? && !goods.isOnSale>checked</#if>>暂不上架

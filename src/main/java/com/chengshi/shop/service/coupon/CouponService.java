@@ -1,6 +1,7 @@
 package com.chengshi.shop.service.coupon;
 
 import com.chengshi.shop.model.coupon.Coupon;
+import com.chengshi.shop.model.coupon.CouponGoods;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,4 +25,18 @@ public interface CouponService {
      * @param coupon
      */
     void saveCoupon(Coupon coupon);
+
+    /**
+     * 获取优惠券信息
+     * @param couponId
+     * @return
+     */
+    Coupon getCoupon(Integer couponId);
+
+    /**
+     * 获取优惠券商品列表
+     * @param couponId
+     * @return
+     */
+    List<CouponGoods> getCouponGoodsList(Integer couponId);
 }
