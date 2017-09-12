@@ -18,4 +18,10 @@ public interface CouponService {
      * @return
      */
     List<Coupon> getCouponList(HashMap<String, Object> inMap);
+
+    /**
+     * 保存优惠券信息
+     * @param coupon
+     */
+    void saveCoupon(Coupon coupon);
 }

@@ -28,4 +28,18 @@ public class CouponServiceImpl implements CouponService {
     public List<Coupon> getCouponList(HashMap<String, Object> inMap) {
         return couponMapper.getList(inMap);
     }
+
+    /**
+     * 保存优惠券信息
+     *
+     * @param coupon
+     */
+    @Override
+    public void saveCoupon(Coupon coupon) {
+        if (coupon.getCouponId() != null) {
+            couponMapper.updateByPrimaryKeySelective(coupon);
+        } else {
+            couponMapper.insertSelective(coupon);
+        }
+    }
 }

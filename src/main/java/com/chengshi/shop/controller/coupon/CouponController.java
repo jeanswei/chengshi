@@ -2,12 +2,10 @@ package com.chengshi.shop.controller.coupon;
 
 import com.chengshi.shop.model.coupon.Coupon;
 import com.chengshi.shop.service.coupon.CouponService;
+import com.chengshi.shop.util.MessageUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -26,7 +24,7 @@ public class CouponController {
     private CouponService couponService;
 
     /**
-     * 优惠券列表
+     * 优惠券列表页面
      * @return
      */
     @GetMapping(value = "couponList")
@@ -34,11 +32,33 @@ public class CouponController {
         return new ModelAndView("admin/coupon/couponList");
     }
 
+    /**
+     * 获取优惠券列表
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
     @GetMapping(value = "getCouponList")
     public PageInfo<Coupon> getCouponList(@RequestParam Integer pageNumber, @RequestParam Integer pageSize){
         PageHelper.startPage(pageNumber, pageSize);
         HashMap<String, Object> inMap = new HashMap<>();
         List<Coupon> couponList = couponService.getCouponList(inMap);
         return new PageInfo<>(couponList);
+    }
+
+    /**
+     * 保存优惠券信息
+     * @param coupon
+     * @return
+     */
+    @PostMapping(value = "saveCoupon")
+    public HashMap<String, Object> saveCoupon(@ModelAttribute Coupon coupon){
+        HashMap<String, Object> retMap = MessageUtils.success();
+        try {
+            couponService.saveCoupon(coupon);
+        } catch (Exception e){
+            retMap = MessageUtils.error();
+        }
+        return retMap;
     }
 }
