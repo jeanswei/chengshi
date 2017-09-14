@@ -4,14 +4,10 @@
     <resultMap id="BaseResultMap" type="com.chengshi.shop.model.goods.Goods">
         <id column="goods_id" jdbcType="INTEGER" property="goodsId"/>
         <result column="cat_id" jdbcType="SMALLINT" property="catId"/>
-        <result column="goods_sn" jdbcType="VARCHAR" property="goodsSn"/>
         <result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
         <result column="click_count" jdbcType="INTEGER" property="clickCount"/>
         <result column="evaluate_count" jdbcType="INTEGER" property="evaluateCount"/>
         <result column="sale_count" jdbcType="INTEGER" property="saleCount"/>
-        <result column="market_price" jdbcType="DECIMAL" property="marketPrice"/>
-        <result column="price" jdbcType="DECIMAL" property="price"/>
-        <result column="store" jdbcType="INTEGER" property="store"/>
         <result column="keywords" jdbcType="VARCHAR" property="keywords"/>
         <result column="goods_brief" jdbcType="VARCHAR" property="goodsBrief"/>
         <result column="goods_img" jdbcType="VARCHAR" property="goodsImg"/>
@@ -27,9 +23,9 @@
         <result column="goods_desc" jdbcType="LONGVARCHAR" property="goodsDesc"/>
     </resultMap>
     <sql id="Base_Column_List">
-        goods_id, cat_id, goods_sn, goods_name, click_count, evaluate_count, sale_count,
-        market_price, price, store, keywords, goods_brief, goods_img, is_on_sale, create_time,
-        is_recommend, is_new, is_hot, last_update, is_delete
+        goods_id, cat_id, goods_name, click_count, evaluate_count, sale_count, keywords,
+        goods_brief, goods_img, is_on_sale, create_time, is_recommend, is_new, is_hot, last_update,
+        is_delete
     </sql>
     <sql id="Blob_Column_List">
         goods_desc
@@ -46,23 +42,21 @@
         DELETE FROM cs_goods
         WHERE goods_id = #{goodsId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.chengshi.shop.model.goods.Goods">
-        INSERT INTO cs_goods (goods_id, cat_id, goods_sn,
-                              goods_name, click_count, evaluate_count,
-                              sale_count, market_price, price,
-                              store, keywords, goods_brief,
-                              goods_img, is_on_sale, create_time,
-                              is_recommend, is_new, is_hot, last_update,
+    <insert id="insert" parameterType="com.chengshi.shop.model.goods.Goods" useGeneratedKeys="true" keyProperty="goodsId">
+        INSERT INTO cs_goods (goods_id, cat_id, goods_name,
+                              click_count, evaluate_count, sale_count,
+                              keywords, goods_brief, goods_img,
+                              is_on_sale, create_time, is_recommend,
+                              is_new, is_hot, last_update,
                               is_delete, goods_desc)
-        VALUES (#{goodsId,jdbcType=INTEGER}, #{catId,jdbcType=SMALLINT}, #{goodsSn,jdbcType=VARCHAR},
-                                             #{goodsName,jdbcType=VARCHAR}, #{clickCount,jdbcType=INTEGER}, #{evaluateCount,jdbcType=INTEGER},
-                                             #{saleCount,jdbcType=INTEGER}, #{marketPrice,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL},
-                                             #{store,jdbcType=INTEGER}, #{keywords,jdbcType=VARCHAR}, #{goodsBrief,jdbcType=VARCHAR},
-                                                                                                      #{goodsImg,jdbcType=VARCHAR}, #{isOnSale,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP},
-                                                                                                      #{isRecommend,jdbcType=BIT}, #{isNew,jdbcType=BIT}, #{isHot,jdbcType=BIT}, #{lastUpdate,jdbcType=TIMESTAMP},
-                                                                                                      #{isDelete,jdbcType=BIT}, #{goodsDesc,jdbcType=LONGVARCHAR})
+        VALUES (#{goodsId,jdbcType=INTEGER}, #{catId,jdbcType=SMALLINT}, #{goodsName,jdbcType=VARCHAR},
+                #{clickCount,jdbcType=INTEGER}, #{evaluateCount,jdbcType=INTEGER}, #{saleCount,jdbcType=INTEGER},
+                #{keywords,jdbcType=VARCHAR}, #{goodsBrief,jdbcType=VARCHAR}, #{goodsImg,jdbcType=VARCHAR},
+                #{isOnSale,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{isRecommend,jdbcType=BIT},
+                #{isNew,jdbcType=BIT}, #{isHot,jdbcType=BIT}, #{lastUpdate,jdbcType=TIMESTAMP},
+                #{isDelete,jdbcType=BIT}, #{goodsDesc,jdbcType=LONGVARCHAR})
     </insert>
-    <insert id="insertSelective" parameterType="com.chengshi.shop.model.goods.Goods">
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.goods.Goods" useGeneratedKeys="true" keyProperty="goodsId">
         insert into cs_goods
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="goodsId != null">
@@ -70,9 +64,6 @@
             </if>
             <if test="catId != null">
                 cat_id,
-            </if>
-            <if test="goodsSn != null">
-                goods_sn,
             </if>
             <if test="goodsName != null">
                 goods_name,
@@ -85,15 +76,6 @@
             </if>
             <if test="saleCount != null">
                 sale_count,
-            </if>
-            <if test="marketPrice != null">
-                market_price,
-            </if>
-            <if test="price != null">
-                price,
-            </if>
-            <if test="store != null">
-                store,
             </if>
             <if test="keywords != null">
                 keywords,
@@ -136,9 +118,6 @@
             <if test="catId != null">
                 #{catId,jdbcType=SMALLINT},
             </if>
-            <if test="goodsSn != null">
-                #{goodsSn,jdbcType=VARCHAR},
-            </if>
             <if test="goodsName != null">
                 #{goodsName,jdbcType=VARCHAR},
             </if>
@@ -150,15 +129,6 @@
             </if>
             <if test="saleCount != null">
                 #{saleCount,jdbcType=INTEGER},
-            </if>
-            <if test="marketPrice != null">
-                #{marketPrice,jdbcType=DECIMAL},
-            </if>
-            <if test="price != null">
-                #{price,jdbcType=DECIMAL},
-            </if>
-            <if test="store != null">
-                #{store,jdbcType=INTEGER},
             </if>
             <if test="keywords != null">
                 #{keywords,jdbcType=VARCHAR},
@@ -201,9 +171,6 @@
             <if test="catId != null">
                 cat_id = #{catId,jdbcType=SMALLINT},
             </if>
-            <if test="goodsSn != null">
-                goods_sn = #{goodsSn,jdbcType=VARCHAR},
-            </if>
             <if test="goodsName != null">
                 goods_name = #{goodsName,jdbcType=VARCHAR},
             </if>
@@ -215,15 +182,6 @@
             </if>
             <if test="saleCount != null">
                 sale_count = #{saleCount,jdbcType=INTEGER},
-            </if>
-            <if test="marketPrice != null">
-                market_price = #{marketPrice,jdbcType=DECIMAL},
-            </if>
-            <if test="price != null">
-                price = #{price,jdbcType=DECIMAL},
-            </if>
-            <if test="store != null">
-                store = #{store,jdbcType=INTEGER},
             </if>
             <if test="keywords != null">
                 keywords = #{keywords,jdbcType=VARCHAR},
@@ -264,14 +222,10 @@
     <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chengshi.shop.model.goods.Goods">
         UPDATE cs_goods
         SET cat_id         = #{catId,jdbcType=SMALLINT},
-            goods_sn       = #{goodsSn,jdbcType=VARCHAR},
             goods_name     = #{goodsName,jdbcType=VARCHAR},
             click_count    = #{clickCount,jdbcType=INTEGER},
             evaluate_count = #{evaluateCount,jdbcType=INTEGER},
             sale_count     = #{saleCount,jdbcType=INTEGER},
-            market_price   = #{marketPrice,jdbcType=DECIMAL},
-            price          = #{price,jdbcType=DECIMAL},
-            store          = #{store,jdbcType=INTEGER},
             keywords       = #{keywords,jdbcType=VARCHAR},
             goods_brief    = #{goodsBrief,jdbcType=VARCHAR},
             goods_img      = #{goodsImg,jdbcType=VARCHAR},
@@ -288,14 +242,10 @@
     <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.goods.Goods">
         UPDATE cs_goods
         SET cat_id         = #{catId,jdbcType=SMALLINT},
-            goods_sn       = #{goodsSn,jdbcType=VARCHAR},
             goods_name     = #{goodsName,jdbcType=VARCHAR},
             click_count    = #{clickCount,jdbcType=INTEGER},
             evaluate_count = #{evaluateCount,jdbcType=INTEGER},
             sale_count     = #{saleCount,jdbcType=INTEGER},
-            market_price   = #{marketPrice,jdbcType=DECIMAL},
-            price          = #{price,jdbcType=DECIMAL},
-            store          = #{store,jdbcType=INTEGER},
             keywords       = #{keywords,jdbcType=VARCHAR},
             goods_brief    = #{goodsBrief,jdbcType=VARCHAR},
             goods_img      = #{goodsImg,jdbcType=VARCHAR},
@@ -321,7 +271,7 @@
         </where>
         order by goods_id DESC
     </select>
-    <update id="deleteByGoodsId">
+    <update id="deleteByGoodsId" parameterType="java.lang.Integer">
         UPDATE cs_goods
         SET
             is_delete = 1

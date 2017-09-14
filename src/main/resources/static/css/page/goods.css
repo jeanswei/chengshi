@@ -38,3 +38,19 @@
     text-align: center;
     margin: 20px;
 }
+
+.kindeditor{
+    height: 500px !important;
+}
+
+.del-spec{
+    float: right;
+}
+
+.goods-spec{
+    margin-bottom: 20px;
+}
+
+select.chosen-select{
+    width: 120px;
+}

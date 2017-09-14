@@ -483,6 +483,8 @@ MIT License, https://github.com/harvesthq/chosen/blob/master/LICENSE.md
                     evt.preventDefault();
                     if(this.results_showing) {
                         return this.result_select(evt);
+                    } else {
+                        console.log(1);
                     }
                     break;
                 case 27:

@@ -1,6 +1,5 @@
 package com.chengshi.shop.model.goods;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,8 +9,6 @@ public class Goods {
 
     private Short catId;
 
-    private String goodsSn;
-
     private String goodsName;
 
     private Integer clickCount;
@@ -19,12 +16,6 @@ public class Goods {
     private Integer evaluateCount;
 
     private Integer saleCount;
-
-    private BigDecimal marketPrice;
-
-    private BigDecimal price;
-
-    private Integer store;
 
     private String keywords;
 
@@ -69,14 +60,6 @@ public class Goods {
         this.catId = catId;
     }
 
-    public String getGoodsSn() {
-        return goodsSn;
-    }
-
-    public void setGoodsSn(String goodsSn) {
-        this.goodsSn = goodsSn == null ? null : goodsSn.trim();
-    }
-
     public String getGoodsName() {
         return goodsName;
     }
@@ -107,30 +90,6 @@ public class Goods {
 
     public void setSaleCount(Integer saleCount) {
         this.saleCount = saleCount;
-    }
-
-    public BigDecimal getMarketPrice() {
-        return marketPrice;
-    }
-
-    public void setMarketPrice(BigDecimal marketPrice) {
-        this.marketPrice = marketPrice;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Integer getStore() {
-        return store;
-    }
-
-    public void setStore(Integer store) {
-        this.store = store;
     }
 
     public String getKeywords() {

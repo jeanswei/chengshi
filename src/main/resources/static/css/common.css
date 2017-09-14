@@ -1,18 +1,27 @@
-#toolbar .btn-link{
+#toolbar .btn-link {
     color: #444;
 }
-.btn-link.disabled{
+
+.btn-link.disabled {
     border-color: transparent;
     background-color: transparent;
 }
 
-.form-control.error{
+.form-control.error {
     border: 1px solid #ea644a;
 }
 
-label.error{
+label.error {
     line-height: 14px;
     font-size: 12px;
     font-weight: normal;
     color: #ea644a;
+}
+
+.mgl-10 {
+    margin-left: 10px;
+}
+
+.mgl-20 {
+    margin-left: 20px;
 }
