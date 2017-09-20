@@ -55,4 +55,8 @@
     set spec_name = #{specName,jdbcType=VARCHAR}
     where spec_id = #{specId,jdbcType=INTEGER}
   </update>
+  <select id="checkSpecName" parameterType="java.lang.String" resultType="java.lang.Boolean">
+    SELECT 1 FROM cs_goods_spec
+    WHERE spec_name = #{specName,jdbcType=VARCHAR}
+  </select>
 </mapper>

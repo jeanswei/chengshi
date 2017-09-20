@@ -1,7 +1,9 @@
 package com.chengshi.shop.dao.goods;
 
 import com.chengshi.shop.model.goods.GoodsSpec;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface GoodsSpecMapper {
     int deleteByPrimaryKey(Integer specId);
 
@@ -14,4 +16,11 @@ public interface GoodsSpecMapper {
     int updateByPrimaryKeySelective(GoodsSpec record);
 
     int updateByPrimaryKey(GoodsSpec record);
+
+    /**
+     * 检查是否存在该规格
+     * @param specName
+     * @return
+     */
+    boolean checkSpecName(String specName);
 }

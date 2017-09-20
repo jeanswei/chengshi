@@ -54,3 +54,15 @@
 select.chosen-select{
     width: 120px;
 }
+
+.hide{
+    display: none;
+}
+
+.spec-value{
+    margin-top: 15px;
+}
+
+.spec-warp > .goods-spec:first-child label{
+    display: inline-block;
+}

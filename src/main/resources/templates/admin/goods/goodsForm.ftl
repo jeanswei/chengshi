@@ -59,15 +59,15 @@
                     <div class="col-md-8">
                         <div class="spec-warp">
                             <div class="goods-spec">
-                                <select data-placeholder="选择或输入规格名称，回车后生成" class="chosen-select form-control spec">
-                                    <option value="cat"></option>
+                                <select data-placeholder="选择规格" class="chosen-select form-control spec">
                                     <option value="cat">小狗</option>
                                     <option value="cat">小猫</option>
                                 </select>
-                                <label class="checkbox-inline mgl-20 hidden">
+                                <label class="checkbox-inline mgl-20 hide">
                                     <input type="checkbox" name="specImage" value="1">添加规格图片，仅支持为第一个规格设置图片， 建议尺寸：<span class="text-red">300 x 300</span> 像素
                                 </label>
                                 <a class="btn btn-link del-spec"><i class="icon icon-trash text-danger"></i> 删除</a>
+                                <div class="spec-value"><a class="btn addSpecValue" type="button"><i class="icon icon-plus"></i>添加</a></div>
                             </div>
                         </div>
                         <div class="alert alert-warning">
@@ -118,21 +118,34 @@
 <script type="text/javascript" src="/lib/uploader/oss-fileupload.js"></script>
 <script type="text/javascript" src="/lib/chosen/chosen.js"></script>
 <script type="text/javascript">
-    $('select.chosen-select').chosen({
-        no_results_text: '没有找到，回车生成该规格',    // 当检索时没有找到匹配项时显示的提示文本
-        search_contains: true         // 从任意位置开始检索
-    });
+    initChosen();
+	function initChosen(){
+        $('select.chosen-select').chosen({
+            no_results_text: '没有找到，回车生成该规格',    // 当检索时没有找到匹配项时显示的提示文本
+            search_contains: true         // 从任意位置开始检索
+        });
+    }
 
     $(".add-spec").click(function () {
-        $(".spec-warp").append("<div class='goods-spec'>1</div>");
+        $(".spec-warp").append("<div class=\"goods-spec\">\n" +
+                "                   <select data-placeholder=\"选择规格\" class=\"chosen-select form-control spec\">" +
+                "                       <option value=\"cat\">小狗</option>" +
+                "                       <option value=\"cat\">小猫</option>" +
+                "                   </select>" +
+                "                   <label class=\"checkbox-inline mgl-20 hide\">" +
+                "                       <input type=\"checkbox\" name=\"specImage\" value=\"1\">添加规格图片，仅支持为第一个规格设置图片， 建议尺寸：<span class=\"text-red\">300 x 300</span> 像素" +
+                "                   </label>" +
+                "                   <a class=\"btn btn-link del-spec\"><i class=\"icon icon-trash text-danger\"></i> 删除</a>" +
+                "                   <div class=\"spec-value\"><a class=\"btn addSpecValue\" type=\"button\"><i class=\"icon icon-plus\"></i>添加</a></div>" +
+                "               </div>");
         if ($(".goods-spec").length === 3) {
             $(this).hide();
         }
+        initChosen();
     });
 
     $(".del-spec").click(function () {
         $(this).parent().remove();
-        $(".goods-spec").eq(0).find("lable.checkbox-inline").show();
         $(".add-spec").show();
     });
 
