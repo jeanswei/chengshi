@@ -66,8 +66,18 @@
                                 <label class="checkbox-inline mgl-20 hide">
                                     <input type="checkbox" name="specImage" value="1">添加规格图片，仅支持为第一个规格设置图片， 建议尺寸：<span class="text-red">300 x 300</span> 像素
                                 </label>
-                                <a class="btn btn-link del-spec"><i class="icon icon-trash text-danger"></i> 删除</a>
-                                <div class="spec-value"><a class="btn addSpecValue" type="button"><i class="icon icon-plus"></i>添加</a></div>
+                                <button class="btn btn-link del-spec"><i class="icon icon-trash text-danger"></i> 删除</button>
+                                <div class="spec-value-wrap">
+                                    <div class="spec-value-items" data-index="0">
+                                        <div class="items-txt" data-id="51448">
+                                            <span>蓝色</span>
+                                            <div class="items-close">×</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt15"><button class="btn add-spec-value" type="button"><i class="icon icon-plus"></i>添加</button></div>
+                                <div></div>
+                                <hr>
                             </div>
                         </div>
                         <div class="alert alert-warning">
@@ -118,16 +128,75 @@
 <script type="text/javascript" src="/lib/uploader/oss-fileupload.js"></script>
 <script type="text/javascript" src="/lib/chosen/chosen.js"></script>
 <script type="text/javascript">
-    initChosen();
-	function initChosen(){
-        $('select.chosen-select').chosen({
+    init();
+
+    function init() {
+        $('.chosen-select').chosen({
             no_results_text: '没有找到，回车生成该规格',    // 当检索时没有找到匹配项时显示的提示文本
             search_contains: true         // 从任意位置开始检索
+        });
+
+        //删除规格列
+        $(".del-spec").click(function () {
+            $(this).parent().remove();
+            $(".add-spec").show();
+        });
+
+        //规格回车事件
+        $('.chosen-select.spec').bind('keydown', function (event) {
+            if (event.keyCode == "13") {
+                alert(1111);
+            }
+        });
+
+
+        //选择规格值
+        $(".set-spec-value").click(function () {
+            var $this = $(this);
+            $.each($this.prevAll(".spec-value").val(), function (index, item) {
+                $this.closest(".goods-spec").find(".spec-value-wrap")
+                        .append("<div class=\"spec-value-items\" data-index=\"" + index + "\">" +
+                                "     <div class=\"items-txt\" data-id=\"51448\">" +
+                                "           <span>" + item + "</span>" +
+                                "           <div class=\"items-close\">×</div>" +
+                                "     </div>" +
+                                "</div>");
+            });
+            $this.closest(".goods-popover").remove();
+            init();
+        });
+
+        $(".items-close").click(function () {
+            $(this).closest(".spec-value-items").remove();
+        });
+
+        //添加规格
+        $(".add-spec-value").click(function () {
+            $(this).parent().next("div").html("<div class=\"goods-popover\">" +
+                    "          <div class=\"goods-popover-inner\">" +
+                    "              <div class=\"page-tag-main\">" +
+                    "                   <div class=\"page-tag\">" +
+                    "                        <select data-placeholder=\"选择或输入规格值\" class=\"chosen-select form-control spec-value\" multiple=\"\">" +
+                    "                             <option value=\"dog\" >小狗</option>" +
+                    "                             <option value=\"cat\" >小猫</option>" +
+                    "                        </select>" +
+                    "                        <button class=\"btn btn-primary ml10 mr10 set-spec-value\">确认</button>" +
+                    "                        <button class=\"btn remove-popover\">取消</button>" +
+                    "                    </div>" +
+                    "               </div>" +
+                    "          </div>" +
+                    "          <div class=\"goods-popover-arrow goods-popover-arrow-up\"></div>" +
+                    "      </div>");
+            init();
+        });
+
+        $(".remove-popover").click(function () {
+            $(this).closest(".goods-popover").remove();
         });
     }
 
     $(".add-spec").click(function () {
-        $(".spec-warp").append("<div class=\"goods-spec\">\n" +
+        $(".spec-warp").append("<div class=\"goods-spec\">" +
                 "                   <select data-placeholder=\"选择规格\" class=\"chosen-select form-control spec\">" +
                 "                       <option value=\"cat\">小狗</option>" +
                 "                       <option value=\"cat\">小猫</option>" +
@@ -135,24 +204,15 @@
                 "                   <label class=\"checkbox-inline mgl-20 hide\">" +
                 "                       <input type=\"checkbox\" name=\"specImage\" value=\"1\">添加规格图片，仅支持为第一个规格设置图片， 建议尺寸：<span class=\"text-red\">300 x 300</span> 像素" +
                 "                   </label>" +
-                "                   <a class=\"btn btn-link del-spec\"><i class=\"icon icon-trash text-danger\"></i> 删除</a>" +
-                "                   <div class=\"spec-value\"><a class=\"btn addSpecValue\" type=\"button\"><i class=\"icon icon-plus\"></i>添加</a></div>" +
+                "                   <button class=\"btn btn-link del-spec\"><i class=\"icon icon-trash text-danger\"></i> 删除</button>" +
+		        "                   <div class=\"spec-value-wrap\"></div>" +
+                "                   <div class=\"mt15\"><button class=\"btn add-spec-value\" type=\"button\"><i class=\"icon icon-plus\"></i>添加</button></div>" +
+		        "                   <div></div><hr>" +
                 "               </div>");
         if ($(".goods-spec").length === 3) {
             $(this).hide();
         }
-        initChosen();
-    });
-
-    $(".del-spec").click(function () {
-        $(this).parent().remove();
-        $(".add-spec").show();
-    });
-
-    $('.chosen-select.spec').bind('keydown',function(event){
-        if(event.keyCode == "13") {
-            alert(1111);
-        }
+        init();
     });
 
     KindEditor.create('textarea.kindeditor', {

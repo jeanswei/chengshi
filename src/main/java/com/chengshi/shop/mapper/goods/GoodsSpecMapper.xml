@@ -1,62 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chengshi.shop.dao.goods.GoodsSpecMapper">
-  <resultMap id="BaseResultMap" type="com.chengshi.shop.model.goods.GoodsSpec">
-    <id column="spec_id" jdbcType="INTEGER" property="specId" />
-    <result column="spec_name" jdbcType="VARCHAR" property="specName" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    spec_id, spec_name
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from cs_goods_spec
-    where spec_id = #{specId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from cs_goods_spec
-    where spec_id = #{specId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.chengshi.shop.model.goods.GoodsSpec">
-    insert into cs_goods_spec (spec_id, spec_name)
-    values (#{specId,jdbcType=INTEGER}, #{specName,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.chengshi.shop.model.goods.GoodsSpec">
-    insert into cs_goods_spec
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="specId != null">
-        spec_id,
-      </if>
-      <if test="specName != null">
-        spec_name,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="specId != null">
-        #{specId,jdbcType=INTEGER},
-      </if>
-      <if test="specName != null">
-        #{specName,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.goods.GoodsSpec">
-    update cs_goods_spec
-    <set>
-      <if test="specName != null">
-        spec_name = #{specName,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where spec_id = #{specId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.goods.GoodsSpec">
-    update cs_goods_spec
-    set spec_name = #{specName,jdbcType=VARCHAR}
-    where spec_id = #{specId,jdbcType=INTEGER}
-  </update>
-  <select id="checkSpecName" parameterType="java.lang.String" resultType="java.lang.Boolean">
-    SELECT 1 FROM cs_goods_spec
-    WHERE spec_name = #{specName,jdbcType=VARCHAR}
-  </select>
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.goods.GoodsSpec">
+        <id column="spec_id" jdbcType="INTEGER" property="specId"/>
+        <result column="spec_name" jdbcType="VARCHAR" property="specName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        spec_id, spec_name
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_goods_spec
+        where spec_id = #{specId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_goods_spec
+        WHERE spec_id = #{specId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.goods.GoodsSpec">
+        INSERT INTO cs_goods_spec (spec_id, spec_name)
+        VALUES (#{specId,jdbcType=INTEGER}, #{specName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.goods.GoodsSpec">
+        insert into cs_goods_spec
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="specId != null">
+                spec_id,
+            </if>
+            <if test="specName != null">
+                spec_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="specId != null">
+                #{specId,jdbcType=INTEGER},
+            </if>
+            <if test="specName != null">
+                #{specName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.goods.GoodsSpec">
+        update cs_goods_spec
+        <set>
+            <if test="specName != null">
+                spec_name = #{specName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where spec_id = #{specId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.goods.GoodsSpec">
+        UPDATE cs_goods_spec
+        SET spec_name = #{specName,jdbcType=VARCHAR}
+        WHERE spec_id = #{specId,jdbcType=INTEGER}
+    </update>
+    <select id="checkSpecName" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        SELECT 1
+        FROM cs_goods_spec
+        WHERE spec_name = #{specName,jdbcType=VARCHAR}
+    </select>
+    <select id="getSpecList" resultMap="BaseResultMap">
+        SELECT *
+        FROM cs_goods_spec
+    </select>
 </mapper>

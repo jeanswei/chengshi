@@ -3,6 +3,8 @@ package com.chengshi.shop.dao.goods;
 import com.chengshi.shop.model.goods.GoodsSpec;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface GoodsSpecMapper {
     int deleteByPrimaryKey(Integer specId);
@@ -23,4 +25,10 @@ public interface GoodsSpecMapper {
      * @return
      */
     boolean checkSpecName(String specName);
+
+    /**
+     * 获取商品规格列表
+     * @return
+     */
+    List<GoodsSpec> getSpecList();
 }

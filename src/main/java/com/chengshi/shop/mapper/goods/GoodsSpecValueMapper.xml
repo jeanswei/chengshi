@@ -1,71 +1,81 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.chengshi.shop.dao.goods.GoodsSpecValueMapper" >
-  <resultMap id="BaseResultMap" type="com.chengshi.shop.model.goods.GoodsSpecValue" >
-    <id column="spec_value_id" property="specValueId" jdbcType="INTEGER" />
-    <result column="spec_id" property="specId" jdbcType="INTEGER" />
-    <result column="spec_value" property="specValue" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    spec_value_id, spec_id, spec_value
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from cs_goods_spec_value
-    where spec_value_id = #{specValueId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from cs_goods_spec_value
-    where spec_value_id = #{specValueId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.chengshi.shop.model.goods.GoodsSpecValue" >
-    insert into cs_goods_spec_value (spec_value_id, spec_id, spec_value
-      )
-    values (#{specValueId,jdbcType=INTEGER}, #{specId,jdbcType=INTEGER}, #{specValue,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.chengshi.shop.model.goods.GoodsSpecValue" >
-    insert into cs_goods_spec_value
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="specValueId != null" >
-        spec_value_id,
-      </if>
-      <if test="specId != null" >
-        spec_id,
-      </if>
-      <if test="specValue != null" >
-        spec_value,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="specValueId != null" >
-        #{specValueId,jdbcType=INTEGER},
-      </if>
-      <if test="specId != null" >
-        #{specId,jdbcType=INTEGER},
-      </if>
-      <if test="specValue != null" >
-        #{specValue,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.goods.GoodsSpecValue" >
-    update cs_goods_spec_value
-    <set >
-      <if test="specId != null" >
-        spec_id = #{specId,jdbcType=INTEGER},
-      </if>
-      <if test="specValue != null" >
-        spec_value = #{specValue,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where spec_value_id = #{specValueId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.goods.GoodsSpecValue" >
-    update cs_goods_spec_value
-    set spec_id = #{specId,jdbcType=INTEGER},
-      spec_value = #{specValue,jdbcType=VARCHAR}
-    where spec_value_id = #{specValueId,jdbcType=INTEGER}
-  </update>
+<mapper namespace="com.chengshi.shop.dao.goods.GoodsSpecValueMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.goods.GoodsSpecValue">
+        <id column="spec_value_id" property="specValueId" jdbcType="INTEGER"/>
+        <result column="spec_id" property="specId" jdbcType="INTEGER"/>
+        <result column="spec_value" property="specValue" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        spec_value_id, spec_id, spec_value
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_goods_spec_value
+        where spec_value_id = #{specValueId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_goods_spec_value
+        WHERE spec_value_id = #{specValueId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.goods.GoodsSpecValue">
+        INSERT INTO cs_goods_spec_value (spec_value_id, spec_id, spec_value
+        )
+        VALUES (#{specValueId,jdbcType=INTEGER}, #{specId,jdbcType=INTEGER}, #{specValue,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.goods.GoodsSpecValue">
+        insert into cs_goods_spec_value
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="specValueId != null">
+                spec_value_id,
+            </if>
+            <if test="specId != null">
+                spec_id,
+            </if>
+            <if test="specValue != null">
+                spec_value,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="specValueId != null">
+                #{specValueId,jdbcType=INTEGER},
+            </if>
+            <if test="specId != null">
+                #{specId,jdbcType=INTEGER},
+            </if>
+            <if test="specValue != null">
+                #{specValue,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.goods.GoodsSpecValue">
+        update cs_goods_spec_value
+        <set>
+            <if test="specId != null">
+                spec_id = #{specId,jdbcType=INTEGER},
+            </if>
+            <if test="specValue != null">
+                spec_value = #{specValue,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where spec_value_id = #{specValueId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.goods.GoodsSpecValue">
+        UPDATE cs_goods_spec_value
+        SET spec_id    = #{specId,jdbcType=INTEGER},
+            spec_value = #{specValue,jdbcType=VARCHAR}
+        WHERE spec_value_id = #{specValueId,jdbcType=INTEGER}
+    </update>
+    <select id="checkSpecValue" resultType="java.lang.Boolean">
+        SELECT 1
+        FROM cs_goods_spec_value
+        WHERE spec_id = #{specId,jdbcType=INTEGER}
+              AND spec_value = #{specValue,jdbcType=VARCHAR}
+    </select>
+    <select id="getSpecValueList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT * FROM cs_goods_spec_value
+        WHERE spec_id = #{specId,jdbcType=INTEGER}
+    </select>
 </mapper>

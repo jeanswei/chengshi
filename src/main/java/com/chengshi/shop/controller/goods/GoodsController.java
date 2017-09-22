@@ -2,10 +2,8 @@ package com.chengshi.shop.controller.goods;
 
 import com.chengshi.shop.model.goods.Goods;
 import com.chengshi.shop.model.goods.GoodsImage;
-import com.chengshi.shop.model.goods.GoodsSpec;
 import com.chengshi.shop.service.goods.GoodsImageService;
 import com.chengshi.shop.service.goods.GoodsService;
-import com.chengshi.shop.service.goods.GoodsSpecService;
 import com.chengshi.shop.util.MessageUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -31,8 +29,7 @@ public class GoodsController {
     private GoodsService goodsService;
     @Resource
     private GoodsImageService goodsImageService;
-    @Resource
-    private GoodsSpecService goodsSpecService;
+
 
     @Value("${img_url}")
     private String IMG_URL;
@@ -134,23 +131,4 @@ public class GoodsController {
         return new ModelAndView("admin/goods/goodsChooseList");
     }
 
-    /**
-     * 新建规格
-     * @param goodsSpec
-     * @return
-     */
-    @PostMapping(value = "saveSpec")
-    public HashMap<String, Object> saveSpec(@ModelAttribute GoodsSpec goodsSpec){
-        HashMap<String, Object> retMap = MessageUtils.success();
-        try {
-            if (goodsSpecService.checkSpecName(goodsSpec.getSpecName())){
-                goodsSpecService.saveSpec(goodsSpec);
-            } else {
-                retMap = MessageUtils.error("该规格已存在");
-            }
-        } catch (Exception e) {
-            retMap = MessageUtils.error();
-        }
-        return retMap;
-    }
 }
