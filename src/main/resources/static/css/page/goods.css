@@ -172,10 +172,10 @@
     background: rgba(153, 153, 153, 0.6);
 }
 
-.table input{
-    width: 100px;
+.table .input-group{
+    width: 120px;
 }
 
-.table span{
+.table .spec-value-text{
     line-height: 32px;
 }

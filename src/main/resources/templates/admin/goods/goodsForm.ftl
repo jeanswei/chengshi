@@ -91,7 +91,7 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label required">价格库存：</label>
                     <div class="col-md-8">
-                        <table class="table datatable">
+                        <table class="table datatable product-table">
 
                         </table>
                     </div>
@@ -202,21 +202,15 @@
                                 "     </div>" +
                                 "</div>");
             });
-            //遍历规格构造数据表格
-            $.each($(".goods-spec"), function (index, item) {
-                var specId = $(item).find('.select2.spec').val();
-                var specName = $(item).find('.select2.spec').text();
-                $.each($(item).find(".spec-value-wrap .spec-value-items"), function (i, e) {
-	                var specValueId = $(e).attr("data-id");
-	                var specValue = $(e).attr("data-text");
-                })
-
-            });
+            //生成货品
+            generateProduct();
             $this.closest(".goods-popover").remove();
             init();
         });
 
         $(".items-close").click(function () {
+            //生成货品
+            generateProduct();
             $(this).closest(".spec-value-items").remove();
         });
 
@@ -266,7 +260,7 @@
                     $.ajax({
                         url: "/admin/saveSpecValue",
                         type: "post",
-                        data: {specId: specId,specValue: text},
+                        data: {specId: specId, specValue: text},
                         async: false,
                         success: function (res) {
                             if (res.errorCode == "y") {
@@ -360,5 +354,36 @@
 
     function deleteFile(e) {
         $(e).closest(".file-thumb").remove();
+    }
+
+    function generateProduct() {
+        var thHtml = "";
+        var trHtml = "";
+        //遍历规格构造数据表格
+        $.each($(".goods-spec"), function (index, item) {
+            var specId = $(item).find('.select2.spec').val();
+            var specName = $(item).find('.select2.spec').text();
+            $.each($(item).find(".spec-value-wrap .spec-value-items"), function (i, e) {
+                var specValueId = $(e).attr("data-id");
+                var specValue = $(e).attr("data-text");
+                trHtml += "                   <tr>" +
+                        "                         <td><span class=\"spec-value-text\">蓝色</span></td>" +
+                        "                         <td><div class=\"input-group\"><input type=\"number\" name=\"marktPrice\" required money=\"true\" value=\"99.99\" placeholder=\"请输入\" class=\"form-control\"><span class=\"input-group-addon\">元</span></div></td>" +
+                        "                         <td><div class=\"input-group\"><input type=\"number\" name=\"price\" required money=\"true\" value=\"29.80\" placeholder=\"请输入\" class=\"form-control\"><span class=\"input-group-addon\">元</span></div></td>" +
+                        "                         <td><div class=\"input-group\"><input type=\"number\" name=\"store\" required digits=\"true\" value=\"80\" placeholder=\"请输入\" class=\"form-control\"><span class=\"input-group-addon\">件</span></div></td>" +
+                        "                     </tr>" +
+            });
+            thHtml += "<th>"+specName+"</th>";
+        });
+        $(".product-table").html("<thead>" +
+                "                    <tr>" + thHtml +
+                "                       <th>市场价</th>" +
+                "                       <th>销售价</th>" +
+                "                       <th>库存</th>" +
+                "                    </tr>" +
+                "                 </thead>" +
+                "                 <tbody>" +
+
+                "                 </tbody>")
     }
 </script>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
+    <property name="LOG_HOME" value="${catalina.base}/mylogs" />
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+        <pattern>%d{yyyy-MM-dd HH:mm:ss} [%level] [%class:%line] - %m %n</pattern>
+        <charset>utf-8</charset>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+        <level>DEBUG</level>
+    </filter>
+    </appender>
+    <!-- 按照每天生成日志文件 -->
+    <appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <FileNamePattern>${LOG_HOME}/logback-%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <!--日志文件最大的大小-->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>50MB</MaxFileSize>
+        </triggeringPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!-- 错误日志 -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 循环政策：基于时间创建日志文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志命名:单个文件大于2MB 按照时间+自增i 生成log文件 -->
+            <fileNamePattern>${LOG_HOME}/logback-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>30MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!-- 最大保存时间：60天-->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <append>true</append>
+        <!-- 日志格式 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger Line:%-3L - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <!-- 日志级别过滤器 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+             <!-- 过滤的级别 -->
+             <level>ERROR</level>
+             <!-- 匹配时的操作：接收（记录） -->
+             <onMatch>ACCEPT</onMatch>
+             <!-- 不匹配时的操作：拒绝（不记录） -->
+             <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>    
+
+	<logger name="com.apache.ibatis" level="ERROR"/>
+	<logger name="org.mybatis.spring" level="ERROR"/>
+	<logger name="java.sql.Connection" level="ERROR"/>
+	<logger name="java.sql.Statement" level="ERROR"/>
+	<logger name="java.sql.PreparedStatement" level="ERROR"/>
+	
+	<!-- 业务debug日志 -->
+ 	<logger name="com.spring" level="ERROR"/>
+
+    <!-- * 通配符 设置log打印级别 对所有类有效TRACE, DEBUG, INFO, WARN, ERROR, ALL 和 OFF-->
+    <!--将上面的appender添加到root-->
+    <root level="ERROR">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="ERROR_FILE" />
+    </root>
+</configuration>
