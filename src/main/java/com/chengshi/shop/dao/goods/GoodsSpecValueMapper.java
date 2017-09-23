@@ -31,7 +31,8 @@ public interface GoodsSpecValueMapper {
     /**
      * 商品规格值列表
      * @param specId
+     * @param specValue
      * @return
      */
-    List<GoodsSpecValue> getSpecValueList(Integer specId);
+    List<GoodsSpecValue> getSpecValueList(@Param("specId") Integer specId,@Param("specValue") String specValue);
 }

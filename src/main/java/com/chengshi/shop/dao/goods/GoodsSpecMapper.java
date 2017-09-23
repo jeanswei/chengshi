@@ -1,6 +1,7 @@
 package com.chengshi.shop.dao.goods;
 
 import com.chengshi.shop.model.goods.GoodsSpec;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public interface GoodsSpecMapper {
 
     /**
      * 检查是否存在该规格
+     *
      * @param specName
      * @return
      */
@@ -28,7 +30,9 @@ public interface GoodsSpecMapper {
 
     /**
      * 获取商品规格列表
+     *
+     * @param specName
      * @return
      */
-    List<GoodsSpec> getSpecList();
+    List<GoodsSpec> getSpecList(@Param(value = "specName") String specName);
 }

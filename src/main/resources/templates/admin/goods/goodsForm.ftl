@@ -1,7 +1,8 @@
 <#include "/admin/common/header.ftl">
 <link href="/css/page/goods.css" rel="stylesheet">
 <link href="/css/page/pictureSpace.css" rel="stylesheet">
-<link href="/lib/chosen/chosen.min.css" rel="stylesheet">
+<link href="/lib/select2/css/select2.css" rel="stylesheet"/>
+<link href="/lib/datatable/zui.datatable.min.css" rel="stylesheet">
 <body>
 <form id="infoFrom" class="form-horizontal" data-toggle="validator">
     <input type="hidden" name="goodsId" value="${goods.goodsId!}">
@@ -59,11 +60,8 @@
                     <div class="col-md-8">
                         <div class="spec-warp">
                             <div class="goods-spec">
-                                <select data-placeholder="选择规格" class="chosen-select form-control spec">
-                                    <option value="cat">小狗</option>
-                                    <option value="cat">小猫</option>
-                                </select>
-                                <label class="checkbox-inline mgl-20 hide">
+                                <select data-placeholder="选择或输入规格" class="select2 form-control spec"></select>
+                                <label class="checkbox-inline ml-20 hide">
                                     <input type="checkbox" name="specImage" value="1">添加规格图片，仅支持为第一个规格设置图片， 建议尺寸：<span class="text-red">300 x 300</span> 像素
                                 </label>
                                 <button class="btn btn-link del-spec"><i class="icon icon-trash text-danger"></i> 删除</button>
@@ -75,7 +73,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt15"><button class="btn add-spec-value" type="button"><i class="icon icon-plus"></i>添加</button></div>
+                                <div class="mt15">
+                                    <button class="btn add-spec-value" type="button"><i class="icon icon-plus"></i>添加</button>
+                                </div>
                                 <div></div>
                                 <hr>
                             </div>
@@ -86,6 +86,14 @@
                             ，请谨慎操作。
                         </div>
                         <button class="btn btn-primary add-spec" type="button"><i class="icon icon-plus"></i>添加规格</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label required">价格库存：</label>
+                    <div class="col-md-8">
+                        <table class="table datatable">
+
+                        </table>
                     </div>
                 </div>
             </div>
@@ -126,14 +134,54 @@
 <script type="text/javascript" src="/lib/kindeditor/kindeditor.min.js"></script>
 <script type="text/javascript" src="/lib/uploader/plupload.full.min.js"></script>
 <script type="text/javascript" src="/lib/uploader/oss-fileupload.js"></script>
-<script type="text/javascript" src="/lib/chosen/chosen.js"></script>
+<script type="text/javascript" src="/lib/select2/js/select2.full.min.js"></script>
+<script type="text/javascript" src="/lib/select2/js/i18n/zh-CN.js"></script>
+<script type="text/javascript" src="/lib/datatable/zui.datatable.min.js"></script>
 <script type="text/javascript">
     init();
 
     function init() {
-        $('.chosen-select').chosen({
-            no_results_text: '没有找到，回车生成该规格',    // 当检索时没有找到匹配项时显示的提示文本
-            search_contains: true         // 从任意位置开始检索
+        $('.select2.spec').select2({
+            language: "zh-CN",
+            ajax: {
+                url: "/admin/getSpecList",
+                type: "get",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        specName: params.term
+                    };
+                },
+                processResults: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        data[i].id = data[i].specId;
+                        data[i].text = data[i].specName;
+                    }
+                    return {
+                        results: data
+                    };
+                }
+            },
+            tags: true,
+            createTag: function (params) {
+                var id = params.term, text = params.term;
+                $.ajax({
+                    url: "/admin/saveSpec",
+                    type: "post",
+                    data: {specName: text},
+                    async: false,
+                    success: function (res) {
+                        if (res.errorCode == "y") {
+                            id = res.spec.specId;
+                        }
+                    }
+                });
+                return {
+                    id: id,
+                    text: text
+                }
+            }
         });
 
         //删除规格列
@@ -142,25 +190,27 @@
             $(".add-spec").show();
         });
 
-        //规格回车事件
-        $('.chosen-select.spec').bind('keydown', function (event) {
-            if (event.keyCode == "13") {
-                alert(1111);
-            }
-        });
-
-
         //选择规格值
         $(".set-spec-value").click(function () {
             var $this = $(this);
-            $.each($this.prevAll(".spec-value").val(), function (index, item) {
+            $.each($this.closest(".goods-spec").find('.select2.spec-value').select2("data"), function (index, item) {
                 $this.closest(".goods-spec").find(".spec-value-wrap")
-                        .append("<div class=\"spec-value-items\" data-index=\"" + index + "\">" +
-                                "     <div class=\"items-txt\" data-id=\"51448\">" +
-                                "           <span>" + item + "</span>" +
+                        .append("<div class=\"spec-value-items\" data-index=\"" + index + "\" data-id=\"" + item.id + "\" data-text=\"" + item.text + "\">" +
+                                "     <div class=\"items-txt\">" +
+                                "           <span>" + item.text + "</span>" +
                                 "           <div class=\"items-close\">×</div>" +
                                 "     </div>" +
                                 "</div>");
+            });
+            //遍历规格构造数据表格
+            $.each($(".goods-spec"), function (index, item) {
+                var specId = $(item).find('.select2.spec').val();
+                var specName = $(item).find('.select2.spec').text();
+                $.each($(item).find(".spec-value-wrap .spec-value-items"), function (i, e) {
+	                var specValueId = $(e).attr("data-id");
+	                var specValue = $(e).attr("data-text");
+                })
+
             });
             $this.closest(".goods-popover").remove();
             init();
@@ -170,15 +220,14 @@
             $(this).closest(".spec-value-items").remove();
         });
 
-        //添加规格
+        //添加规格值
         $(".add-spec-value").click(function () {
+            var specId = $(this).closest(".goods-spec").find('.select2.spec').select2("val");
             $(this).parent().next("div").html("<div class=\"goods-popover\">" +
                     "          <div class=\"goods-popover-inner\">" +
                     "              <div class=\"page-tag-main\">" +
                     "                   <div class=\"page-tag\">" +
-                    "                        <select data-placeholder=\"选择或输入规格值\" class=\"chosen-select form-control spec-value\" multiple=\"\">" +
-                    "                             <option value=\"dog\" >小狗</option>" +
-                    "                             <option value=\"cat\" >小猫</option>" +
+                    "                        <select data-placeholder=\"选择或输入规格值\" class=\"select2 form-control spec-value\" multiple=\"\">" +
                     "                        </select>" +
                     "                        <button class=\"btn btn-primary ml10 mr10 set-spec-value\">确认</button>" +
                     "                        <button class=\"btn remove-popover\">取消</button>" +
@@ -187,6 +236,51 @@
                     "          </div>" +
                     "          <div class=\"goods-popover-arrow goods-popover-arrow-up\"></div>" +
                     "      </div>");
+
+            $('.select2.spec-value').select2({
+                maximumSelectionLength: 10,
+                language: "zh-CN",
+                ajax: {
+                    url: "/admin/getSpecValueList?specId=" + specId,
+                    type: "get",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            specValue: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            data[i].id = data[i].specValueId;
+                            data[i].text = data[i].specValue;
+                        }
+                        return {
+                            results: data
+                        };
+                    }
+                },
+                tags: true,//允许手动添加
+                createTag: function (params) {
+                    var id = params.term, text = params.term;
+                    $.ajax({
+                        url: "/admin/saveSpecValue",
+                        type: "post",
+                        data: {specId: specId,specValue: text},
+                        async: false,
+                        success: function (res) {
+                            if (res.errorCode == "y") {
+                                id = res.specValue.specValueId;
+                            }
+                        }
+                    });
+                    return {
+                        id: id,
+                        text: text
+                    }
+                }
+            });
+
             init();
         });
 
@@ -195,19 +289,18 @@
         });
     }
 
+    //添加规格
     $(".add-spec").click(function () {
         $(".spec-warp").append("<div class=\"goods-spec\">" +
-                "                   <select data-placeholder=\"选择规格\" class=\"chosen-select form-control spec\">" +
-                "                       <option value=\"cat\">小狗</option>" +
-                "                       <option value=\"cat\">小猫</option>" +
+                "                   <select data-placeholder=\"选择或输入规格\" class=\"select2 form-control spec\">" +
                 "                   </select>" +
-                "                   <label class=\"checkbox-inline mgl-20 hide\">" +
+                "                   <label class=\"checkbox-inline ml-20 hide\">" +
                 "                       <input type=\"checkbox\" name=\"specImage\" value=\"1\">添加规格图片，仅支持为第一个规格设置图片， 建议尺寸：<span class=\"text-red\">300 x 300</span> 像素" +
                 "                   </label>" +
                 "                   <button class=\"btn btn-link del-spec\"><i class=\"icon icon-trash text-danger\"></i> 删除</button>" +
-		        "                   <div class=\"spec-value-wrap\"></div>" +
+                "                   <div class=\"spec-value-wrap\"></div>" +
                 "                   <div class=\"mt15\"><button class=\"btn add-spec-value\" type=\"button\"><i class=\"icon icon-plus\"></i>添加</button></div>" +
-		        "                   <div></div><hr>" +
+                "                   <div></div><hr>" +
                 "               </div>");
         if ($(".goods-spec").length === 3) {
             $(this).hide();

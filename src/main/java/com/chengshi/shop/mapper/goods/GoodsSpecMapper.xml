@@ -18,11 +18,11 @@
         DELETE FROM cs_goods_spec
         WHERE spec_id = #{specId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.chengshi.shop.model.goods.GoodsSpec">
+    <insert id="insert" parameterType="com.chengshi.shop.model.goods.GoodsSpec" keyProperty="specId" useGeneratedKeys="true">
         INSERT INTO cs_goods_spec (spec_id, spec_name)
         VALUES (#{specId,jdbcType=INTEGER}, #{specName,jdbcType=VARCHAR})
     </insert>
-    <insert id="insertSelective" parameterType="com.chengshi.shop.model.goods.GoodsSpec">
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.goods.GoodsSpec" keyProperty="specId" useGeneratedKeys="true">
         insert into cs_goods_spec
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="specId != null">
@@ -56,12 +56,17 @@
         WHERE spec_id = #{specId,jdbcType=INTEGER}
     </update>
     <select id="checkSpecName" parameterType="java.lang.String" resultType="java.lang.Boolean">
-        SELECT 1
+        SELECT IF(COUNT(1) > 0, 0, 1)
         FROM cs_goods_spec
         WHERE spec_name = #{specName,jdbcType=VARCHAR}
     </select>
-    <select id="getSpecList" resultMap="BaseResultMap">
+    <select id="getSpecList" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT *
         FROM cs_goods_spec
+        WHERE 1=1
+        <if test="specName !=null and specName!='' ">
+            and spec_name LIKE '%${specName}%'
+        </if>
+        ORDER BY spec_id DESC
     </select>
 </mapper>

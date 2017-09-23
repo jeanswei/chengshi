@@ -26,8 +26,8 @@ public class GoodsSpecController {
      * @return
      */
     @GetMapping(value = "getSpecList")
-    public List<GoodsSpec> getSpecList(){
-        return goodsSpecService.getSpecList();
+    public List<GoodsSpec> getSpecList(@RequestParam(required = false) String specName){
+        return goodsSpecService.getSpecList(specName);
     }
 
     /**
@@ -36,8 +36,8 @@ public class GoodsSpecController {
      * @return
      */
     @GetMapping(value = "getSpecValueList")
-    public List<GoodsSpecValue> getSpecValueList(@RequestParam Integer specId){
-        return goodsSpecService.getSpecValueList(specId);
+    public List<GoodsSpecValue> getSpecValueList(@RequestParam Integer specId, @RequestParam(required = false) String specValue){
+        return goodsSpecService.getSpecValueList(specId, specValue);
     }
 
     /**
@@ -51,6 +51,7 @@ public class GoodsSpecController {
         try {
             if (goodsSpecService.checkSpecName(goodsSpec.getSpecName())){
                 goodsSpecService.saveSpec(goodsSpec);
+                retMap.put("spec", goodsSpec);
             } else {
                 retMap = MessageUtils.error("该规格已存在");
             }
@@ -71,6 +72,7 @@ public class GoodsSpecController {
         try {
             if (goodsSpecService.checkSpecValue(goodsSpecValue.getSpecId(), goodsSpecValue.getSpecValue())){
                 goodsSpecService.saveSpecValue(goodsSpecValue);
+                retMap.put("specValue", goodsSpecValue);
             } else {
                 retMap = MessageUtils.error("该规格值已存在");
             }

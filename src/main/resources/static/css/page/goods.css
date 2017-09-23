@@ -171,3 +171,11 @@
     cursor: pointer;
     background: rgba(153, 153, 153, 0.6);
 }
+
+.table input{
+    width: 100px;
+}
+
+.table span{
+    line-height: 32px;
+}

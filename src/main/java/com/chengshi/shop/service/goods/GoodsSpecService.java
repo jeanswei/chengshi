@@ -42,13 +42,15 @@ public interface GoodsSpecService {
     /**
      * 获取商品规格列表
      * @return
+     * @param specName
      */
-    List<GoodsSpec> getSpecList();
+    List<GoodsSpec> getSpecList(String specName);
 
     /**
      * 获取商品规格值列表
      * @param specId
+     * @param specValue
      * @return
      */
-    List<GoodsSpecValue> getSpecValueList(Integer specId);
+    List<GoodsSpecValue> getSpecValueList(Integer specId, String specValue);
 }

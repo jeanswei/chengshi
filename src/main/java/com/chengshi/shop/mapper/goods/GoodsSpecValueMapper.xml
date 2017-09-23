@@ -19,13 +19,13 @@
         DELETE FROM cs_goods_spec_value
         WHERE spec_value_id = #{specValueId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.chengshi.shop.model.goods.GoodsSpecValue">
+    <insert id="insert" parameterType="com.chengshi.shop.model.goods.GoodsSpecValue" useGeneratedKeys="true" keyProperty="specValueId">
         INSERT INTO cs_goods_spec_value (spec_value_id, spec_id, spec_value
         )
         VALUES (#{specValueId,jdbcType=INTEGER}, #{specId,jdbcType=INTEGER}, #{specValue,jdbcType=VARCHAR}
         )
     </insert>
-    <insert id="insertSelective" parameterType="com.chengshi.shop.model.goods.GoodsSpecValue">
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.goods.GoodsSpecValue" useGeneratedKeys="true" keyProperty="specValueId">
         insert into cs_goods_spec_value
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="specValueId != null">
@@ -69,13 +69,17 @@
         WHERE spec_value_id = #{specValueId,jdbcType=INTEGER}
     </update>
     <select id="checkSpecValue" resultType="java.lang.Boolean">
-        SELECT 1
+        SELECT IF(COUNT(1) > 0, 0, 1)
         FROM cs_goods_spec_value
         WHERE spec_id = #{specId,jdbcType=INTEGER}
               AND spec_value = #{specValue,jdbcType=VARCHAR}
     </select>
-    <select id="getSpecValueList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="getSpecValueList" resultMap="BaseResultMap">
         SELECT * FROM cs_goods_spec_value
         WHERE spec_id = #{specId,jdbcType=INTEGER}
+        <if test="specValue!=null and specValue!='' ">
+            and spec_value LIKE '%${specValue}%'
+        </if>
+        ORDER BY spec_value_id DESC
     </select>
 </mapper>

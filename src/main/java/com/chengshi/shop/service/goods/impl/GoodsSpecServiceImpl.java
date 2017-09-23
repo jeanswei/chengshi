@@ -78,20 +78,22 @@ public class GoodsSpecServiceImpl implements GoodsSpecService {
      * 获取商品规格列表
      *
      * @return
+     * @param specName
      */
     @Override
-    public List<GoodsSpec> getSpecList() {
-        return goodsSpecMapper.getSpecList();
+    public List<GoodsSpec> getSpecList(String specName) {
+        return goodsSpecMapper.getSpecList(specName);
     }
 
     /**
      * 获取商品规格值列表
      *
      * @param specId
+     * @param specValue
      * @return
      */
     @Override
-    public List<GoodsSpecValue> getSpecValueList(Integer specId) {
-        return goodsSpecValueMapper.getSpecValueList(specId);
+    public List<GoodsSpecValue> getSpecValueList(Integer specId, String specValue) {
+        return goodsSpecValueMapper.getSpecValueList(specId, specValue);
     }
 }
