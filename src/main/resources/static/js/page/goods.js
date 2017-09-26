@@ -176,6 +176,8 @@ $(".add-spec").click(function () {
 //初始化富文本编辑器
 var editor = new wangEditor('#editor');
 editor.customConfig.zIndex = 100;
+// 关闭粘贴样式的过滤
+editor.customConfig.pasteFilterStyle = false;
 editor.create();
 
 $("#infoFrom").validate({
@@ -448,9 +450,8 @@ $("#process").mergeCell({
     cols: arrayColumn
 });
 
-$('.w-e-menu i.w-e-icon-image').parent().on('click', function (e) {
+$('.w-e-menu i.w-e-icon-image').parent().on('click', function () {
     dlg.show({remote: '/admin/pictureSpace?isEditor=1'});
-    e.stopPropagation();
 });
 
 function returnEditorPicture(pictureData) {

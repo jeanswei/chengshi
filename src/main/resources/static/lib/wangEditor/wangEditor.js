@@ -2580,7 +2580,8 @@ Image.prototype = {
             width: 300,
             tabs: tabsConfigResult
         });
-        panel.show();
+        //阻止默认上传图片显示
+        // panel.show();
 
         // 记录属性
         this.panel = panel;
