@@ -40,10 +40,11 @@ public class PictureController {
      * @return
      */
     @GetMapping(value = "pictureSpace")
-    public ModelAndView pictureSpace() {
+    public ModelAndView pictureSpace(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/picture/pictureSpace");
         List<AlbumFolder> folderList = pictureService.getFolderList();
         mav.addObject("folderList", folderList);
+        mav.addObject("isEditor", request.getParameter("isEditor"));
         return mav;
     }
 

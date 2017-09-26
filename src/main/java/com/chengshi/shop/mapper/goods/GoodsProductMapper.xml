@@ -131,5 +131,6 @@
         FROM cs_goods_product
         WHERE goods_id = #{goodsId,jdbcType=INTEGER}
               AND is_delete = 0
+        ORDER BY product_id DESC
     </select>
 </mapper>

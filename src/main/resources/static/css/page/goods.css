@@ -39,8 +39,8 @@
     margin: 20px;
 }
 
-.kindeditor {
-    height: 500px !important;
+.w-e-text-container {
+    height: 400px !important;
 }
 
 .del-spec {
@@ -48,6 +48,10 @@
 }
 
 .goods-spec {
+    margin-bottom: 20px;
+}
+
+.add-spec{
     margin-bottom: 20px;
 }
 
@@ -172,6 +176,12 @@
     background: rgba(153, 153, 153, 0.6);
 }
 
-.table .input-group{
+#product-table .input-group{
     width: 120px;
+    margin: 0 auto;
+}
+
+#product-table th,#product-table td{
+    text-align: center;
+    vertical-align: middle
 }

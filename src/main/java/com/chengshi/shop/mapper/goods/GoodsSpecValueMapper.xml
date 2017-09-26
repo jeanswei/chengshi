@@ -80,7 +80,6 @@
         <if test="specValue!=null and specValue!='' ">
             and spec_value LIKE '%${specValue}%'
         </if>
-        ORDER BY spec_value_id DESC
     </select>
     <select id="getListBySpecIdAndGoodsId" resultMap="BaseResultMap">
         SELECT * FROM cs_goods_product_spec

@@ -9,6 +9,7 @@ import com.chengshi.shop.model.goods.GoodsProductSpec;
 import com.chengshi.shop.model.goods.GoodsSpec;
 import com.chengshi.shop.model.goods.GoodsSpecValue;
 import com.chengshi.shop.service.goods.GoodsProductService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,17 +45,19 @@ public class GoodsProductServiceImpl implements GoodsProductService {
         } else {
             goodsProductMapper.insertSelective(goodsProduct);
             //生成货品拥有商品规格表
-            for (String specIdAndValueId : goodsProduct.getSpecIdAndValueId().split(";")){
-                GoodsProductSpec goodsProductSpec = new GoodsProductSpec();
-                goodsProductSpec.setGoodsId(goodsProduct.getGoodsId());
-                goodsProductSpec.setProductId(goodsProduct.getProductId());
-                goodsProductSpec.setSpecId(Integer.valueOf(specIdAndValueId.split(":")[0]));
-                GoodsSpec goodsSpec = goodsSpecMapper.selectByPrimaryKey(Integer.valueOf(specIdAndValueId.split(":")[0]));
-                goodsProductSpec.setSpecName(goodsSpec.getSpecName());
-                goodsProductSpec.setSpecValueId(Integer.valueOf(specIdAndValueId.split(":")[1]));
-                GoodsSpecValue goodsSpecValue = goodsSpecValueMapper.selectByPrimaryKey(Integer.valueOf(specIdAndValueId.split(":")[1]));
-                goodsProductSpec.setSpecValue(goodsSpecValue.getSpecValue());
-                goodsProductSpecMapper.insertSelective(goodsProductSpec);
+            if (StringUtils.isNotBlank(goodsProduct.getSpecIdAndValueId())){
+                for (String specIdAndValueId : goodsProduct.getSpecIdAndValueId().split(";")){
+                    GoodsProductSpec goodsProductSpec = new GoodsProductSpec();
+                    goodsProductSpec.setGoodsId(goodsProduct.getGoodsId());
+                    goodsProductSpec.setProductId(goodsProduct.getProductId());
+                    goodsProductSpec.setSpecId(Integer.valueOf(specIdAndValueId.split(":")[0]));
+                    GoodsSpec goodsSpec = goodsSpecMapper.selectByPrimaryKey(Integer.valueOf(specIdAndValueId.split(":")[0]));
+                    goodsProductSpec.setSpecName(goodsSpec.getSpecName());
+                    goodsProductSpec.setSpecValueId(Integer.valueOf(specIdAndValueId.split(":")[1]));
+                    GoodsSpecValue goodsSpecValue = goodsSpecValueMapper.selectByPrimaryKey(Integer.valueOf(specIdAndValueId.split(":")[1]));
+                    goodsProductSpec.setSpecValue(goodsSpecValue.getSpecValue());
+                    goodsProductSpecMapper.insertSelective(goodsProductSpec);
+                }
             }
         }
     }

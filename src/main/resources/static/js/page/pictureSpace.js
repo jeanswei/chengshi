@@ -241,6 +241,10 @@ $(function () {
             return {imgUrl: $(e).attr("data-src"), thumbnail: $(e).closest(".card").find("img").attr("src")};
         });
         //选择图片带回
-        returnPicture(pictureData);
+        if (isEditor==1){
+            returnEditorPicture(pictureData);
+        } else {
+            returnPicture(pictureData);
+        }
     });
 });

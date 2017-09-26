@@ -19,7 +19,7 @@
 </style>
 <body>
 <form id="infoFrom" class="form-horizontal" data-toggle="validator">
-    <input type="hidden" name="couponId" value="${coupon.couponId!?c}">
+    <input type="hidden" name="couponId" value="${coupon.couponId!}">
     <div class="panel-group">
         <div class="panel">
             <div class="panel-heading">基本信息</div>
@@ -218,7 +218,7 @@
 
     var dg = $('#dataGrid').bootstrapTable({
         method: "get",//请求方式
-        url: "/admin/getCouponGoodsList?couponId=${coupon.couponId!?c}",//数据源
+        url: "/admin/getCouponGoodsList?couponId=${coupon.couponId!}",//数据源
         uniqueId: "id",
         dataField: "list",
         queryParamsType: "",

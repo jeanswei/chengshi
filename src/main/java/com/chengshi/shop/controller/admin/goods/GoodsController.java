@@ -94,6 +94,9 @@ public class GoodsController {
             goods.setSpecList(specList);
 
             List<GoodsProduct> productList = goodsProductService.getProductList(goodsId);
+            for (GoodsProduct goodsProduct : productList){
+                goodsProduct.setSpecValueList(goodsSpecService.getSpecValueListByProductId(goodsProduct.getProductId()));
+            }
             goods.setProductList(productList);
         }
         mav.addObject("goods", goods);

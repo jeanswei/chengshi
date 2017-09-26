@@ -16,9 +16,9 @@
                     <div class="cs-space-left col-md-2">
 					<#list folderList as folder>
 						<#if folder_index==0>
-                            <a href="#" data-id="${folder.albumId?c}" class="list-navbar active">${folder.albumName}<span class="label label-badge pull-right">${folder.picNum}</span></a>
+                            <a href="#" data-id="${folder.albumId}" class="list-navbar active">${folder.albumName}<span class="label label-badge pull-right">${folder.picNum}</span></a>
 						<#else>
-                            <a href="#" data-id="${folder.albumId?c}" class="list-navbar">${folder.albumName}<span class="label label-badge pull-right">${folder.picNum}</span></a>
+                            <a href="#" data-id="${folder.albumId}" class="list-navbar">${folder.albumName}<span class="label label-badge pull-right">${folder.picNum}</span></a>
 						</#if>
 					</#list>
                     </div>
@@ -36,4 +36,7 @@
         <button type="button" class="btn btn-primary choosePicture">确认</button>
     </div>
 </div>
+<script>
+    var isEditor = "${isEditor!}";
+</script>
 <script type="text/javascript" src="/js/page/pictureSpace.js"></script>

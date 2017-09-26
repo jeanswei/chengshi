@@ -173,11 +173,10 @@ $(".add-spec").click(function () {
     init();
 });
 
-KindEditor.create('textarea.kindeditor', {
-    basePath: '/lib/kindeditor/',
-    allowFileManager: true,
-    bodyClass: 'article-content'
-});
+//初始化富文本编辑器
+var editor = new wangEditor('#editor');
+editor.customConfig.zIndex = 100;
+editor.create();
 
 $("#infoFrom").validate({
     errorPlacement: function (error, element) {
@@ -188,6 +187,7 @@ $("#infoFrom").validate({
         }
     },
     submitHandler: function (form) {
+        $("input[name='goodsDesc']").val(editor.txt.html());
         $(form).ajaxSubmit({
             type: 'POST',
             url: '/admin/saveGoods',
@@ -243,7 +243,7 @@ var step = {
             var specName = $(item).find('.select2.spec').select2("data")[0].text;
             var specValueItems = $(item).find(".spec-value-wrap .spec-value-items");
             //有规格值时
-            if (specValueItems.length>0){
+            if (specValueItems.length > 0) {
                 arrayTitle.push(specName);
             }
 
@@ -304,6 +304,26 @@ var step = {
                     '           <input type="hidden" name="productList[' + index + '].productId">';
                 tr.append(str);
             });
+        } else {
+            // 创建表头
+            trHead.append('<th>规格</th><th>市场价</th><th>销售价</th><th>库存</th>');
+            var tbody = $('<tbody></tbody>');
+            tbody.appendTo(table);
+            //创建行
+            var tr = $('<tr></tr>');
+            tr.appendTo(tbody);
+            var str = '';
+            str += '<td>默认</td>';
+            str += '<td><div class="input-group"><input type="number" name="productList[0].marktPrice" required money="true" ' +
+                'placeholder="请输入" class="form-control"><span class="input-group-addon">元</span></div></td>';
+            str += '<td><div class="input-group"><input type="number" name="productList[0].price" required money="true" ' +
+                'placeholder="请输入" class="form-control"><span class="input-group-addon">元</span></div></td>';
+            str += '<td><div class="input-group"><input type="number" name="productList[0].store" required digits="true" ' +
+                'placeholder="请输入" class="form-control"><span class="input-group-addon">件</span></div></td>' +
+                '           <input type="hidden" name="productList[0].specIdAndValueId">' +
+                '           <input type="hidden" name="productList[0].specView">' +
+                '           <input type="hidden" name="productList[0].productId">';
+            tr.append(str);
         }
 
         //结束创建Table表
@@ -412,5 +432,30 @@ var step = {
         }
     }
 };
-//初始化生成货品表格
-step.create_table();
+
+//初始化合并table单元格
+step.mergeFunction();
+var arrayColumn = []; // 指定列，用来合并哪些列
+
+var columnIndex = 0;
+$.each($(".goods-spec"), function () {
+    arrayColumn.push(columnIndex++);
+});
+arrayColumn.pop(); //删除数组中最后一项
+//合并单元格
+$("#process").mergeCell({
+    // 目前只有cols这么一个配置项, 用数组表示列的索引,从0开始
+    cols: arrayColumn
+});
+
+$('.w-e-menu i.w-e-icon-image').parent().on('click', function (e) {
+    dlg.show({remote: '/admin/pictureSpace?isEditor=1'});
+    e.stopPropagation();
+});
+
+function returnEditorPicture(pictureData) {
+    $.each(pictureData, function (index, item) {
+        editor.txt.append('<img src="' + item.thumbnail.substr(0, item.thumbnail.indexOf("?")) + '">')
+    });
+    dlg.close();
+}

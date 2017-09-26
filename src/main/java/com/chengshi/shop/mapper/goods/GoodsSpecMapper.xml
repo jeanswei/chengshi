@@ -67,7 +67,6 @@
         <if test="specName !=null and specName!='' ">
             and spec_name LIKE '%${specName}%'
         </if>
-        ORDER BY spec_id DESC
     </select>
     <select id="getSpecListByGoodsId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         SELECT * FROM cs_goods_product_spec

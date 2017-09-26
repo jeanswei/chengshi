@@ -1,7 +1,9 @@
 package com.chengshi.shop.service.goods.impl;
 
+import com.chengshi.shop.dao.goods.GoodsProductSpecMapper;
 import com.chengshi.shop.dao.goods.GoodsSpecMapper;
 import com.chengshi.shop.dao.goods.GoodsSpecValueMapper;
+import com.chengshi.shop.model.goods.GoodsProduct;
 import com.chengshi.shop.model.goods.GoodsSpec;
 import com.chengshi.shop.model.goods.GoodsSpecValue;
 import com.chengshi.shop.service.goods.GoodsSpecService;
@@ -22,6 +24,8 @@ public class GoodsSpecServiceImpl implements GoodsSpecService {
     private GoodsSpecMapper goodsSpecMapper;
     @Resource
     private GoodsSpecValueMapper goodsSpecValueMapper;
+    @Resource
+    private GoodsProductSpecMapper goodsProductSpecMapper;
 
     /**
      * 检查是否存在规格
@@ -110,5 +114,16 @@ public class GoodsSpecServiceImpl implements GoodsSpecService {
             spec.setSpecValueList(goodsSpecValueMapper.getListBySpecIdAndGoodsId(spec.getSpecId(), goodsId));
         }
         return specList;
+    }
+
+    /**
+     * 获取货品拥有的规格值
+     *
+     * @param productId
+     * @return
+     */
+    @Override
+    public List<String> getSpecValueListByProductId(Integer productId) {
+        return goodsProductSpecMapper.getSpecValueListByProductId(productId);
     }
 }

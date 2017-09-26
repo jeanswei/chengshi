@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="alert alert-warning">温馨提示：当为父级菜单链接可以不填，默认为#</div>
                     <form id="infoFrom" class="form-horizontal" data-toggle="validator">
-                        <input type="hidden" name="menuId" value="${menu.menuId!?c}">
+                        <input type="hidden" name="menuId" value="${menu.menuId!}">
                         <div class="form-group">
                             <label class="col-md-2 control-label required">菜单名称</label>
                             <div class="col-md-4">
@@ -23,9 +23,9 @@
                                     <option value="0">父级菜单</option>
 								<#list pMenuList as pMenu>
 									<#if menu.pid?? && pMenu.menuId?c == menu.pid?c>
-                                        <option value="${pMenu.menuId?c}" selected>${pMenu.name}</option>
+                                        <option value="${pMenu.menuId}" selected>${pMenu.name}</option>
 									<#else>
-                                        <option value="${pMenu.menuId?c}">${pMenu.name}</option>
+                                        <option value="${pMenu.menuId}">${pMenu.name}</option>
 									</#if>
 								</#list>
                                 </select>

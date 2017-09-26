@@ -1,6 +1,7 @@
 package com.chengshi.shop.model.goods;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class GoodsProduct {
     private Integer productId;
@@ -19,8 +20,10 @@ public class GoodsProduct {
 
     private Boolean isDelete;
 
-    /**********************/
     private String specIdAndValueId;
+
+    /*************************/
+    private List<String> specValueList;
 
     public Integer getProductId() {
         return productId;
@@ -92,5 +95,13 @@ public class GoodsProduct {
 
     public void setSpecIdAndValueId(String specIdAndValueId) {
         this.specIdAndValueId = specIdAndValueId;
+    }
+
+    public List<String> getSpecValueList() {
+        return specValueList;
+    }
+
+    public void setSpecValueList(List<String> specValueList) {
+        this.specValueList = specValueList;
     }
 }
