@@ -35,4 +35,11 @@ public interface GoodsSpecMapper {
      * @return
      */
     List<GoodsSpec> getSpecList(@Param(value = "specName") String specName);
+
+    /**
+     * 根据商品id获取所用规格
+     * @param goodsId
+     * @return
+     */
+    List<GoodsSpec> getSpecListByGoodsId(Integer goodsId);
 }

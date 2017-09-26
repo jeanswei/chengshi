@@ -71,7 +71,7 @@
     }
 
     $(function () {
-        getMenuTree(${userId});
+        getMenuTree(${userId?c});
     });
 
     $('.save').on("click", function () {
@@ -84,7 +84,7 @@
         $.ajax({
             type: "POST",
             url: "/admin/saveUserMenu",
-            data: {userId: ${userId}, menuIdList: JSON.stringify(menuIdList)},
+            data: {userId: ${userId?c}, menuIdList: JSON.stringify(menuIdList)},
             success: function (data) {
                 successTip(data, dg, dlg);
             }

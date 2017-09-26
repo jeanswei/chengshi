@@ -42,6 +42,10 @@ public class Goods {
     /***********************/
     private List<GoodsImage> imageList = new ArrayList<>();
 
+    private List<GoodsProduct> productList = new ArrayList<>();
+
+    private List<GoodsSpec> specList = new ArrayList<>();
+
     private String thumbnail;
 
     public Integer getGoodsId() {
@@ -194,5 +198,21 @@ public class Goods {
 
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public List<GoodsProduct> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<GoodsProduct> productList) {
+        this.productList = productList;
+    }
+
+    public List<GoodsSpec> getSpecList() {
+        return specList;
+    }
+
+    public void setSpecList(List<GoodsSpec> specList) {
+        this.specList = specList;
     }
 }

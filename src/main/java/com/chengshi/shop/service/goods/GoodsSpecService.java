@@ -53,4 +53,11 @@ public interface GoodsSpecService {
      * @return
      */
     List<GoodsSpecValue> getSpecValueList(Integer specId, String specValue);
+
+    /**
+     * 根据商品id获取所用规格
+     * @param goodsId
+     * @return
+     */
+    List<GoodsSpec> getSpecListByGoodsId(Integer goodsId);
 }

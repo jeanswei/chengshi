@@ -1,4 +1,4 @@
-package com.chengshi.shop.controller.goods;
+package com.chengshi.shop.controller.mobile.goods;
 
 import com.chengshi.shop.model.goods.Goods;
 import com.chengshi.shop.model.goods.GoodsImage;

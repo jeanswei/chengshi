@@ -1,4 +1,4 @@
-package com.chengshi.shop.controller.picture;
+package com.chengshi.shop.controller.admin.picture;
 
 import com.alibaba.fastjson.JSON;
 import com.chengshi.shop.model.picture.AlbumFolder;

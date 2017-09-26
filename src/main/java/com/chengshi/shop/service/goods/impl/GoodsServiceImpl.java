@@ -3,7 +3,9 @@ package com.chengshi.shop.service.goods.impl;
 import com.chengshi.shop.dao.goods.GoodsMapper;
 import com.chengshi.shop.model.goods.Goods;
 import com.chengshi.shop.model.goods.GoodsImage;
+import com.chengshi.shop.model.goods.GoodsProduct;
 import com.chengshi.shop.service.goods.GoodsImageService;
+import com.chengshi.shop.service.goods.GoodsProductService;
 import com.chengshi.shop.service.goods.GoodsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,8 @@ public class GoodsServiceImpl implements GoodsService {
     private GoodsMapper goodsMapper;
     @Resource
     private GoodsImageService goodsImageService;
+    @Resource
+    private GoodsProductService goodsProductService;
 
     /**
      * 查询商品列表
@@ -90,5 +94,10 @@ public class GoodsServiceImpl implements GoodsService {
         }
 
         goodsImageService.deleteNotInImgIds(goods.getGoodsId(), imgIds.length() > 0 ? imgIds.substring(1) : "0");
+        //保存货品
+        for (GoodsProduct goodsProduct : goods.getProductList()){
+            goodsProduct.setGoodsId(goods.getGoodsId());
+            goodsProductService.saveProduct(goodsProduct);
+        }
     }
 }

@@ -69,4 +69,9 @@
         </if>
         ORDER BY spec_id DESC
     </select>
+    <select id="getSpecListByGoodsId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT * FROM cs_goods_product_spec
+        WHERE goods_id = #{goodsId,jdbcType=INTEGER}
+        GROUP BY spec_id
+    </select>
 </mapper>

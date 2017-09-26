@@ -1,4 +1,4 @@
-package com.chengshi.shop.controller.coupon;
+package com.chengshi.shop.controller.admin.coupon;
 
 import com.chengshi.shop.controller.common.BaseController;
 import com.chengshi.shop.model.coupon.Coupon;

@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="alert alert-warning">温馨提示：新建用户的默认密码是888888，为保证账户安全，请登陆系统后自行修改密码</div>
                     <form id="infoFrom" class="form-horizontal" data-toggle="validator">
-                        <input type="hidden" name="userId" value="${user.userId!}">
+                        <input type="hidden" name="userId" value="${user.userId!?c}">
                         <div class="form-group">
                             <label class="col-md-2 control-label required">用户名</label>
                             <div class="col-md-4">
@@ -45,7 +45,7 @@
             userName: {
                 required: true,
                 rangelength:[2,11],
-	            remote:'/admin/checkUserName?userId=${user.userId!}'
+	            remote:'/admin/checkUserName?userId=${user.userId!?c}'
             },
             mobile: {
                 maxlength: 20

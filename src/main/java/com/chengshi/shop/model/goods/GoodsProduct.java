@@ -7,10 +7,6 @@ public class GoodsProduct {
 
     private Integer goodsId;
 
-    private Integer specId;
-
-    private Integer specValueId;
-
     private String specImage;
 
     private String specView;
@@ -22,6 +18,9 @@ public class GoodsProduct {
     private Integer store;
 
     private Boolean isDelete;
+
+    /**********************/
+    private String specIdAndValueId;
 
     public Integer getProductId() {
         return productId;
@@ -37,22 +36,6 @@ public class GoodsProduct {
 
     public void setGoodsId(Integer goodsId) {
         this.goodsId = goodsId;
-    }
-
-    public Integer getSpecId() {
-        return specId;
-    }
-
-    public void setSpecId(Integer specId) {
-        this.specId = specId;
-    }
-
-    public Integer getSpecValueId() {
-        return specValueId;
-    }
-
-    public void setSpecValueId(Integer specValueId) {
-        this.specValueId = specValueId;
     }
 
     public String getSpecImage() {
@@ -101,5 +84,13 @@ public class GoodsProduct {
 
     public void setIsDelete(Boolean isDelete) {
         this.isDelete = isDelete;
+    }
+
+    public String getSpecIdAndValueId() {
+        return specIdAndValueId;
+    }
+
+    public void setSpecIdAndValueId(String specIdAndValueId) {
+        this.specIdAndValueId = specIdAndValueId;
     }
 }

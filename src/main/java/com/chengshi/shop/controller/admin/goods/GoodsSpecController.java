@@ -1,4 +1,4 @@
-package com.chengshi.shop.controller.goods;
+package com.chengshi.shop.controller.admin.goods;
 
 import com.chengshi.shop.model.goods.GoodsSpec;
 import com.chengshi.shop.model.goods.GoodsSpecValue;

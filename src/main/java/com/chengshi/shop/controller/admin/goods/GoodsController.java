@@ -1,9 +1,13 @@
-package com.chengshi.shop.controller.goods;
+package com.chengshi.shop.controller.admin.goods;
 
 import com.chengshi.shop.model.goods.Goods;
 import com.chengshi.shop.model.goods.GoodsImage;
+import com.chengshi.shop.model.goods.GoodsProduct;
+import com.chengshi.shop.model.goods.GoodsSpec;
 import com.chengshi.shop.service.goods.GoodsImageService;
+import com.chengshi.shop.service.goods.GoodsProductService;
 import com.chengshi.shop.service.goods.GoodsService;
+import com.chengshi.shop.service.goods.GoodsSpecService;
 import com.chengshi.shop.util.MessageUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -28,7 +32,11 @@ public class GoodsController {
     @Resource
     private GoodsService goodsService;
     @Resource
+    private GoodsSpecService goodsSpecService;
+    @Resource
     private GoodsImageService goodsImageService;
+    @Resource
+    private GoodsProductService goodsProductService;
 
 
     @Value("${img_url}")
@@ -81,6 +89,12 @@ public class GoodsController {
                 image.setThumbnail(IMG_URL + image.getImgUrl() + SMALL_IMG);
             }
             goods.setImageList(imageList);
+
+            List<GoodsSpec> specList = goodsSpecService.getSpecListByGoodsId(goodsId);
+            goods.setSpecList(specList);
+
+            List<GoodsProduct> productList = goodsProductService.getProductList(goodsId);
+            goods.setProductList(productList);
         }
         mav.addObject("goods", goods);
         return mav;

@@ -1,153 +1,135 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.chengshi.shop.dao.goods.GoodsProductMapper" >
-  <resultMap id="BaseResultMap" type="com.chengshi.shop.model.goods.GoodsProduct" >
-    <id column="product_id" property="productId" jdbcType="INTEGER" />
-    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
-    <result column="spec_id" property="specId" jdbcType="INTEGER" />
-    <result column="spec_value_id" property="specValueId" jdbcType="INTEGER" />
-    <result column="spec_image" property="specImage" jdbcType="VARCHAR" />
-    <result column="spec_view" property="specView" jdbcType="VARCHAR" />
-    <result column="markt_price" property="marktPrice" jdbcType="DECIMAL" />
-    <result column="price" property="price" jdbcType="DECIMAL" />
-    <result column="store" property="store" jdbcType="INTEGER" />
-    <result column="is_delete" property="isDelete" jdbcType="BIT" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    product_id, goods_id, spec_id, spec_value_id, spec_image, spec_view, markt_price, 
-    price, store, is_delete
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from cs_goods_product
-    where product_id = #{productId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from cs_goods_product
-    where product_id = #{productId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.chengshi.shop.model.goods.GoodsProduct" >
-    insert into cs_goods_product (product_id, goods_id, spec_id, 
-      spec_value_id, spec_image, spec_view, 
-      markt_price, price, store, 
-      is_delete)
-    values (#{productId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{specId,jdbcType=INTEGER}, 
-      #{specValueId,jdbcType=INTEGER}, #{specImage,jdbcType=VARCHAR}, #{specView,jdbcType=VARCHAR}, 
-      #{marktPrice,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, #{store,jdbcType=INTEGER}, 
-      #{isDelete,jdbcType=BIT})
-  </insert>
-  <insert id="insertSelective" parameterType="com.chengshi.shop.model.goods.GoodsProduct" >
-    insert into cs_goods_product
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="productId != null" >
-        product_id,
-      </if>
-      <if test="goodsId != null" >
-        goods_id,
-      </if>
-      <if test="specId != null" >
-        spec_id,
-      </if>
-      <if test="specValueId != null" >
-        spec_value_id,
-      </if>
-      <if test="specImage != null" >
-        spec_image,
-      </if>
-      <if test="specView != null" >
-        spec_view,
-      </if>
-      <if test="marktPrice != null" >
-        markt_price,
-      </if>
-      <if test="price != null" >
-        price,
-      </if>
-      <if test="store != null" >
-        store,
-      </if>
-      <if test="isDelete != null" >
-        is_delete,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="productId != null" >
-        #{productId,jdbcType=INTEGER},
-      </if>
-      <if test="goodsId != null" >
-        #{goodsId,jdbcType=INTEGER},
-      </if>
-      <if test="specId != null" >
-        #{specId,jdbcType=INTEGER},
-      </if>
-      <if test="specValueId != null" >
-        #{specValueId,jdbcType=INTEGER},
-      </if>
-      <if test="specImage != null" >
-        #{specImage,jdbcType=VARCHAR},
-      </if>
-      <if test="specView != null" >
-        #{specView,jdbcType=VARCHAR},
-      </if>
-      <if test="marktPrice != null" >
-        #{marktPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="price != null" >
-        #{price,jdbcType=DECIMAL},
-      </if>
-      <if test="store != null" >
-        #{store,jdbcType=INTEGER},
-      </if>
-      <if test="isDelete != null" >
-        #{isDelete,jdbcType=BIT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.goods.GoodsProduct" >
-    update cs_goods_product
-    <set >
-      <if test="goodsId != null" >
-        goods_id = #{goodsId,jdbcType=INTEGER},
-      </if>
-      <if test="specId != null" >
-        spec_id = #{specId,jdbcType=INTEGER},
-      </if>
-      <if test="specValueId != null" >
-        spec_value_id = #{specValueId,jdbcType=INTEGER},
-      </if>
-      <if test="specImage != null" >
-        spec_image = #{specImage,jdbcType=VARCHAR},
-      </if>
-      <if test="specView != null" >
-        spec_view = #{specView,jdbcType=VARCHAR},
-      </if>
-      <if test="marktPrice != null" >
-        markt_price = #{marktPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="price != null" >
-        price = #{price,jdbcType=DECIMAL},
-      </if>
-      <if test="store != null" >
-        store = #{store,jdbcType=INTEGER},
-      </if>
-      <if test="isDelete != null" >
-        is_delete = #{isDelete,jdbcType=BIT},
-      </if>
-    </set>
-    where product_id = #{productId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.goods.GoodsProduct" >
-    update cs_goods_product
-    set goods_id = #{goodsId,jdbcType=INTEGER},
-      spec_id = #{specId,jdbcType=INTEGER},
-      spec_value_id = #{specValueId,jdbcType=INTEGER},
-      spec_image = #{specImage,jdbcType=VARCHAR},
-      spec_view = #{specView,jdbcType=VARCHAR},
-      markt_price = #{marktPrice,jdbcType=DECIMAL},
-      price = #{price,jdbcType=DECIMAL},
-      store = #{store,jdbcType=INTEGER},
-      is_delete = #{isDelete,jdbcType=BIT}
-    where product_id = #{productId,jdbcType=INTEGER}
-  </update>
+<mapper namespace="com.chengshi.shop.dao.goods.GoodsProductMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.goods.GoodsProduct">
+        <id column="product_id" property="productId" jdbcType="INTEGER"/>
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="spec_image" property="specImage" jdbcType="VARCHAR"/>
+        <result column="spec_view" property="specView" jdbcType="VARCHAR"/>
+        <result column="markt_price" property="marktPrice" jdbcType="DECIMAL"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="store" property="store" jdbcType="INTEGER"/>
+        <result column="is_delete" property="isDelete" jdbcType="BIT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        product_id, goods_id, spec_image, spec_view, markt_price,
+        price, store, is_delete
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_goods_product
+        where product_id = #{productId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_goods_product
+        WHERE product_id = #{productId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.goods.GoodsProduct" useGeneratedKeys="true" keyProperty="productId">
+        INSERT INTO cs_goods_product (product_id, goods_id, spec_image, spec_view,
+                                      markt_price, price, store,
+                                      is_delete)
+        VALUES (#{productId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{specImage,jdbcType=VARCHAR}, #{specView,jdbcType=VARCHAR},
+                #{marktPrice,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, #{store,jdbcType=INTEGER},
+                #{isDelete,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.goods.GoodsProduct" useGeneratedKeys="true" keyProperty="productId">
+        insert into cs_goods_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="specImage != null">
+                spec_image,
+            </if>
+            <if test="specView != null">
+                spec_view,
+            </if>
+            <if test="marktPrice != null">
+                markt_price,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="store != null">
+                store,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                #{productId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="specImage != null">
+                #{specImage,jdbcType=VARCHAR},
+            </if>
+            <if test="specView != null">
+                #{specView,jdbcType=VARCHAR},
+            </if>
+            <if test="marktPrice != null">
+                #{marktPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="store != null">
+                #{store,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.goods.GoodsProduct">
+        update cs_goods_product
+        <set>
+            <if test="goodsId != null">
+                goods_id = #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="specImage != null">
+                spec_image = #{specImage,jdbcType=VARCHAR},
+            </if>
+            <if test="specView != null">
+                spec_view = #{specView,jdbcType=VARCHAR},
+            </if>
+            <if test="marktPrice != null">
+                markt_price = #{marktPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="store != null">
+                store = #{store,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=BIT},
+            </if>
+        </set>
+        where product_id = #{productId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.goods.GoodsProduct">
+        UPDATE cs_goods_product
+        SET goods_id    = #{goodsId,jdbcType=INTEGER},
+            spec_image  = #{specImage,jdbcType=VARCHAR},
+            spec_view   = #{specView,jdbcType=VARCHAR},
+            markt_price = #{marktPrice,jdbcType=DECIMAL},
+            price       = #{price,jdbcType=DECIMAL},
+            store       = #{store,jdbcType=INTEGER},
+            is_delete   = #{isDelete,jdbcType=BIT}
+        WHERE product_id = #{productId,jdbcType=INTEGER}
+    </update>
+    <select id="getList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT *
+        FROM cs_goods_product
+        WHERE goods_id = #{goodsId,jdbcType=INTEGER}
+              AND is_delete = 0
+    </select>
 </mapper>

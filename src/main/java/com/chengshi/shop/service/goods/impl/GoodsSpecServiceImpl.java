@@ -96,4 +96,19 @@ public class GoodsSpecServiceImpl implements GoodsSpecService {
     public List<GoodsSpecValue> getSpecValueList(Integer specId, String specValue) {
         return goodsSpecValueMapper.getSpecValueList(specId, specValue);
     }
+
+    /**
+     * 根据商品id获取所用规格
+     *
+     * @param goodsId
+     * @return
+     */
+    @Override
+    public List<GoodsSpec> getSpecListByGoodsId(Integer goodsId) {
+        List<GoodsSpec> specList = goodsSpecMapper.getSpecListByGoodsId(goodsId);
+        for (GoodsSpec spec : specList){
+            spec.setSpecValueList(goodsSpecValueMapper.getListBySpecIdAndGoodsId(spec.getSpecId(), goodsId));
+        }
+        return specList;
+    }
 }
