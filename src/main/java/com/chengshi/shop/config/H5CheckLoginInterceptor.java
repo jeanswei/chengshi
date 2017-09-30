@@ -1,17 +1,14 @@
 package com.chengshi.shop.config;
 
 import com.chengshi.shop.model.member.Member;
-import com.chengshi.shop.service.member.MemberService;
 import com.chengshi.shop.util.JsonToHtmlUtil;
 import com.chengshi.shop.util.SessionUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
-import java.util.Objects;
 
 /**
  * 检验h5是否登陆
@@ -19,8 +16,6 @@ import java.util.Objects;
  * @author Administrator
  */
 public class H5CheckLoginInterceptor extends HandlerInterceptorAdapter {
-    @Resource
-    private MemberService memberService;
 
     /**
      * controller 执行之前调用
@@ -49,7 +44,7 @@ public class H5CheckLoginInterceptor extends HandlerInterceptorAdapter {
             HashMap<String, Object> retMap = new HashMap<>();
             retMap.put("errorCode", "NOLOGIN");
             retMap.put("errorText", "未登录");
-            retMap.put("accreditUrl", "/mobile/login/wxLogin.html?requestURI=");
+            retMap.put("accreditUrl", "/mobile/wechat/wxLogin.html?requestURI=");
             JsonToHtmlUtil.outJson(response, retMap);
             return false;
         }

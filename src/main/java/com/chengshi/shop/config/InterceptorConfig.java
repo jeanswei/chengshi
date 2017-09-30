@@ -21,7 +21,7 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localInterceptor())
-                .excludePathPatterns("/mobile/login/**",
+                .excludePathPatterns("/mobile/wechat/**",
                         "/mobile/pay/getWxOrderNotify*")
                 .addPathPatterns("/mobile/**");
     }

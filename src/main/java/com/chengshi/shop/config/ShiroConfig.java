@@ -1,7 +1,6 @@
 package com.chengshi.shop.config;
 
 
-import com.chengshi.shop.service.admin.SystemService;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
@@ -13,7 +12,6 @@ import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,8 +35,6 @@ public class ShiroConfig {
     private int timeout;
     @Value("${spring.redis.password}")
     private String password;
-    @Autowired
-    private SystemService systemService;
 
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
@@ -56,12 +52,6 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setUnauthorizedUrl("/admin/403");
         // 配置需要验证登录后访问的链接
         filterChainDefinitionMap.put("/admin/**", "authc");
-        // 从数据库获取
-//        List<AdminMenu> list = systemService.selectAllMenu();
-//
-//        for (AdminMenu menu : list) {
-//            filterChainDefinitionMap.put(menu.getMenuUrl(), "authc");
-//        }
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
@@ -89,7 +79,7 @@ public class ShiroConfig {
         securityManager.setCacheManager(cacheManager());
         // 自定义session管理 使用redis
         securityManager.setSessionManager(sessionManager());
-//        //注入记住我管理器;
+        //注入记住我管理器;
         securityManager.setRememberMeManager(rememberMeManager());
         return securityManager;
     }

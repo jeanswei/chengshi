@@ -208,7 +208,7 @@
         GROUP BY b.member_id
     </select>
 
-    <select id="getCanUseCommonCouponList" resultMap="MemberCouponMap">
+    <select id="getCanUseCommonCouponList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from hm_member_coupon
