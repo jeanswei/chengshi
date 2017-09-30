@@ -16,10 +16,11 @@
         <result column="limit_num" jdbcType="SMALLINT" property="limitNum"/>
         <result column="is_show" jdbcType="BIT" property="isShow"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
     </resultMap>
     <sql id="Base_Column_List">
         coupon_id, coupon_name, coupon_type, money, need_money, total_count, get_count, use_start,
-        use_end, content, limit_grade, limit_num, is_show, create_time
+        use_end, content, limit_grade, limit_num, is_show, create_time, status
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -36,12 +37,12 @@
                                money, need_money, total_count,
                                get_count, use_start, use_end,
                                content, limit_grade, limit_num,
-                               is_show, create_time)
+                               is_show, create_time, status)
         VALUES (#{couponId,jdbcType=INTEGER}, #{couponName,jdbcType=VARCHAR}, #{couponType,jdbcType=TINYINT},
-                #{money,jdbcType=DECIMAL}, #{needMoney,jdbcType=DECIMAL}, #{totalCount,jdbcType=SMALLINT},
-                #{getCount,jdbcType=SMALLINT}, #{useStart,jdbcType=TIMESTAMP}, #{useEnd,jdbcType=TIMESTAMP},
-                #{content,jdbcType=VARCHAR}, #{limitGrade,jdbcType=INTEGER}, #{limitNum,jdbcType=SMALLINT},
-                #{isShow,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP})
+                                              #{money,jdbcType=DECIMAL}, #{needMoney,jdbcType=DECIMAL}, #{totalCount,jdbcType=SMALLINT},
+                                              #{getCount,jdbcType=SMALLINT}, #{useStart,jdbcType=TIMESTAMP}, #{useEnd,jdbcType=TIMESTAMP},
+                                              #{content,jdbcType=VARCHAR}, #{limitGrade,jdbcType=INTEGER}, #{limitNum,jdbcType=SMALLINT},
+                #{isShow,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT})
     </insert>
     <insert id="insertSelective" parameterType="com.chengshi.shop.model.coupon.Coupon" keyProperty="couponId" useGeneratedKeys="true">
         insert into cs_coupon
@@ -88,6 +89,9 @@
             <if test="createTime != null">
                 create_time,
             </if>
+            <if test="status != null">
+                status,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="couponId != null">
@@ -131,6 +135,9 @@
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
             </if>
         </trim>
     </insert>
@@ -176,6 +183,9 @@
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
         </set>
         where coupon_id = #{couponId,jdbcType=INTEGER}
     </update>
@@ -193,11 +203,53 @@
             limit_grade = #{limitGrade,jdbcType=INTEGER},
             limit_num   = #{limitNum,jdbcType=SMALLINT},
             is_show     = #{isShow,jdbcType=BIT},
-            create_time = #{createTime,jdbcType=TIMESTAMP}
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            status      = #{status,jdbcType=TINYINT}
         WHERE coupon_id = #{couponId,jdbcType=INTEGER}
     </update>
     <select id="getList" resultMap="BaseResultMap">
         SELECT *
         FROM cs_coupon
     </select>
+    <select id="getCanGetCouponList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT *
+        FROM
+            cs_coupon
+        WHERE
+            coupon_type = 1
+            <![CDATA[
+            AND use_start < NOW()
+            AND use_end > NOW()
+            ]]>
+            AND is_show = 1
+            AND status = 1
+        UNION
+        SELECT a.*
+        FROM
+            cs_coupon a
+        WHERE
+            a.coupon_type = 2
+            AND exists(
+                    SELECT 1
+                    FROM
+                        hm_coupon_goods
+                    WHERE coupon_id = a.coupon_id
+                          AND goods_id = #{goodsId,jdbcType=INTEGER})
+            <![CDATA[
+            AND a.use_start < NOW()
+            AND a.use_end > NOW()
+            ]]>
+            AND a.is_show = 1
+            AND a.status = 1
+    </select>
+    <update id="addGetCount" parameterType="java.lang.Integer">
+        UPDATE cs_coupon
+        SET get_count = get_count + #{count,jdbcType=INTEGER}
+        WHERE coupon_id = #{couponId,jdbcType=INTEGER}
+    </update>
+    <update id="updateStatus">
+        UPDATE cs_coupon
+        SET status = #{status}
+        WHERE coupon_id = #{couponId,jdbcType=INTEGER}
+    </update>
 </mapper>

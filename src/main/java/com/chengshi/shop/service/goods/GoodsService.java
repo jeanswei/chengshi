@@ -37,4 +37,11 @@ public interface GoodsService {
      * @param goods
      */
     void saveGoods(Goods goods);
+
+    /**
+     * 增加评价数量
+     * @param goodsId
+     * @param count
+     */
+    void addEvaluateCount(Integer goodsId, Integer count);
 }

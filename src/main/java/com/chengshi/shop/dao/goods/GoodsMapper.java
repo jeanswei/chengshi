@@ -1,6 +1,7 @@
 package com.chengshi.shop.dao.goods;
 
 import com.chengshi.shop.model.goods.Goods;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -34,4 +35,18 @@ public interface GoodsMapper {
      * @param goodsId
      */
     void deleteByGoodsId(Integer goodsId);
+
+    /**
+     * 增加商品评价数量
+     * @param goodsId
+     * @param count
+     */
+    void addEvaluateCount(@Param("goodsId") Integer goodsId, @Param("count") Integer count);
+
+    /**
+     * 增加商品销量
+     * @param goodsId
+     * @param count
+     */
+    void addSaleCount(@Param("goodsId") Integer goodsId, @Param("count") Integer count);
 }

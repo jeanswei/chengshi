@@ -23,4 +23,11 @@ public interface GoodsProductService {
      * @return
      */
     List<GoodsProduct> getProductList(Integer goodsId);
+
+    /**
+     * 查询货品详情
+     * @param productId
+     * @return
+     */
+    GoodsProduct getProductByProductId(Integer productId);
 }

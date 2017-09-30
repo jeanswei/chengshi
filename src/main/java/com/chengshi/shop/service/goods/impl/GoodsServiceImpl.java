@@ -1,13 +1,14 @@
 package com.chengshi.shop.service.goods.impl;
 
 import com.chengshi.shop.dao.goods.GoodsMapper;
+import com.chengshi.shop.dao.goods.GoodsProductMapper;
+import com.chengshi.shop.dao.goods.GoodsProductSpecMapper;
 import com.chengshi.shop.model.goods.Goods;
 import com.chengshi.shop.model.goods.GoodsImage;
 import com.chengshi.shop.model.goods.GoodsProduct;
 import com.chengshi.shop.service.goods.GoodsImageService;
 import com.chengshi.shop.service.goods.GoodsProductService;
 import com.chengshi.shop.service.goods.GoodsService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,11 @@ public class GoodsServiceImpl implements GoodsService {
     private GoodsImageService goodsImageService;
     @Resource
     private GoodsProductService goodsProductService;
+    @Resource
+    private GoodsProductMapper goodsProductMapper;
+    @Resource
+    private GoodsProductSpecMapper goodsProductSpecMapper;
+
 
     /**
      * 查询商品列表
@@ -71,7 +77,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     @Transactional
     public void saveGoods(Goods goods) {
-        if (!goods.getImageList().isEmpty()){
+        if (!goods.getImageList().isEmpty()) {
             goods.setGoodsImg(goods.getImageList().get(0).getImgUrl());
         } else {
             goods.setGoodsImg("");
@@ -94,10 +100,28 @@ public class GoodsServiceImpl implements GoodsService {
         }
 
         goodsImageService.deleteNotInImgIds(goods.getGoodsId(), imgIds.length() > 0 ? imgIds.substring(1) : "0");
+
+        //如果是重新生成规格
+        if (!goods.getProductList().isEmpty() && goods.getProductList().get(0).getProductId() == null) {
+            //先删除所有已有的货品和货品规格再插入新货品
+            goodsProductMapper.deleteProductByGoodsId(goods.getGoodsId());
+            goodsProductSpecMapper.deleteProductSpecByGoodsId(goods.getGoodsId());
+        }
         //保存货品
-        for (GoodsProduct goodsProduct : goods.getProductList()){
+        for (GoodsProduct goodsProduct : goods.getProductList()) {
             goodsProduct.setGoodsId(goods.getGoodsId());
             goodsProductService.saveProduct(goodsProduct);
         }
+    }
+
+    /**
+     * 增加评价数量
+     *
+     * @param goodsId
+     * @param count
+     */
+    @Override
+    public void addEvaluateCount(Integer goodsId, Integer count) {
+        goodsMapper.addEvaluateCount(goodsId, count);
     }
 }

@@ -72,4 +72,15 @@ public class GoodsProductServiceImpl implements GoodsProductService {
     public List<GoodsProduct> getProductList(Integer goodsId) {
         return goodsProductMapper.getList(goodsId);
     }
+
+    /**
+     * 查询货品详情
+     *
+     * @param productId
+     * @return
+     */
+    @Override
+    public GoodsProduct getProductByProductId(Integer productId) {
+        return goodsProductMapper.selectByPrimaryKey(productId);
+    }
 }

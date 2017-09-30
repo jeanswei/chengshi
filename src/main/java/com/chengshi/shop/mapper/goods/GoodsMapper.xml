@@ -50,9 +50,9 @@
                               is_new, is_hot, last_update,
                               is_delete, goods_desc)
         VALUES (#{goodsId,jdbcType=INTEGER}, #{catId,jdbcType=SMALLINT}, #{goodsName,jdbcType=VARCHAR},
-                #{clickCount,jdbcType=INTEGER}, #{evaluateCount,jdbcType=INTEGER}, #{saleCount,jdbcType=INTEGER},
-                #{keywords,jdbcType=VARCHAR}, #{goodsBrief,jdbcType=VARCHAR}, #{goodsImg,jdbcType=VARCHAR},
-                #{isOnSale,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{isRecommend,jdbcType=BIT},
+                                             #{clickCount,jdbcType=INTEGER}, #{evaluateCount,jdbcType=INTEGER}, #{saleCount,jdbcType=INTEGER},
+                                             #{keywords,jdbcType=VARCHAR}, #{goodsBrief,jdbcType=VARCHAR}, #{goodsImg,jdbcType=VARCHAR},
+                                             #{isOnSale,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{isRecommend,jdbcType=BIT},
                 #{isNew,jdbcType=BIT}, #{isHot,jdbcType=BIT}, #{lastUpdate,jdbcType=TIMESTAMP},
                 #{isDelete,jdbcType=BIT}, #{goodsDesc,jdbcType=LONGVARCHAR})
     </insert>
@@ -259,22 +259,37 @@
         WHERE goods_id = #{goodsId,jdbcType=INTEGER}
     </update>
     <select id="getGoodsList" resultMap="BaseResultMap">
-        SELECT * FROM cs_goods
+        SELECT a.*, b.markt_price marktPrice, b.price, b.store
+        FROM cs_goods a
+        LEFT JOIN cs_goods_product b
+        ON a.goods_id = b.goods_id
         <where>
             <if test="goodsName !=null and goodsName !='' ">
-                and goods_name like '%${goodsName}%'
+                and a.goods_name like '%${goodsName}%'
             </if>
             <if test="isOnSale !=null and isOnSale!='' ">
-                and is_on_sale = #{isOnSale,jdbcType=BIT}
+                and a.is_on_sale = #{isOnSale,jdbcType=BIT}
             </if>
-            and is_delete = 0
+            and a.is_delete = 0
+            and b.is_delete = 0
         </where>
-        order by goods_id DESC
+        GROUP BY a.goods_id
+        order by a.goods_id DESC
     </select>
     <update id="deleteByGoodsId" parameterType="java.lang.Integer">
         UPDATE cs_goods
         SET
             is_delete = 1
+        WHERE goods_id = #{goodsId,jdbcType=INTEGER}
+    </update>
+    <update id="addEvaluateCount">
+        UPDATE cs_goods
+        SET evaluate_count = evaluate_count + #{count}
+        WHERE goods_id = #{goodsId,jdbcType=INTEGER}
+    </update>
+    <update id="addSaleCount">
+        UPDATE cs_goods
+        SET sale_count = sale_count + #{count}
         WHERE goods_id = #{goodsId,jdbcType=INTEGER}
     </update>
 </mapper>

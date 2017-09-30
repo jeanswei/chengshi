@@ -33,4 +33,11 @@ public interface CouponGoodsMapper {
      * @param couponGoodsIds
      */
     void deleteNotInCouponGoodsIds(@Param("couponId") Integer couponId,@Param("couponGoodsIds") String couponGoodsIds);
+
+    /**
+     * 优惠券适用的商品id列表
+     * @param couponId
+     * @return
+     */
+    List<Integer> getGoodsIdListByCouponId(Integer couponId);
 }

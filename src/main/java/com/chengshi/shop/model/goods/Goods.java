@@ -1,5 +1,6 @@
 package com.chengshi.shop.model.goods;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,6 +48,12 @@ public class Goods {
     private List<GoodsSpec> specList = new ArrayList<>();
 
     private String thumbnail;
+
+    private BigDecimal marktPrice;
+
+    private BigDecimal price;
+
+    private Integer Store;
 
     public Integer getGoodsId() {
         return goodsId;
@@ -214,5 +221,29 @@ public class Goods {
 
     public void setSpecList(List<GoodsSpec> specList) {
         this.specList = specList;
+    }
+
+    public BigDecimal getMarktPrice() {
+        return marktPrice;
+    }
+
+    public void setMarktPrice(BigDecimal marktPrice) {
+        this.marktPrice = marktPrice;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Integer getStore() {
+        return Store;
+    }
+
+    public void setStore(Integer store) {
+        Store = store;
     }
 }

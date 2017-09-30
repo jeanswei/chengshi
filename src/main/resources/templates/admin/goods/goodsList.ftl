@@ -40,7 +40,7 @@
             },
             {
                 title: "市场价",
-                field: "marketPrice"
+                field: "marktPrice"
             },
             {
                 title: "销售价",

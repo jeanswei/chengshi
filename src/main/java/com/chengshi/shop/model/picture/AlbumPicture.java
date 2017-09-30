@@ -15,7 +15,7 @@ public class AlbumPicture {
 
     private String picType;
 
-    private Date uploadTime;
+    private Date createTime;
 
     /************************/
     private String thumbnail;
@@ -68,12 +68,12 @@ public class AlbumPicture {
         this.picType = picType == null ? null : picType.trim();
     }
 
-    public Date getUploadTime() {
-        return uploadTime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setUploadTime(Date uploadTime) {
-        this.uploadTime = uploadTime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public String getThumbnail() {

@@ -129,4 +129,8 @@
         SELECT spec_value FROM cs_goods_product_spec
         WHERE product_id = #{productId,jdbcType=INTEGER}
     </select>
+    <delete id="deleteProductSpecByGoodsId" parameterType="java.lang.Integer">
+        DELETE FROM cs_goods_product_spec
+        WHERE goods_id = #{goodsId,jdbcType=INTEGER}
+    </delete>
 </mapper>

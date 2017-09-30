@@ -133,4 +133,25 @@
               AND is_delete = 0
         ORDER BY product_id DESC
     </select>
+    <update id="deleteProductByGoodsId" parameterType="java.lang.Integer">
+        UPDATE cs_goods_product
+        SET is_delete = 1
+        WHERE goods_id = #{goodsId,jdbcType=INTEGER}
+    </update>
+    <update id="addProductStore">
+        UPDATE cs_goods_product
+        SET store = store + #{count}
+        WHERE product_id = #{productId,jdbcType=INTEGER}
+    </update>
+    <update id="subProductStore">
+        UPDATE cs_goods_product
+        SET store = store - #{count}
+        WHERE product_id = #{productId,jdbcType=INTEGER}
+    </update>
+    <select id="getMinProductByGoodsId">
+        SELECT * FROM cs_goods_product
+        WHERE goods_id = #{goodsId,jdbcType=INTEGER}
+        ORDER BY price
+        LIMIT 1
+    </select>
 </mapper>

@@ -34,6 +34,8 @@ public class Coupon {
 
     private Date createTime;
 
+    private Byte status;
+
     /**************************/
     private List<CouponGoods> couponGoodsList = new ArrayList<>();
 
@@ -147,6 +149,14 @@ public class Coupon {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 
     public List<CouponGoods> getCouponGoodsList() {

@@ -25,4 +25,10 @@ public interface GoodsProductSpecMapper {
      * @return
      */
     List<String> getSpecValueListByProductId(Integer productId);
+
+    /**
+     * 删除商品的货品规格
+     * @param goodsId
+     */
+    void deleteProductSpecByGoodsId(Integer goodsId);
 }

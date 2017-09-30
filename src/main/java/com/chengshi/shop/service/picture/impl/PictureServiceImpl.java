@@ -59,7 +59,7 @@ public class PictureServiceImpl implements PictureService {
     @Transactional
     public void savePicture(List<AlbumPicture> pictureList) {
         for (AlbumPicture picture : pictureList){
-            picture.setUploadTime(new Date());
+            picture.setCreateTime(new Date());
             albumPictureMapper.insertSelective(picture);
             albumFolderMapper.updatePicNum(picture.getAlbumId(), 1);
         }

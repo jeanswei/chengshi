@@ -1,6 +1,7 @@
 package com.chengshi.shop.dao.goods;
 
 import com.chengshi.shop.model.goods.GoodsProduct;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,4 +26,31 @@ public interface GoodsProductMapper {
      * @return
      */
     List<GoodsProduct> getList(Integer goodsId);
+
+    /**
+     * 逻辑删除货品
+     * @param goodsId
+     */
+    void deleteProductByGoodsId(Integer goodsId);
+
+    /**
+     * 增加货品库存
+     * @param productId
+     * @param count
+     */
+    void addProductStore(@Param("productId") Integer productId, @Param("count") Integer count);
+
+    /**
+     * 减少货品库存
+     * @param productId
+     * @param count
+     */
+    void subProductStore(@Param("productId") Integer productId, @Param("count") Integer count);
+
+    /**
+     * 获取价格最低的货品
+     * @param goodsId
+     * @return
+     */
+    GoodsProduct getMinProductByGoodsId(Integer goodsId);
 }

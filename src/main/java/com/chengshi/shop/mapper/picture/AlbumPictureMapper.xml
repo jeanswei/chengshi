@@ -8,10 +8,10 @@
         <result column="pic_url" property="picUrl" jdbcType="VARCHAR"/>
         <result column="pic_size" property="picSize" jdbcType="INTEGER"/>
         <result column="pic_type" property="picType" jdbcType="VARCHAR"/>
-        <result column="upload_time" property="uploadTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-        pic_id, album_id, pic_name, pic_url, pic_size, pic_type, upload_time
+        pic_id, album_id, pic_name, pic_url, pic_size, pic_type, create_time
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -26,10 +26,10 @@
     <insert id="insert" parameterType="com.chengshi.shop.model.picture.AlbumPicture">
         INSERT INTO cs_album_picture (pic_id, album_id, pic_name,
                                       pic_url, pic_size, pic_type,
-                                      upload_time)
+                                      create_time)
         VALUES (#{picId,jdbcType=INTEGER}, #{albumId,jdbcType=INTEGER}, #{picName,jdbcType=VARCHAR},
                 #{picUrl,jdbcType=VARCHAR}, #{picSize,jdbcType=INTEGER}, #{picType,jdbcType=VARCHAR},
-                #{uploadTime,jdbcType=TIMESTAMP})
+                #{createTime,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="com.chengshi.shop.model.picture.AlbumPicture">
         insert into cs_album_picture
@@ -52,8 +52,8 @@
             <if test="picType != null">
                 pic_type,
             </if>
-            <if test="uploadTime != null">
-                upload_time,
+            <if test="createTime != null">
+                create_time,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -75,8 +75,8 @@
             <if test="picType != null">
                 #{picType,jdbcType=VARCHAR},
             </if>
-            <if test="uploadTime != null">
-                #{uploadTime,jdbcType=TIMESTAMP},
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
@@ -98,8 +98,8 @@
             <if test="picType != null">
                 pic_type = #{picType,jdbcType=VARCHAR},
             </if>
-            <if test="uploadTime != null">
-                upload_time = #{uploadTime,jdbcType=TIMESTAMP},
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         where pic_id = #{picId,jdbcType=INTEGER}
@@ -111,7 +111,7 @@
             pic_url     = #{picUrl,jdbcType=VARCHAR},
             pic_size    = #{picSize,jdbcType=INTEGER},
             pic_type    = #{picType,jdbcType=VARCHAR},
-            upload_time = #{uploadTime,jdbcType=TIMESTAMP}
+            create_time = #{createTime,jdbcType=TIMESTAMP}
         WHERE pic_id = #{picId,jdbcType=INTEGER}
     </update>
     <select id="getPictureList" resultMap="BaseResultMap">

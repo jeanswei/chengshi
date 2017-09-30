@@ -83,4 +83,9 @@
         WHERE coupon_id = #{couponId,jdbcType=INTEGER}
               AND id NOT IN (${couponGoodsIds})
     </delete>
+    <select id="getGoodsIdListByCouponId" resultType="java.lang.Integer">
+        SELECT goods_id
+        FROM cs_coupon_goods
+        WHERE coupon_id = #{couponId,jdbcType=INTEGER}
+    </select>
 </mapper>
