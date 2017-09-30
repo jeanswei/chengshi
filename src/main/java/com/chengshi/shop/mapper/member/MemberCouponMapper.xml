@@ -232,7 +232,7 @@
         ]]>
     </select>
 
-    <select id="getCanUseCouponList" resultMap="MemberCouponMap">
+    <select id="getCanUseCouponList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from hm_member_coupon
@@ -244,7 +244,7 @@
         ]]>
     </select>
 
-    <select id="getSpecificCouponList" resultMap="MemberCouponMap">
+    <select id="getSpecificCouponList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from hm_member_coupon

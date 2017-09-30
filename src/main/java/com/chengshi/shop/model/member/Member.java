@@ -1,9 +1,10 @@
 package com.chengshi.shop.model.member;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Member {
+public class Member implements Serializable{
     private Integer memberId;
 
     private String name;
