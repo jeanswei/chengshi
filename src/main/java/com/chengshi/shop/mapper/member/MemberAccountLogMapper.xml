@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chengshi.shop.dao.member.MemberAccountLogMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.member.MemberAccountLog">
+        <id column="log_id" property="logId" jdbcType="INTEGER"/>
+        <result column="member_id" property="memberId" jdbcType="INTEGER"/>
+        <result column="account_type" property="accountType" jdbcType="TINYINT"/>
+        <result column="from_type" property="fromType" jdbcType="TINYINT"/>
+        <result column="number" property="number" jdbcType="DECIMAL"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        log_id, member_id, account_type, from_type, number, content, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_member_account_log
+        where log_id = #{logId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_member_account_log
+        WHERE log_id = #{logId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.member.MemberAccountLog">
+        INSERT INTO cs_member_account_log (log_id, member_id, account_type,
+                                           from_type, number, content,
+                                           create_time)
+        VALUES (#{logId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{accountType,jdbcType=TINYINT},
+                #{fromType,jdbcType=TINYINT}, #{number,jdbcType=DECIMAL}, #{content,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.member.MemberAccountLog">
+        insert into cs_member_account_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="logId != null">
+                log_id,
+            </if>
+            <if test="memberId != null">
+                member_id,
+            </if>
+            <if test="accountType != null">
+                account_type,
+            </if>
+            <if test="fromType != null">
+                from_type,
+            </if>
+            <if test="number != null">
+                number,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="logId != null">
+                #{logId,jdbcType=INTEGER},
+            </if>
+            <if test="memberId != null">
+                #{memberId,jdbcType=INTEGER},
+            </if>
+            <if test="accountType != null">
+                #{accountType,jdbcType=TINYINT},
+            </if>
+            <if test="fromType != null">
+                #{fromType,jdbcType=TINYINT},
+            </if>
+            <if test="number != null">
+                #{number,jdbcType=DECIMAL},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.member.MemberAccountLog">
+        update cs_member_account_log
+        <set>
+            <if test="memberId != null">
+                member_id = #{memberId,jdbcType=INTEGER},
+            </if>
+            <if test="accountType != null">
+                account_type = #{accountType,jdbcType=TINYINT},
+            </if>
+            <if test="fromType != null">
+                from_type = #{fromType,jdbcType=TINYINT},
+            </if>
+            <if test="number != null">
+                number = #{number,jdbcType=DECIMAL},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where log_id = #{logId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.member.MemberAccountLog">
+        UPDATE cs_member_account_log
+        SET member_id    = #{memberId,jdbcType=INTEGER},
+            account_type = #{accountType,jdbcType=TINYINT},
+            from_type    = #{fromType,jdbcType=TINYINT},
+            number       = #{number,jdbcType=DECIMAL},
+            content      = #{content,jdbcType=VARCHAR},
+            create_time  = #{createTime,jdbcType=TIMESTAMP}
+        WHERE log_id = #{logId,jdbcType=INTEGER}
+    </update>
+    <select id="getLogListByMemberId">
+        SELECT *
+        FROM cs_member_account_log
+        WHERE member_id = #{memberId,jdbcType=INTEGER}
+              AND account_type = #{accountType,jdbcType=TINYINT}
+        ORDER BY log_id DESC
+    </select>
+</mapper>

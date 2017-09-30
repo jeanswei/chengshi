@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chengshi.shop.dao.member.MemberCouponMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.member.MemberCoupon">
+        <id column="member_coupon_id" property="memberCouponId" jdbcType="INTEGER"/>
+        <result column="coupon_id" property="couponId" jdbcType="INTEGER"/>
+        <result column="member_id" property="memberId" jdbcType="INTEGER"/>
+        <result column="get_type" property="getType" jdbcType="TINYINT"/>
+        <result column="coupon_name" property="couponName" jdbcType="VARCHAR"/>
+        <result column="coupon_type" property="couponType" jdbcType="TINYINT"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+        <result column="need_money" property="needMoney" jdbcType="DECIMAL"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="use_start" property="useStart" jdbcType="TIMESTAMP"/>
+        <result column="use_end" property="useEnd" jdbcType="TIMESTAMP"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        member_coupon_id, coupon_id, member_id, get_type, coupon_name, coupon_type, money,
+        need_money, status, use_start, use_end, content, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_member_coupon
+        where member_coupon_id = #{memberCouponId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_member_coupon
+        WHERE member_coupon_id = #{memberCouponId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.member.MemberCoupon">
+        INSERT INTO cs_member_coupon (member_coupon_id, coupon_id, member_id,
+                                      get_type, coupon_name, coupon_type,
+                                      money, need_money, status,
+                                      use_start, use_end, content,
+                                      create_time)
+        VALUES (#{memberCouponId,jdbcType=INTEGER}, #{couponId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER},
+                                                    #{getType,jdbcType=TINYINT}, #{couponName,jdbcType=VARCHAR}, #{couponType,jdbcType=TINYINT},
+                                                    #{money,jdbcType=DECIMAL}, #{needMoney,jdbcType=DECIMAL}, #{status,jdbcType=TINYINT},
+                                                    #{useStart,jdbcType=TIMESTAMP}, #{useEnd,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.member.MemberCoupon">
+        insert into cs_member_coupon
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="memberCouponId != null">
+                member_coupon_id,
+            </if>
+            <if test="couponId != null">
+                coupon_id,
+            </if>
+            <if test="memberId != null">
+                member_id,
+            </if>
+            <if test="getType != null">
+                get_type,
+            </if>
+            <if test="couponName != null">
+                coupon_name,
+            </if>
+            <if test="couponType != null">
+                coupon_type,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="needMoney != null">
+                need_money,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="useStart != null">
+                use_start,
+            </if>
+            <if test="useEnd != null">
+                use_end,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="memberCouponId != null">
+                #{memberCouponId,jdbcType=INTEGER},
+            </if>
+            <if test="couponId != null">
+                #{couponId,jdbcType=INTEGER},
+            </if>
+            <if test="memberId != null">
+                #{memberId,jdbcType=INTEGER},
+            </if>
+            <if test="getType != null">
+                #{getType,jdbcType=TINYINT},
+            </if>
+            <if test="couponName != null">
+                #{couponName,jdbcType=VARCHAR},
+            </if>
+            <if test="couponType != null">
+                #{couponType,jdbcType=TINYINT},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="needMoney != null">
+                #{needMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="useStart != null">
+                #{useStart,jdbcType=TIMESTAMP},
+            </if>
+            <if test="useEnd != null">
+                #{useEnd,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.member.MemberCoupon">
+        update cs_member_coupon
+        <set>
+            <if test="couponId != null">
+                coupon_id = #{couponId,jdbcType=INTEGER},
+            </if>
+            <if test="memberId != null">
+                member_id = #{memberId,jdbcType=INTEGER},
+            </if>
+            <if test="getType != null">
+                get_type = #{getType,jdbcType=TINYINT},
+            </if>
+            <if test="couponName != null">
+                coupon_name = #{couponName,jdbcType=VARCHAR},
+            </if>
+            <if test="couponType != null">
+                coupon_type = #{couponType,jdbcType=TINYINT},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="needMoney != null">
+                need_money = #{needMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="useStart != null">
+                use_start = #{useStart,jdbcType=TIMESTAMP},
+            </if>
+            <if test="useEnd != null">
+                use_end = #{useEnd,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where member_coupon_id = #{memberCouponId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.member.MemberCoupon">
+        UPDATE cs_member_coupon
+        SET coupon_id   = #{couponId,jdbcType=INTEGER},
+            member_id   = #{memberId,jdbcType=INTEGER},
+            get_type    = #{getType,jdbcType=TINYINT},
+            coupon_name = #{couponName,jdbcType=VARCHAR},
+            coupon_type = #{couponType,jdbcType=TINYINT},
+            money       = #{money,jdbcType=DECIMAL},
+            need_money  = #{needMoney,jdbcType=DECIMAL},
+            status      = #{status,jdbcType=TINYINT},
+            use_start   = #{useStart,jdbcType=TIMESTAMP},
+            use_end     = #{useEnd,jdbcType=TIMESTAMP},
+            content     = #{content,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        WHERE member_coupon_id = #{memberCouponId,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询领取优惠券的会员列表 -->
+    <select id="getMemberList" parameterType="java.util.HashMap" resultType="com.chengshi.shop.model.member.Member">
+        select
+        a.*, COUNT(1) getNum, c.name memberLvName
+        from cs_member a, cs_member_coupon b, cs_member_rank c
+        where a.member_id = b.member_id
+        and a.member_lv_id = c.member_grade_id
+        <if test="name != null and name !='' ">
+            and a.name like '%${name}%'
+        </if>
+        <if test="mobile != null and mobile !='' ">
+            and a.mobile like '%${mobile}%'
+        </if>
+        <if test="memberLvId != null and memberLvId !='' ">
+            and a.member_lv_id = #{memberLvId}
+        </if>
+        <if test="couponId != null and couponId !='' ">
+            and b.coupon_id = #{couponId}
+        </if>
+        GROUP BY b.member_id
+    </select>
+
+    <select id="getCanUseCommonCouponList" resultMap="MemberCouponMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hm_member_coupon
+        where member_id = #{memberId,jdbcType=INTEGER}
+        and coupon_type = 1
+        and status = 1
+        <![CDATA[
+        and use_start < NOW()
+        and use_end > NOW()
+        and need_money <= #{totalMoney}
+        ]]>
+    </select>
+    <select id="getCouponNum" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM hm_member_coupon
+        WHERE member_id = #{memberId,jdbcType=INTEGER}
+              AND status = 1
+    <![CDATA[
+              AND use_start < NOW()
+              AND use_end > NOW()
+        ]]>
+    </select>
+
+    <select id="getCanUseCouponList" resultMap="MemberCouponMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hm_member_coupon
+        where member_id = #{memberId,jdbcType=INTEGER}
+        and status = 1
+        <![CDATA[
+        and use_start < NOW()
+        and use_end > NOW()
+        ]]>
+    </select>
+
+    <select id="getSpecificCouponList" resultMap="MemberCouponMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hm_member_coupon
+        where member_id = #{memberId,jdbcType=INTEGER}
+        and status = 1
+        and coupon_type = 2
+        <![CDATA[
+        and use_start < NOW()
+        and use_end > NOW()
+        ]]>
+    </select>
+
+    <select id="getHasCountByCouponId" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM
+            hm_member_coupon
+        WHERE member_id = #{memberId,jdbcType=INTEGER}
+              AND coupon_id = #{couponId,jdbcType=INTEGER}
+    </select>
+</mapper>

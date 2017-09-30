@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chengshi.shop.dao.promotion.PromotionMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.promotion.Promotion">
+        <id column="promotion_id" property="promotionId" jdbcType="INTEGER"/>
+        <result column="promotion_name" property="promotionName" jdbcType="VARCHAR"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="promotion_type" property="promotionType" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        promotion_id, promotion_name, start_time, end_time, content, promotion_type, create_time,
+        status
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_promotion
+        where promotion_id = #{promotionId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_promotion
+        WHERE promotion_id = #{promotionId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.promotion.Promotion">
+        INSERT INTO cs_promotion (promotion_id, promotion_name, start_time,
+                                  end_time, content, promotion_type,
+                                  create_time, status)
+        VALUES (#{promotionId,jdbcType=INTEGER}, #{promotionName,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP},
+                #{endTime,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}, #{promotionType,jdbcType=TINYINT},
+                #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.promotion.Promotion">
+        insert into cs_promotion
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="promotionId != null">
+                promotion_id,
+            </if>
+            <if test="promotionName != null">
+                promotion_name,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="promotionType != null">
+                promotion_type,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="promotionId != null">
+                #{promotionId,jdbcType=INTEGER},
+            </if>
+            <if test="promotionName != null">
+                #{promotionName,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="promotionType != null">
+                #{promotionType,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.promotion.Promotion">
+        update cs_promotion
+        <set>
+            <if test="promotionName != null">
+                promotion_name = #{promotionName,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="promotionType != null">
+                promotion_type = #{promotionType,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+        </set>
+        where promotion_id = #{promotionId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.promotion.Promotion">
+        UPDATE cs_promotion
+        SET promotion_name = #{promotionName,jdbcType=VARCHAR},
+            start_time     = #{startTime,jdbcType=TIMESTAMP},
+            end_time       = #{endTime,jdbcType=TIMESTAMP},
+            content        = #{content,jdbcType=VARCHAR},
+            promotion_type = #{promotionType,jdbcType=TINYINT},
+            create_time    = #{createTime,jdbcType=TIMESTAMP},
+            status         = #{status,jdbcType=TINYINT}
+        WHERE promotion_id = #{promotionId,jdbcType=INTEGER}
+    </update>
+    <select id="getPromotionList" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        select *
+        from cs_promotion
+        <where>
+            <if test="status != null and status != ''">
+                and status in (${status})
+            </if>
+            <if test="promotionName != null and promotionName != ''">
+                and promotion_name like CONCAT('%', #{promotionName,jdbcType=VARCHAR} ,'%')
+            </if>
+            <!-- 已结束 -->
+            <if test="queryStatus == -1">
+                <![CDATA[
+        		    and (UNIX_TIMESTAMP() >= UNIX_TIMESTAMP(end_time) or status = 2)
+		 	    ]]>
+            </if>
+            <!-- 进行中 -->
+            <if test="queryStatus == 0">
+                <![CDATA[
+                    and UNIX_TIMESTAMP() > UNIX_TIMESTAMP(start_time)
+                    and UNIX_TIMESTAMP() < UNIX_TIMESTAMP(end_time)
+                    and status != 2
+		 	    ]]>
+            </if>
+            <!-- 未开始 -->
+            <if test="queryStatus == 1">
+                <![CDATA[
+                    and UNIX_TIMESTAMP() <= UNIX_TIMESTAMP(start_time)
+                ]]>
+            </if>
+            <if test="startTime !=null and startTime != '' ">
+                <![CDATA[
+                    and UNIX_TIMESTAMP(#{startTime,jdbcType=VARCHAR}) >= UNIX_TIMESTAMP(start_time)
+                    and UNIX_TIMESTAMP(#{startTime,jdbcType=VARCHAR}) < UNIX_TIMESTAMP(end_time)
+                ]]>
+            </if>
+        </where>
+    </select>
+    <select id="getPromotionByGoodsId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT b.*
+        FROM cs_promotion_goods a, cs_promotion b
+        WHERE a.promotion_id = b.promotion_id
+              AND a.goods_id = #{goodsId,jdbcType=INTEGER}
+              AND b.promotion_type = 2
+            <![CDATA[
+              AND b.start_time < NOW()
+              AND b.end_time > NOW()
+            ]]>
+              AND b.`status` = 1
+        UNION
+        SELECT *
+        FROM cs_promotion
+        WHERE promotion_type = 1
+            <![CDATA[
+              AND start_time < NOW()
+              AND end_time > NOW()
+            ]]>
+              AND `status` = 1
+        LIMIT 1
+    </select>
+</mapper>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chengshi.shop.dao.order.OrderReturnMapper" >
+  <resultMap id="BaseResultMap" type="com.chengshi.shop.model.order.OrderReturn" >
+    <id column="order_return_id" property="orderReturnId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="order_item_id" property="orderItemId" jdbcType="INTEGER" />
+    <result column="return_type" property="returnType" jdbcType="TINYINT" />
+    <result column="from_type" property="fromType" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="return_money" property="returnMoney" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="reply" property="reply" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_return_id, order_id, member_id, order_item_id, return_type, from_type, create_time, 
+    content, image, num, return_money, status, reply
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cs_order_return
+    where order_return_id = #{orderReturnId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cs_order_return
+    where order_return_id = #{orderReturnId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chengshi.shop.model.order.OrderReturn" >
+    insert into cs_order_return (order_return_id, order_id, member_id, 
+      order_item_id, return_type, from_type, 
+      create_time, content, image, 
+      num, return_money, status, 
+      reply)
+    values (#{orderReturnId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, 
+      #{orderItemId,jdbcType=INTEGER}, #{returnType,jdbcType=TINYINT}, #{fromType,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
+      #{num,jdbcType=INTEGER}, #{returnMoney,jdbcType=DECIMAL}, #{status,jdbcType=TINYINT}, 
+      #{reply,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengshi.shop.model.order.OrderReturn" >
+    insert into cs_order_return
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderReturnId != null" >
+        order_return_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="orderItemId != null" >
+        order_item_id,
+      </if>
+      <if test="returnType != null" >
+        return_type,
+      </if>
+      <if test="fromType != null" >
+        from_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="returnMoney != null" >
+        return_money,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="reply != null" >
+        reply,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderReturnId != null" >
+        #{orderReturnId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="orderItemId != null" >
+        #{orderItemId,jdbcType=INTEGER},
+      </if>
+      <if test="returnType != null" >
+        #{returnType,jdbcType=TINYINT},
+      </if>
+      <if test="fromType != null" >
+        #{fromType,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="returnMoney != null" >
+        #{returnMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="reply != null" >
+        #{reply,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.order.OrderReturn" >
+    update cs_order_return
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="orderItemId != null" >
+        order_item_id = #{orderItemId,jdbcType=INTEGER},
+      </if>
+      <if test="returnType != null" >
+        return_type = #{returnType,jdbcType=TINYINT},
+      </if>
+      <if test="fromType != null" >
+        from_type = #{fromType,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="returnMoney != null" >
+        return_money = #{returnMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="reply != null" >
+        reply = #{reply,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_return_id = #{orderReturnId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.order.OrderReturn" >
+    update cs_order_return
+    set order_id = #{orderId,jdbcType=INTEGER},
+      member_id = #{memberId,jdbcType=INTEGER},
+      order_item_id = #{orderItemId,jdbcType=INTEGER},
+      return_type = #{returnType,jdbcType=TINYINT},
+      from_type = #{fromType,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      return_money = #{returnMoney,jdbcType=DECIMAL},
+      status = #{status,jdbcType=TINYINT},
+      reply = #{reply,jdbcType=VARCHAR}
+    where order_return_id = #{orderReturnId,jdbcType=INTEGER}
+  </update>
+</mapper>

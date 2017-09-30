@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengshi.shop.dao.order.OrderHistoryMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.order.OrderHistory">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="order_id" jdbcType="INTEGER" property="orderId"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="op_name" jdbcType="VARCHAR" property="opName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, order_id, content, create_time, op_name
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_order_history
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_order_history
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.order.OrderHistory">
+        INSERT INTO cs_order_history (id, order_id, content,
+                                      create_time, op_name)
+        VALUES (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP}, #{opName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.order.OrderHistory">
+        insert into cs_order_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="opName != null">
+                op_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="opName != null">
+                #{opName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.order.OrderHistory">
+        update cs_order_history
+        <set>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="opName != null">
+                op_name = #{opName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.order.OrderHistory">
+        UPDATE cs_order_history
+        SET order_id    = #{orderId,jdbcType=INTEGER},
+            content     = #{content,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            op_name     = #{opName,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="getListByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT *
+        FROM cs_order_history
+        WHERE order_id = #{orderId,jdbcType=INTEGER}
+        ORDER BY id DESC
+    </select>
+</mapper>

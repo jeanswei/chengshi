@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chengshi.shop.dao.system.ExpressMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.system.Express">
+        <id column="express_id" property="expressId" jdbcType="TINYINT"/>
+        <result column="express_code" property="expressCode" jdbcType="VARCHAR"/>
+        <result column="express_name" property="expressName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        express_id, express_code, express_name
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Byte">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_express
+        where express_id = #{expressId,jdbcType=TINYINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Byte">
+        DELETE FROM cs_express
+        WHERE express_id = #{expressId,jdbcType=TINYINT}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.system.Express">
+        INSERT INTO cs_express (express_id, express_code, express_name
+        )
+        VALUES (#{expressId,jdbcType=TINYINT}, #{expressCode,jdbcType=VARCHAR}, #{expressName,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.system.Express">
+        insert into cs_express
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="expressId != null">
+                express_id,
+            </if>
+            <if test="expressCode != null">
+                express_code,
+            </if>
+            <if test="expressName != null">
+                express_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="expressId != null">
+                #{expressId,jdbcType=TINYINT},
+            </if>
+            <if test="expressCode != null">
+                #{expressCode,jdbcType=VARCHAR},
+            </if>
+            <if test="expressName != null">
+                #{expressName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.system.Express">
+        update cs_express
+        <set>
+            <if test="expressCode != null">
+                express_code = #{expressCode,jdbcType=VARCHAR},
+            </if>
+            <if test="expressName != null">
+                express_name = #{expressName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where express_id = #{expressId,jdbcType=TINYINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.system.Express">
+        UPDATE cs_express
+        SET express_code = #{expressCode,jdbcType=VARCHAR},
+            express_name = #{expressName,jdbcType=VARCHAR}
+        WHERE express_id = #{expressId,jdbcType=TINYINT}
+    </update>
+    <select id="findByExpressCode" resultType="java.lang.String">
+        SELECT express_name
+        FROM cs_express
+        WHERE express_code = #{expressCode,jdbcType=VARCHAR}
+    </select>
+</mapper>

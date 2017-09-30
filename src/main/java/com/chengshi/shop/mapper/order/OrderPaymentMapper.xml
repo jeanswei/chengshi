@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chengshi.shop.dao.order.OrderPaymentMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.order.OrderPayment">
+        <id column="order_payment_id" property="orderPaymentId" jdbcType="INTEGER"/>
+        <result column="order_id" property="orderId" jdbcType="INTEGER"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+        <result column="payment_method" property="paymentMethod" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="trade_no" property="tradeNo" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        order_payment_id, order_id, money, payment_method, create_time, content, trade_no
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_order_payment
+        where order_payment_id = #{orderPaymentId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_order_payment
+        WHERE order_payment_id = #{orderPaymentId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.order.OrderPayment">
+        INSERT INTO cs_order_payment (order_payment_id, order_id, money,
+                                      payment_method, create_time, content,
+                                      trade_no)
+        VALUES (#{orderPaymentId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{money,jdbcType=DECIMAL},
+                #{paymentMethod,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR},
+                #{tradeNo,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.order.OrderPayment">
+        insert into cs_order_payment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderPaymentId != null">
+                order_payment_id,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="paymentMethod != null">
+                payment_method,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="tradeNo != null">
+                trade_no,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderPaymentId != null">
+                #{orderPaymentId,jdbcType=INTEGER},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="paymentMethod != null">
+                #{paymentMethod,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeNo != null">
+                #{tradeNo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.order.OrderPayment">
+        update cs_order_payment
+        <set>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="paymentMethod != null">
+                payment_method = #{paymentMethod,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeNo != null">
+                trade_no = #{tradeNo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where order_payment_id = #{orderPaymentId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.order.OrderPayment">
+        UPDATE cs_order_payment
+        SET order_id       = #{orderId,jdbcType=INTEGER},
+            money          = #{money,jdbcType=DECIMAL},
+            payment_method = #{paymentMethod,jdbcType=TINYINT},
+            create_time    = #{createTime,jdbcType=TIMESTAMP},
+            content        = #{content,jdbcType=VARCHAR},
+            trade_no       = #{tradeNo,jdbcType=VARCHAR}
+        WHERE order_payment_id = #{orderPaymentId,jdbcType=INTEGER}
+    </update>
+    <select id="getListByOrderId" resultMap="BaseResultMap">
+        SELECT *
+        FROM cs_order_payments
+        WHERE order_id = #{orderId,jdbcType=INTEGER}
+              AND payment_method = #{paymentMethod,jdbcType=TINYINT}
+    </select>
+</mapper>

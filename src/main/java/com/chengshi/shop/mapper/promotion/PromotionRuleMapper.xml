@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chengshi.shop.dao.promotion.PromotionRuleMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.promotion.PromotionRule">
+        <id column="rule_id" property="ruleId" jdbcType="INTEGER"/>
+        <result column="promotion_id" property="promotionId" jdbcType="INTEGER"/>
+        <result column="need_money" property="needMoney" jdbcType="DECIMAL"/>
+        <result column="discount" property="discount" jdbcType="DECIMAL"/>
+        <result column="give_coupon" property="giveCoupon" jdbcType="INTEGER"/>
+        <result column="is_give_gift" property="isGiveGift" jdbcType="BIT"/>
+        <result column="gift" property="gift" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        rule_id, promotion_id, need_money, discount, give_coupon, is_give_gift, gift
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_promotion_rule
+        where rule_id = #{ruleId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_promotion_rule
+        WHERE rule_id = #{ruleId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.promotion.PromotionRule">
+        INSERT INTO cs_promotion_rule (rule_id, promotion_id, need_money,
+                                       discount, give_coupon, is_give_gift,
+                                       gift)
+        VALUES (#{ruleId,jdbcType=INTEGER}, #{promotionId,jdbcType=INTEGER}, #{needMoney,jdbcType=DECIMAL},
+                #{discount,jdbcType=DECIMAL}, #{giveCoupon,jdbcType=INTEGER}, #{isGiveGift,jdbcType=BIT},
+                #{gift,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.promotion.PromotionRule">
+        insert into cs_promotion_rule
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ruleId != null">
+                rule_id,
+            </if>
+            <if test="promotionId != null">
+                promotion_id,
+            </if>
+            <if test="needMoney != null">
+                need_money,
+            </if>
+            <if test="discount != null">
+                discount,
+            </if>
+            <if test="giveCoupon != null">
+                give_coupon,
+            </if>
+            <if test="isGiveGift != null">
+                is_give_gift,
+            </if>
+            <if test="gift != null">
+                gift,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ruleId != null">
+                #{ruleId,jdbcType=INTEGER},
+            </if>
+            <if test="promotionId != null">
+                #{promotionId,jdbcType=INTEGER},
+            </if>
+            <if test="needMoney != null">
+                #{needMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="discount != null">
+                #{discount,jdbcType=DECIMAL},
+            </if>
+            <if test="giveCoupon != null">
+                #{giveCoupon,jdbcType=INTEGER},
+            </if>
+            <if test="isGiveGift != null">
+                #{isGiveGift,jdbcType=BIT},
+            </if>
+            <if test="gift != null">
+                #{gift,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.promotion.PromotionRule">
+        update cs_promotion_rule
+        <set>
+            <if test="promotionId != null">
+                promotion_id = #{promotionId,jdbcType=INTEGER},
+            </if>
+            <if test="needMoney != null">
+                need_money = #{needMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="discount != null">
+                discount = #{discount,jdbcType=DECIMAL},
+            </if>
+            <if test="giveCoupon != null">
+                give_coupon = #{giveCoupon,jdbcType=INTEGER},
+            </if>
+            <if test="isGiveGift != null">
+                is_give_gift = #{isGiveGift,jdbcType=BIT},
+            </if>
+            <if test="gift != null">
+                gift = #{gift,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where rule_id = #{ruleId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.promotion.PromotionRule">
+        UPDATE cs_promotion_rule
+        SET promotion_id = #{promotionId,jdbcType=INTEGER},
+            need_money   = #{needMoney,jdbcType=DECIMAL},
+            discount     = #{discount,jdbcType=DECIMAL},
+            give_coupon  = #{giveCoupon,jdbcType=INTEGER},
+            is_give_gift = #{isGiveGift,jdbcType=BIT},
+            gift         = #{gift,jdbcType=VARCHAR}
+        WHERE rule_id = #{ruleId,jdbcType=INTEGER}
+    </update>
+    <select id="selectPromotionRuleListByPromotionId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT *
+        FROM cs_promotion_rule
+        WHERE promotion_id = #{promotionId,jdbcType=INTEGER}
+        ORDER BY need_money ASC
+    </select>
+
+    <!-- 删除修改后多余的促销规则 -->
+    <delete id="deleteNotInRules" parameterType="java.lang.Integer">
+        delete from cs_promotion_rule
+        where promotion_id = #{promotionId,jdbcType=INTEGER}
+        <if test="ruleIds != null and ruleIds !=''">
+            and rule_id not in (${ruleIds})
+        </if>
+    </delete>
+
+    <!-- 删除促销规则 -->
+    <delete id="deletePromotionRule" parameterType="java.lang.Integer">
+        DELETE FROM cs_promotion_rule
+        WHERE promotion_id = #{promotionId,jdbcType=INTEGER}
+    </delete>
+</mapper>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chengshi.shop.dao.goods.GoodsEvaluateMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.goods.GoodsEvaluate">
+        <id column="evaluate_id" property="evaluateId" jdbcType="INTEGER"/>
+        <result column="order_item_id" property="orderItemId" jdbcType="INTEGER"/>
+        <result column="member_id" property="memberId" jdbcType="INTEGER"/>
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="score" property="score" jdbcType="TINYINT"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="images" property="images" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="is_reply" property="isReply" jdbcType="TINYINT"/>
+        <result column="reply_time" property="replyTime" jdbcType="TIMESTAMP"/>
+        <result column="reply_content" property="replyContent" jdbcType="VARCHAR"/>
+        <result column="op_name" property="opName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        evaluate_id, order_item_id, member_id, goods_id, score, content, images, create_time,
+        status, is_reply, reply_time, reply_content, op_name
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_goods_evaluate
+        where evaluate_id = #{evaluateId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_goods_evaluate
+        WHERE evaluate_id = #{evaluateId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.goods.GoodsEvaluate">
+        INSERT INTO cs_goods_evaluate (evaluate_id, order_item_id, member_id,
+                                       goods_id, score, content,
+                                       images, create_time, status,
+                                       is_reply, reply_time, reply_content,
+                                       op_name)
+        VALUES (#{evaluateId,jdbcType=INTEGER}, #{orderItemId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER},
+                                                #{goodsId,jdbcType=INTEGER}, #{score,jdbcType=TINYINT}, #{content,jdbcType=VARCHAR},
+                                                #{images,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT},
+                                                #{isReply,jdbcType=TINYINT}, #{replyTime,jdbcType=TIMESTAMP}, #{replyContent,jdbcType=VARCHAR},
+                #{opName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.goods.GoodsEvaluate">
+        insert into cs_goods_evaluate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="evaluateId != null">
+                evaluate_id,
+            </if>
+            <if test="orderItemId != null">
+                order_item_id,
+            </if>
+            <if test="memberId != null">
+                member_id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="images != null">
+                images,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="isReply != null">
+                is_reply,
+            </if>
+            <if test="replyTime != null">
+                reply_time,
+            </if>
+            <if test="replyContent != null">
+                reply_content,
+            </if>
+            <if test="opName != null">
+                op_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="evaluateId != null">
+                #{evaluateId,jdbcType=INTEGER},
+            </if>
+            <if test="orderItemId != null">
+                #{orderItemId,jdbcType=INTEGER},
+            </if>
+            <if test="memberId != null">
+                #{memberId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=TINYINT},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="images != null">
+                #{images,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="isReply != null">
+                #{isReply,jdbcType=TINYINT},
+            </if>
+            <if test="replyTime != null">
+                #{replyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="replyContent != null">
+                #{replyContent,jdbcType=VARCHAR},
+            </if>
+            <if test="opName != null">
+                #{opName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.goods.GoodsEvaluate">
+        update cs_goods_evaluate
+        <set>
+            <if test="orderItemId != null">
+                order_item_id = #{orderItemId,jdbcType=INTEGER},
+            </if>
+            <if test="memberId != null">
+                member_id = #{memberId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="score != null">
+                score = #{score,jdbcType=TINYINT},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="images != null">
+                images = #{images,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="isReply != null">
+                is_reply = #{isReply,jdbcType=TINYINT},
+            </if>
+            <if test="replyTime != null">
+                reply_time = #{replyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="replyContent != null">
+                reply_content = #{replyContent,jdbcType=VARCHAR},
+            </if>
+            <if test="opName != null">
+                op_name = #{opName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where evaluate_id = #{evaluateId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.goods.GoodsEvaluate">
+        UPDATE cs_goods_evaluate
+        SET order_item_id = #{orderItemId,jdbcType=INTEGER},
+            member_id     = #{memberId,jdbcType=INTEGER},
+            goods_id      = #{goodsId,jdbcType=INTEGER},
+            score         = #{score,jdbcType=TINYINT},
+            content       = #{content,jdbcType=VARCHAR},
+            images        = #{images,jdbcType=VARCHAR},
+            create_time   = #{createTime,jdbcType=TIMESTAMP},
+            status        = #{status,jdbcType=TINYINT},
+            is_reply      = #{isReply,jdbcType=TINYINT},
+            reply_time    = #{replyTime,jdbcType=TIMESTAMP},
+            reply_content = #{replyContent,jdbcType=VARCHAR},
+            op_name       = #{opName,jdbcType=VARCHAR}
+        WHERE evaluate_id = #{evaluateId,jdbcType=INTEGER}
+    </update>
+    <select id="getEvaluateListByGoodsId" resultMap="BaseResultMap">
+        SELECT *
+        FROM cs_goods_evaluate
+        WHERE goods_id = #{goodsId,jdbcType=INTEGER}
+        <if test="score!=null and score!=''">
+            and score = #{score,jdbcType=TINYINT}
+        </if>
+        and status =1
+        ORDER BY evaluate_id DESC
+    </select>
+</mapper>

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengshi.shop.dao.member.MemberMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.member.Member">
+        <id column="member_id" jdbcType="INTEGER" property="memberId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="sex" jdbcType="TINYINT" property="sex"/>
+        <result column="birthday" jdbcType="DATE" property="birthday"/>
+        <result column="member_points" jdbcType="DECIMAL" property="memberPoints"/>
+        <result column="member_balance" jdbcType="DECIMAL" property="memberBalance"/>
+        <result column="member_rank" jdbcType="INTEGER" property="memberRank"/>
+        <result column="rank_points" jdbcType="DECIMAL" property="rankPoints"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="open_id" jdbcType="VARCHAR" property="openId"/>
+        <result column="head_img" jdbcType="VARCHAR" property="headImg"/>
+        <result column="country" jdbcType="VARCHAR" property="country"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        member_id, name, sex, birthday, member_points, member_balance, member_rank, rank_points,
+        mobile, open_id, head_img, country, province, city, create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_member
+        where member_id = #{memberId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_member
+        WHERE member_id = #{memberId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.member.Member">
+        INSERT INTO cs_member (member_id, name, sex,
+                               birthday, member_points, member_balance,
+                               member_rank, rank_points, mobile,
+                               open_id, head_img, country,
+                               province, city, create_time
+        )
+        VALUES (#{memberId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT},
+                #{birthday,jdbcType=DATE}, #{memberPoints,jdbcType=DECIMAL}, #{memberBalance,jdbcType=DECIMAL},
+                #{memberRank,jdbcType=INTEGER}, #{rankPoints,jdbcType=DECIMAL}, #{mobile,jdbcType=VARCHAR},
+                #{openId,jdbcType=VARCHAR}, #{headImg,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR},
+                #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.member.Member">
+        insert into cs_member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">
+                member_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="memberPoints != null">
+                member_points,
+            </if>
+            <if test="memberBalance != null">
+                member_balance,
+            </if>
+            <if test="memberRank != null">
+                member_rank,
+            </if>
+            <if test="rankPoints != null">
+                rank_points,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="openId != null">
+                open_id,
+            </if>
+            <if test="headImg != null">
+                head_img,
+            </if>
+            <if test="country != null">
+                country,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">
+                #{memberId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=TINYINT},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="memberPoints != null">
+                #{memberPoints,jdbcType=DECIMAL},
+            </if>
+            <if test="memberBalance != null">
+                #{memberBalance,jdbcType=DECIMAL},
+            </if>
+            <if test="memberRank != null">
+                #{memberRank,jdbcType=INTEGER},
+            </if>
+            <if test="rankPoints != null">
+                #{rankPoints,jdbcType=DECIMAL},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="headImg != null">
+                #{headImg,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.member.Member">
+        update cs_member
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=TINYINT},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="memberPoints != null">
+                member_points = #{memberPoints,jdbcType=DECIMAL},
+            </if>
+            <if test="memberBalance != null">
+                member_balance = #{memberBalance,jdbcType=DECIMAL},
+            </if>
+            <if test="memberRank != null">
+                member_rank = #{memberRank,jdbcType=INTEGER},
+            </if>
+            <if test="rankPoints != null">
+                rank_points = #{rankPoints,jdbcType=DECIMAL},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                open_id = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="headImg != null">
+                head_img = #{headImg,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                country = #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where member_id = #{memberId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.member.Member">
+        UPDATE cs_member
+        SET name           = #{name,jdbcType=VARCHAR},
+            sex            = #{sex,jdbcType=TINYINT},
+            birthday       = #{birthday,jdbcType=DATE},
+            member_points  = #{memberPoints,jdbcType=DECIMAL},
+            member_balance = #{memberBalance,jdbcType=DECIMAL},
+            member_rank    = #{memberRank,jdbcType=INTEGER},
+            rank_points    = #{rankPoints,jdbcType=DECIMAL},
+            mobile         = #{mobile,jdbcType=VARCHAR},
+            open_id        = #{openId,jdbcType=VARCHAR},
+            head_img       = #{headImg,jdbcType=VARCHAR},
+            country        = #{country,jdbcType=VARCHAR},
+            province       = #{province,jdbcType=VARCHAR},
+            city           = #{city,jdbcType=VARCHAR},
+            create_time    = #{createTime,jdbcType=TIMESTAMP}
+        WHERE member_id = #{memberId,jdbcType=INTEGER}
+    </update>
+    <update id="addMemberPoints">
+        UPDATE cs_member
+        SET member_points = member_points + #{points}
+        WHERE member_id = #{memberId,jdbcType=INTEGER}
+    </update>
+    <update id="addMemberBalance">
+        UPDATE cs_member
+        SET member_balance = member_balance + #{balance}
+        WHERE member_id = #{memberId,jdbcType=INTEGER}
+    </update>
+    <update id="subMemberPoints">
+        UPDATE cs_member
+        SET member_points = member_points + #{points}
+        WHERE member_id = #{memberId,jdbcType=INTEGER}
+    </update>
+    <update id="subMemberBalance">
+        UPDATE cs_member
+        SET member_balance = member_balance + #{balance}
+        WHERE member_id = #{memberId,jdbcType=INTEGER}
+    </update>
+    <select id="getMemberByOpenId" resultMap="BaseResultMap">
+        SELECT * FROM cs_member
+        WHERE openId = #{openId,jdbcType=VARCHAR}
+        LIMIT 1
+    </select>
+    <select id="getList" resultMap="BaseResultMap">
+        SELECT * FROM cs_member
+    </select>
+</mapper>

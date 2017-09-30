@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chengshi.shop.dao.member.MemberAddressMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.member.MemberAddress">
+        <id column="address_id" property="addressId" jdbcType="INTEGER"/>
+        <result column="member_id" property="memberId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="district" property="district" jdbcType="VARCHAR"/>
+        <result column="detail_address" property="detailAddress" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="is_default" property="isDefault" jdbcType="BIT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="is_delete" property="isDelete" jdbcType="BIT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        address_id, member_id, name, mobile, province, city, district, detail_address, address,
+        is_default, create_time, is_delete
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_member_address
+        where address_id = #{addressId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_member_address
+        WHERE address_id = #{addressId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.member.MemberAddress">
+        INSERT INTO cs_member_address (address_id, member_id, name,
+                                       mobile, province, city,
+                                       district, detail_address, address,
+                                       is_default, create_time, is_delete
+        )
+        VALUES (#{addressId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+                                               #{mobile,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
+                                               #{district,jdbcType=VARCHAR}, #{detailAddress,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+                                               #{isDefault,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=BIT}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.member.MemberAddress">
+        insert into cs_member_address
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="addressId != null">
+                address_id,
+            </if>
+            <if test="memberId != null">
+                member_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="district != null">
+                district,
+            </if>
+            <if test="detailAddress != null">
+                detail_address,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="isDefault != null">
+                is_default,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="addressId != null">
+                #{addressId,jdbcType=INTEGER},
+            </if>
+            <if test="memberId != null">
+                #{memberId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="district != null">
+                #{district,jdbcType=VARCHAR},
+            </if>
+            <if test="detailAddress != null">
+                #{detailAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="isDefault != null">
+                #{isDefault,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.member.MemberAddress">
+        update cs_member_address
+        <set>
+            <if test="memberId != null">
+                member_id = #{memberId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="district != null">
+                district = #{district,jdbcType=VARCHAR},
+            </if>
+            <if test="detailAddress != null">
+                detail_address = #{detailAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="isDefault != null">
+                is_default = #{isDefault,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=BIT},
+            </if>
+        </set>
+        where address_id = #{addressId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.member.MemberAddress">
+        UPDATE cs_member_address
+        SET member_id      = #{memberId,jdbcType=INTEGER},
+            name           = #{name,jdbcType=VARCHAR},
+            mobile         = #{mobile,jdbcType=VARCHAR},
+            province       = #{province,jdbcType=VARCHAR},
+            city           = #{city,jdbcType=VARCHAR},
+            district       = #{district,jdbcType=VARCHAR},
+            detail_address = #{detailAddress,jdbcType=VARCHAR},
+            address        = #{address,jdbcType=VARCHAR},
+            is_default     = #{isDefault,jdbcType=BIT},
+            create_time    = #{createTime,jdbcType=TIMESTAMP},
+            is_delete      = #{isDelete,jdbcType=BIT}
+        WHERE address_id = #{addressId,jdbcType=INTEGER}
+    </update>
+    <select id="getDefaultAddress" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT *
+        FROM hm_member_address
+        WHERE is_default = 1
+              AND is_delete = 0
+              AND member_id = #{memberId,jdbcType=INTEGER}
+        LIMIT 1
+    </select>
+    <!-- 临时设置该用户所有的收货地址的is_default字段都为0 -->
+    <update id="changeOtherDefault" parameterType="java.lang.Integer">
+        UPDATE
+            hm_member__address
+        SET
+            is_default = 0
+        WHERE
+            member_id = #{member_id,jdbcType=INTEGER}
+    </update>
+    <select id="getListByMemberId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT *
+        FROM hm_member_address
+        WHERE member_id = #{memberId,jdbcType=INTEGER}
+              AND is_delete = 0
+        ORDER BY is_default, address_id DESC
+    </select>
+    <update id="deleteAddress">
+        UPDATE hm_member_address
+        SET is_delete = 1
+        WHERE address_id = #{addressId,jdbcType=INTEGER}
+    </update>
+</mapper>

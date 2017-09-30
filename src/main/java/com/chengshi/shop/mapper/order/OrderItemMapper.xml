@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengshi.shop.dao.order.OrderItemMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.order.OrderItem">
+        <id column="order_item_id" jdbcType="INTEGER" property="orderItemId"/>
+        <result column="order_id" jdbcType="INTEGER" property="orderId"/>
+        <result column="goods_id" jdbcType="INTEGER" property="goodsId"/>
+        <result column="product_id" jdbcType="INTEGER" property="productId"/>
+        <result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+        <result column="goods_img" jdbcType="VARCHAR" property="goodsImg"/>
+        <result column="spec_view" jdbcType="VARCHAR" property="specView"/>
+        <result column="total_amount" jdbcType="DECIMAL" property="totalAmount"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="num" jdbcType="INTEGER" property="num"/>
+        <result column="return_num" jdbcType="INTEGER" property="returnNum"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        order_item_id, order_id, goods_id, product_id, goods_name, goods_img, spec_view,
+        total_amount, price, num, return_num, status
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_order_item
+        where order_item_id = #{orderItemId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_order_item
+        WHERE order_item_id = #{orderItemId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.order.OrderItem">
+        INSERT INTO cs_order_item (order_item_id, order_id, goods_id,
+                                   product_id, goods_name, goods_img,
+                                   spec_view, total_amount, price,
+                                   num, return_num, status
+        )
+        VALUES (#{orderItemId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER},
+                                                 #{productId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsImg,jdbcType=VARCHAR},
+                                                 #{specView,jdbcType=VARCHAR}, #{totalAmount,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL},
+                                                 #{num,jdbcType=INTEGER}, #{returnNum,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.order.OrderItem">
+        insert into cs_order_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderItemId != null">
+                order_item_id,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="goodsName != null">
+                goods_name,
+            </if>
+            <if test="goodsImg != null">
+                goods_img,
+            </if>
+            <if test="specView != null">
+                spec_view,
+            </if>
+            <if test="totalAmount != null">
+                total_amount,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="num != null">
+                num,
+            </if>
+            <if test="returnNum != null">
+                return_num,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderItemId != null">
+                #{orderItemId,jdbcType=INTEGER},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsName != null">
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsImg != null">
+                #{goodsImg,jdbcType=VARCHAR},
+            </if>
+            <if test="specView != null">
+                #{specView,jdbcType=VARCHAR},
+            </if>
+            <if test="totalAmount != null">
+                #{totalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="num != null">
+                #{num,jdbcType=INTEGER},
+            </if>
+            <if test="returnNum != null">
+                #{returnNum,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.order.OrderItem">
+        update cs_order_item
+        <set>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsName != null">
+                goods_name = #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsImg != null">
+                goods_img = #{goodsImg,jdbcType=VARCHAR},
+            </if>
+            <if test="specView != null">
+                spec_view = #{specView,jdbcType=VARCHAR},
+            </if>
+            <if test="totalAmount != null">
+                total_amount = #{totalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="num != null">
+                num = #{num,jdbcType=INTEGER},
+            </if>
+            <if test="returnNum != null">
+                return_num = #{returnNum,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+        </set>
+        where order_item_id = #{orderItemId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.order.OrderItem">
+        UPDATE cs_order_item
+        SET order_id     = #{orderId,jdbcType=INTEGER},
+            goods_id     = #{goodsId,jdbcType=INTEGER},
+            product_id   = #{productId,jdbcType=INTEGER},
+            goods_name   = #{goodsName,jdbcType=VARCHAR},
+            goods_img    = #{goodsImg,jdbcType=VARCHAR},
+            spec_view    = #{specView,jdbcType=VARCHAR},
+            total_amount = #{totalAmount,jdbcType=DECIMAL},
+            price        = #{price,jdbcType=DECIMAL},
+            num          = #{num,jdbcType=INTEGER},
+            return_num   = #{returnNum,jdbcType=INTEGER},
+            status       = #{status,jdbcType=TINYINT}
+        WHERE order_item_id = #{orderItemId,jdbcType=INTEGER}
+    </update>
+    <select id="getListByOrderId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT *
+        FROM cs_order_item
+        WHERE order_id = #{orderId,jdbcType=INTEGER}
+    </select>
+    <select id="getCanReturnOrderItem" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT DISTINCT a.*
+        FROM cs_order_item a, cs_order b
+        WHERE a.order_id = b.order_id
+        AND b.member_id = #{memberId,jdbcType=INTEGER}
+        AND a.`status` = 4
+        AND b.status = 10
+        AND (IFNULL(unix_timestamp(b.finish_time), 0) + IFNULL(d.return_day * 86400, 0)) &gt;= unix_timestamp(now())
+        <![CDATA[
+              AND (a.num - (SELECT IFNULL(sum(num), 0) +
+                                   (SELECT IFNULL(sum(num), 0)
+                                    FROM hm_order_return
+                                    WHERE order_items_id = a.order_items_id AND type = 2 AND `status` <> 2)
+                            FROM hm_order_return
+                            WHERE order_items_id = a.order_items_id AND type = 1 AND `status` = 0) > 0)
+	          ]]>
+        ORDER BY a.order_items_id DESC
+    </select>
+</mapper>

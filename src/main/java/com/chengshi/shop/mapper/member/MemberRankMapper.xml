@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chengshi.shop.dao.member.MemberRankMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.member.MemberRank">
+        <id column="rank_id" property="rankId" jdbcType="INTEGER"/>
+        <result column="rank_name" property="rankName" jdbcType="VARCHAR"/>
+        <result column="min_points" property="minPoints" jdbcType="INTEGER"/>
+        <result column="max_points" property="maxPoints" jdbcType="INTEGER"/>
+        <result column="discount" property="discount" jdbcType="DECIMAL"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        rank_id, rank_name, min_points, max_points, discount
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Byte">
+        select
+        <include refid="Base_Column_List"/>
+        from cs_member_rank
+        where rank_id = #{rankId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Byte">
+        DELETE FROM cs_member_rank
+        WHERE rank_id = #{rankId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.member.MemberRank">
+        INSERT INTO cs_member_rank (rank_id, rank_name, min_points,
+                                    max_points, discount)
+        VALUES (#{rankId,jdbcType=INTEGER}, #{rankName,jdbcType=VARCHAR}, #{minPoints,jdbcType=INTEGER},
+                #{maxPoints,jdbcType=INTEGER}, #{discount,jdbcType=DECIMAL})
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.member.MemberRank">
+        insert into cs_member_rank
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="rankId != null">
+                rank_id,
+            </if>
+            <if test="rankName != null">
+                rank_name,
+            </if>
+            <if test="minPoints != null">
+                min_points,
+            </if>
+            <if test="maxPoints != null">
+                max_points,
+            </if>
+            <if test="discount != null">
+                discount,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="rankId != null">
+                #{rankId,jdbcType=INTEGER},
+            </if>
+            <if test="rankName != null">
+                #{rankName,jdbcType=VARCHAR},
+            </if>
+            <if test="minPoints != null">
+                #{minPoints,jdbcType=INTEGER},
+            </if>
+            <if test="maxPoints != null">
+                #{maxPoints,jdbcType=INTEGER},
+            </if>
+            <if test="discount != null">
+                #{discount,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.member.MemberRank">
+        update cs_member_rank
+        <set>
+            <if test="rankName != null">
+                rank_name = #{rankName,jdbcType=VARCHAR},
+            </if>
+            <if test="minPoints != null">
+                min_points = #{minPoints,jdbcType=INTEGER},
+            </if>
+            <if test="maxPoints != null">
+                max_points = #{maxPoints,jdbcType=INTEGER},
+            </if>
+            <if test="discount != null">
+                discount = #{discount,jdbcType=DECIMAL},
+            </if>
+        </set>
+        where rank_id = #{rankId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.member.MemberRank">
+        UPDATE cs_member_rank
+        SET rank_name  = #{rankName,jdbcType=VARCHAR},
+            min_points = #{minPoints,jdbcType=INTEGER},
+            max_points = #{maxPoints,jdbcType=INTEGER},
+            discount   = #{discount,jdbcType=DECIMAL}
+        WHERE rank_id = #{rankId,jdbcType=INTEGER}
+    </update>
+    <select id="getMemberRankByMemberId" resultMap="BaseResultMap">
+        SELECT a.*
+        FROM cs_member_rank a, cs_member b
+        WHERE a.rank_id = b.member_rank
+              AND b.member_id = #{memberId,jdbcType=INTEGER}
+    </select>
+    <select id="findMinMemberRank" resultMap="BaseResultMap">
+        SELECT *
+        FROM cs_member_rank
+        ORDER BY min_points
+        LIMIT 1
+    </select>
+    <select id="getMemberDiscount" resultType="java.math.BigDecimal">
+        SELECT a.discount
+        FROM cs_member_rank a, cs_member b
+        WHERE a.rank_id = b.member_rank
+              AND b.member_id = #{memberId,jdbcType=INTEGER}
+    </select>
+</mapper>
