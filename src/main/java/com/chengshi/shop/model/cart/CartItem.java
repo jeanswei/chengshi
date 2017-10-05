@@ -5,20 +5,20 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 /**
  * 购物车明细
  *
- * @author yuanrs
- * @date 创建时间：2015年10月11日 上午10:41:51 *
+ * @author 徐新龙
+ * @version 2017年4月14日 上午10:57:06
  */
 public class CartItem {
     // 会员id
     private Integer memberId;
-    // 加入购物车的供应商货品id
+    // 货品id
     private Integer productId;
     // 货品的数量
-    private int productNum;
-    // 选中状态，0未选中，1选中
-    private Byte chooseType;
-    // 商品是否有效 1有效 0无效
-    private Integer isValid = 1;
+    private Integer productNum;
+    // 选中状态
+    private Boolean isChoose;
+    // 商品是否有效
+    private Boolean isValid = false;
 
     @Override
     public String toString() {
@@ -41,27 +41,27 @@ public class CartItem {
         this.productId = productId;
     }
 
-    public int getProductNum() {
+    public Integer getProductNum() {
         return productNum;
     }
 
-    public void setProductNum(int productNum) {
+    public void setProductNum(Integer productNum) {
         this.productNum = productNum;
     }
 
-    public Byte getChooseType() {
-        return chooseType;
+    public Boolean getIsChoose() {
+        return isChoose;
     }
 
-    public void setChooseType(Byte chooseType) {
-        this.chooseType = chooseType;
+    public void setIsChoose(Boolean isChoose) {
+        this.isChoose = isChoose;
     }
 
-    public Integer getIsValid() {
+    public Boolean getIsValid() {
         return isValid;
     }
 
-    public void setIsValid(Integer isValid) {
+    public void setIsValid(Boolean isValid) {
         this.isValid = isValid;
     }
 }

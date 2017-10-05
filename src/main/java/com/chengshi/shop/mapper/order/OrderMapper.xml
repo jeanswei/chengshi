@@ -337,7 +337,7 @@
         WHERE `status` = 1
         <![CDATA[ and auto_close_time< now() ]]>
     </select>
-    <select id="getCanReceiptOrder">
+    <select id="getCanReceiptOrder" resultMap="BaseResultMap">
         SELECT * FROM cs_order
         WHERE `status` = 4
         <![CDATA[ and auto_finish_time< now() ]]>

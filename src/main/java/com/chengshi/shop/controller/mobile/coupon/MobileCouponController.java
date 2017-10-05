@@ -11,6 +11,9 @@ import com.chengshi.shop.util.DateFormatUtil;
 import com.chengshi.shop.util.EnumUtil;
 import com.chengshi.shop.util.MessageUtils;
 import com.chengshi.shop.util.SessionUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -25,6 +28,7 @@ import java.util.List;
  * @author xuxinlong
  * @version 2017年09月14日
  */
+@Api(value = "coupon", description = "优惠券相关接口")
 @RestController
 @RequestMapping(value = "/mobile/coupon")
 public class MobileCouponController {
@@ -41,7 +45,9 @@ public class MobileCouponController {
      * @param goodsId
      * @return
      */
-    @RequestMapping(value = "getGoodsCoupon")
+    @ApiOperation(value = "获取商品可领取优惠券列表")
+    @ApiImplicitParam(name = "goodsId", required = true, value = "商品Id", paramType = "query", dataType = "int")
+    @GetMapping(value = "getGoodsCoupon")
     public HashMap<String, Object> getGoodsCoupon(@RequestParam Integer goodsId) {
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
@@ -64,9 +70,9 @@ public class MobileCouponController {
                 map.put("getCount", coupon.getGetCount());
                 Integer hasCount = couponService.getHasCountByCouponId(member.getMemberId(), coupon.getCouponId());
                 //是否可以继续领取
-                map.put("canGet", 1);
+                map.put("canGet", true);
                 if (coupon.getLimitNum() != 0 && coupon.getLimitNum() - hasCount <= 0) {
-                    map.put("canGet", 0);
+                    map.put("canGet", false);
                 }
                 mapList.add(map);
             }
@@ -82,6 +88,7 @@ public class MobileCouponController {
      *
      * @return
      */
+    @ApiOperation(value = "获取购物车内商品可领取优惠券列表")
     @GetMapping(value = "getCartCoupon")
     public HashMap<String, Object> getCartCoupon() {
         HashMap<String, Object> retMap = MessageUtils.success();
@@ -113,9 +120,9 @@ public class MobileCouponController {
                     map.put("getCount", coupon.getGetCount());
                     Integer hasCount = couponService.getHasCountByCouponId(member.getMemberId(), coupon.getCouponId());
                     //是否可以继续领取
-                    map.put("canGet", 1);
+                    map.put("canGet", true);
                     if (coupon.getLimitNum() != 0 && coupon.getLimitNum() - hasCount <= 0) {
-                        map.put("canGet", 0);
+                        map.put("canGet", false);
                     }
                     mapList.add(map);
                 }
@@ -133,6 +140,8 @@ public class MobileCouponController {
      * @param couponId
      * @return
      */
+    @ApiOperation(value = "领取优惠券")
+    @ApiImplicitParam(name = "couponId", required = true, value = "优惠券Id", paramType = "query", dataType = "int")
     @PostMapping(value = "/receiveCoupon")
     public HashMap<String, Object> receiveCoupon(@RequestParam Integer couponId) {
         HashMap<String, Object> retMap = MessageUtils.success("领取成功");

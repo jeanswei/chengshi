@@ -21,9 +21,7 @@ public class OrderItem {
 
     private BigDecimal price;
 
-    private Integer quantity;
-
-    private Integer returnNum;
+    private Integer productNum;
 
     private Byte status;
 
@@ -99,20 +97,12 @@ public class OrderItem {
         this.price = price;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getProductNum() {
+        return productNum;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Integer getReturnNum() {
-        return returnNum;
-    }
-
-    public void setReturnNum(Integer returnNum) {
-        this.returnNum = returnNum;
+    public void setProductNum(Integer productNum) {
+        this.productNum = productNum;
     }
 
     public Byte getStatus() {

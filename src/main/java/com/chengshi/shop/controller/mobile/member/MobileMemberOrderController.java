@@ -12,6 +12,7 @@ import com.chengshi.shop.util.MessageUtils;
 import com.chengshi.shop.util.SessionUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,11 +25,12 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * &#x4f1a;&#x5458;&#x8ba2;&#x5355;&#x7ba1;&#x7406;
+ * 会员订单信息
  *
  * @author xuxinlong
- * @version 2017&#x5e74;08&#x6708;01&#x65e5;
+ * @version 2017年08月01日
  */
+@Api(value = "member", description = "会员订单信息相关接口")
 @RestController
 @RequestMapping(value = "/mobile/member")
 public class MobileMemberOrderController extends BaseController {
@@ -79,7 +81,7 @@ public class MobileMemberOrderController extends BaseController {
                     itemMap.put("productId", orderItem.getProductId());
                     itemMap.put("goodsName", orderItem.getGoodsName());
                     itemMap.put("price", orderItem.getPrice());
-                    itemMap.put("quantity", orderItem.getQuantity());
+                    itemMap.put("productNum", orderItem.getProductNum());
                     itemMapList.add(itemMap);
                 }
                 map.put("orderItemList", itemMapList);
@@ -144,7 +146,7 @@ public class MobileMemberOrderController extends BaseController {
                     itemMap.put("goodsImage", orderItem.getGoodsImg());
                     itemMap.put("productId", orderItem.getProductId());
                     itemMap.put("price", orderItem.getPrice());
-                    itemMap.put("quantity", orderItem.getQuantity());
+                    itemMap.put("productNum", orderItem.getProductNum());
                     itemsMapList.add(itemMap);
                 }
                 retMap.put("orderItem", itemsMapList);
@@ -178,8 +180,7 @@ public class MobileMemberOrderController extends BaseController {
                 itemMap.put("goodsImage", orderItem.getGoodsImg());
                 itemMap.put("goodsName", orderItem.getGoodsName());
                 itemMap.put("price", orderItem.getPrice());
-                itemMap.put("quantity", orderItem.getQuantity());
-
+                itemMap.put("productNum", orderItem.getProductNum());
                 itemsMapList.add(itemMap);
             }
             retMap.put("orderItem", itemsMapList);

@@ -15,7 +15,7 @@ public class CartGoods {
     private Integer goodsId;
     //货品Id
     private Integer productId;
-    //标题（商品上架名称）
+    //商品名称
     private String goodsName;
     //购物车商品图片
     private String goodsImage;
@@ -31,14 +31,12 @@ public class CartGoods {
     private Integer productNum;
     //商品总额
     private BigDecimal totalMoney = BigDecimal.ZERO;
-    //商品是否有效  0无效 1有效 2受限制
-    private Integer isValid;
+    //商品是否有效
+    private Boolean isValid = false;
     //商品无效原因
     private String noValReason;
-    //商品类型
-    private Byte goodsType = 1;
-    //选中状态，0未选中，1选中
-    private Byte chooseType;
+    //选中状态
+    private Boolean isChoose;
     //最小购买数量
     private Integer minNum = 1;
     //最大购买数量
@@ -92,11 +90,11 @@ public class CartGoods {
         this.productId = productId;
     }
 
-    public Integer getIsValid() {
+    public Boolean getIsValid() {
         return isValid;
     }
 
-    public void setIsValid(Integer isValid) {
+    public void setIsValid(Boolean isValid) {
         this.isValid = isValid;
     }
 
@@ -140,20 +138,12 @@ public class CartGoods {
         this.noValReason = noValReason;
     }
 
-    public Byte getGoodsType() {
-        return goodsType;
+    public Boolean getIsChoose() {
+        return isChoose;
     }
 
-    public void setGoodsType(Byte goodsType) {
-        this.goodsType = goodsType;
-    }
-
-    public Byte getChooseType() {
-        return chooseType;
-    }
-
-    public void setChooseType(Byte chooseType) {
-        this.chooseType = chooseType;
+    public void setIsChoose(Boolean isChoose) {
+        this.isChoose = isChoose;
     }
 
     public Integer getMinNum() {

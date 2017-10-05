@@ -59,5 +59,5 @@ public interface MemberAssetsService {
      * @param memberId
      * @return
      */
-    BigDecimal getPointsByMemberId(Integer memberId);
+    BigDecimal getMemberPointsByMemberId(Integer memberId);
 }

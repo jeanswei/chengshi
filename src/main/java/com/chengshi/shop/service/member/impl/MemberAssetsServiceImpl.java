@@ -91,7 +91,7 @@ public class MemberAssetsServiceImpl implements MemberAssetsService {
      * @return
      */
     @Override
-    public BigDecimal getPointsByMemberId(Integer memberId) {
+    public BigDecimal getMemberPointsByMemberId(Integer memberId) {
         return memberMapper.selectByPrimaryKey(memberId).getMemberPoints();
     }
 

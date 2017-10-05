@@ -122,7 +122,7 @@ public class OrderServiceImpl implements OrderService {
                 orderItem.setStatus(EnumUtil.ORDER_ITEM_STATUS.已退款.getValue().byteValue());
                 orderItemMapper.updateByPrimaryKeySelective(orderItem);
                 //返还库存
-                goodsProductMapper.addProductStore(orderItem.getProductId(), orderItem.getQuantity());
+                goodsProductMapper.addProductStore(orderItem.getProductId(), orderItem.getProductNum());
             }
             // 关闭订单
             order.setStatus(EnumUtil.ORDER_STATUS.交易关闭.getValue().byteValue());

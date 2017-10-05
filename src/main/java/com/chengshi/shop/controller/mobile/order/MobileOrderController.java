@@ -11,6 +11,9 @@ import com.chengshi.shop.service.order.OrderService;
 import com.chengshi.shop.util.EnumUtil;
 import com.chengshi.shop.util.MessageUtils;
 import com.chengshi.shop.util.SessionUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -23,6 +26,7 @@ import java.util.HashMap;
  * @author xuxinlong
  * @version 2017年07月18日
  */
+@Api(value = "order", description = "订单处理相关接口")
 @RestController
 @RequestMapping("/mobile/order")
 public class MobileOrderController extends BaseController {
@@ -42,6 +46,8 @@ public class MobileOrderController extends BaseController {
      * @param orderInputBean
      * @return
      */
+    @ApiOperation(value = "提交订单")
+    @ApiImplicitParam(name = "orderInputBean", value = "订单信息组合实体类", required = true, dataType = "OrderInputBean")
     @PostMapping(value = "/addOrderList")
     public HashMap<String, Object> addOrderList(@ModelAttribute("orderInputBean") OrderInputBean orderInputBean) {
         HashMap<String, Object> retMap = MessageUtils.success();

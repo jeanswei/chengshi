@@ -176,7 +176,7 @@
     </update>
     <select id="getDefaultAddress" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT *
-        FROM hm_member_address
+        FROM cs_member_address
         WHERE is_default = 1
               AND is_delete = 0
               AND member_id = #{memberId,jdbcType=INTEGER}
@@ -185,7 +185,7 @@
     <!-- 临时设置该用户所有的收货地址的is_default字段都为0 -->
     <update id="changeOtherDefault" parameterType="java.lang.Integer">
         UPDATE
-            hm_member__address
+            cs_member_address
         SET
             is_default = 0
         WHERE
@@ -193,13 +193,13 @@
     </update>
     <select id="getListByMemberId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT *
-        FROM hm_member_address
+        FROM cs_member_address
         WHERE member_id = #{memberId,jdbcType=INTEGER}
               AND is_delete = 0
         ORDER BY is_default, address_id DESC
     </select>
     <update id="deleteAddress">
-        UPDATE hm_member_address
+        UPDATE cs_member_address
         SET is_delete = 1
         WHERE address_id = #{addressId,jdbcType=INTEGER}
     </update>

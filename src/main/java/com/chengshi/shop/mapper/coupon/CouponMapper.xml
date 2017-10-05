@@ -232,7 +232,7 @@
             AND exists(
                     SELECT 1
                     FROM
-                        hm_coupon_goods
+                        cs_coupon_goods
                     WHERE coupon_id = a.coupon_id
                           AND goods_id = #{goodsId,jdbcType=INTEGER})
             <![CDATA[

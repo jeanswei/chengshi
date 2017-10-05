@@ -148,10 +148,11 @@
         SET store = store - #{count}
         WHERE product_id = #{productId,jdbcType=INTEGER}
     </update>
-    <select id="getMinProductByGoodsId">
+    <select id="getFirstProductByGoodsId" resultMap="BaseResultMap">
         SELECT * FROM cs_goods_product
         WHERE goods_id = #{goodsId,jdbcType=INTEGER}
-        ORDER BY price
+              AND is_delete = 0
+        ORDER BY product_id DESC
         LIMIT 1
     </select>
 </mapper>

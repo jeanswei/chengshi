@@ -52,5 +52,5 @@ public interface GoodsProductMapper {
      * @param goodsId
      * @return
      */
-    GoodsProduct getMinProductByGoodsId(Integer goodsId);
+    GoodsProduct getFirstProductByGoodsId(Integer goodsId);
 }

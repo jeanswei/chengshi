@@ -11,13 +11,12 @@
         <result column="spec_view" jdbcType="VARCHAR" property="specView"/>
         <result column="total_amount" jdbcType="DECIMAL" property="totalAmount"/>
         <result column="price" jdbcType="DECIMAL" property="price"/>
-        <result column="num" jdbcType="INTEGER" property="num"/>
-        <result column="return_num" jdbcType="INTEGER" property="returnNum"/>
+        <result column="product_num" jdbcType="INTEGER" property="productNum"/>
         <result column="status" jdbcType="TINYINT" property="status"/>
     </resultMap>
     <sql id="Base_Column_List">
         order_item_id, order_id, goods_id, product_id, goods_name, goods_img, spec_view,
-        total_amount, price, num, return_num, status
+        total_amount, price, product_num, status
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -33,13 +32,11 @@
         INSERT INTO cs_order_item (order_item_id, order_id, goods_id,
                                    product_id, goods_name, goods_img,
                                    spec_view, total_amount, price,
-                                   num, return_num, status
-        )
+                                   product_num, status)
         VALUES (#{orderItemId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER},
                                                  #{productId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsImg,jdbcType=VARCHAR},
                                                  #{specView,jdbcType=VARCHAR}, #{totalAmount,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL},
-                                                 #{num,jdbcType=INTEGER}, #{returnNum,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}
-        )
+                                                 #{productNum,jdbcType=INTEGER}, #{status,jdbcType=TINYINT})
     </insert>
     <insert id="insertSelective" parameterType="com.chengshi.shop.model.order.OrderItem">
         insert into cs_order_item
@@ -71,11 +68,8 @@
             <if test="price != null">
                 price,
             </if>
-            <if test="num != null">
-                num,
-            </if>
-            <if test="returnNum != null">
-                return_num,
+            <if test="productNum != null">
+                product_num,
             </if>
             <if test="status != null">
                 status,
@@ -109,11 +103,8 @@
             <if test="price != null">
                 #{price,jdbcType=DECIMAL},
             </if>
-            <if test="num != null">
-                #{num,jdbcType=INTEGER},
-            </if>
-            <if test="returnNum != null">
-                #{returnNum,jdbcType=INTEGER},
+            <if test="productNum != null">
+                #{productNum,jdbcType=INTEGER},
             </if>
             <if test="status != null">
                 #{status,jdbcType=TINYINT},
@@ -147,11 +138,8 @@
             <if test="price != null">
                 price = #{price,jdbcType=DECIMAL},
             </if>
-            <if test="num != null">
-                num = #{num,jdbcType=INTEGER},
-            </if>
-            <if test="returnNum != null">
-                return_num = #{returnNum,jdbcType=INTEGER},
+            <if test="productNum != null">
+                product_num = #{productNum,jdbcType=INTEGER},
             </if>
             <if test="status != null">
                 status = #{status,jdbcType=TINYINT},
@@ -169,8 +157,7 @@
             spec_view    = #{specView,jdbcType=VARCHAR},
             total_amount = #{totalAmount,jdbcType=DECIMAL},
             price        = #{price,jdbcType=DECIMAL},
-            num          = #{num,jdbcType=INTEGER},
-            return_num   = #{returnNum,jdbcType=INTEGER},
+            product_num  = #{productNum,jdbcType=INTEGER},
             status       = #{status,jdbcType=TINYINT}
         WHERE order_item_id = #{orderItemId,jdbcType=INTEGER}
     </update>
@@ -183,10 +170,10 @@
         SELECT DISTINCT a.*
         FROM cs_order_item a, cs_order b
         WHERE a.order_id = b.order_id
-        AND b.member_id = #{memberId,jdbcType=INTEGER}
-        AND a.`status` = 4
-        AND b.status = 10
-        AND (IFNULL(unix_timestamp(b.finish_time), 0) + IFNULL(d.return_day * 86400, 0)) &gt;= unix_timestamp(now())
+              AND b.member_id = #{memberId,jdbcType=INTEGER}
+              AND a.`status` = 4
+              AND b.status = 10
+              AND (IFNULL(unix_timestamp(b.finish_time), 0) + IFNULL(d.return_day * 86400, 0)) &gt;= unix_timestamp(now())
         <![CDATA[
               AND (a.num - (SELECT IFNULL(sum(num), 0) +
                                    (SELECT IFNULL(sum(num), 0)

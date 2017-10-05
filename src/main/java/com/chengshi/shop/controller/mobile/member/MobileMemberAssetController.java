@@ -8,6 +8,8 @@ import com.chengshi.shop.service.member.MemberAssetsService;
 import com.chengshi.shop.util.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,8 +27,9 @@ import java.util.List;
  * @author xuxinlong
  * @version 2017年08月01日
  */
+@Api(value = "asset", description = "会员个人资产相关接口")
 @RestController
-@RequestMapping(value = "/mobile/member")
+@RequestMapping(value = "/mobile/asset")
 public class MobileMemberAssetController extends BaseController {
     @Resource
     private MemberAssetsService memberAssetsService;
@@ -36,7 +39,8 @@ public class MobileMemberAssetController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/getAssetInfo")
+    @ApiOperation(value = "会员资产基本信息")
+    @GetMapping(value = "/getAssetInfo")
     public HashMap<String, Object> getAssetInfo() {
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
@@ -44,7 +48,7 @@ public class MobileMemberAssetController extends BaseController {
 
             List<HashMap<String, Object>> assetList = new ArrayList<>();
             HashMap<String, Object> map = new HashMap<>();
-            BigDecimal points = memberAssetsService.getPointsByMemberId(memberId);
+            BigDecimal points = memberAssetsService.getMemberPointsByMemberId(memberId);
             map.put("id", "points");
             map.put("name", "积分");//积分
             map.put("value", points);//积分余额
@@ -77,8 +81,9 @@ public class MobileMemberAssetController extends BaseController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/getMemberPointsInfo")
-    public HashMap<String, Object> getPointsList(HttpServletRequest request) {
+    @ApiOperation(value = "会员积分明细列表")
+    @GetMapping(value = "/getMemberPointsInfo")
+    public HashMap<String, Object> getMemberPointsInfo(HttpServletRequest request) {
 
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
@@ -109,8 +114,9 @@ public class MobileMemberAssetController extends BaseController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/getMemberBalanceInfo")
-    public HashMap<String, Object> getMemberBalanceHistoryList(HttpServletRequest request) {
+    @ApiOperation(value = "会员余额明细列表")
+    @GetMapping(value = "/getMemberBalanceInfo")
+    public HashMap<String, Object> getMemberBalanceInfo(HttpServletRequest request) {
 
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
@@ -141,7 +147,8 @@ public class MobileMemberAssetController extends BaseController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/getCouponList")
+    @ApiOperation(value = "会员拥有优惠券列表")
+    @GetMapping(value = "/getCouponList")
     public HashMap<String, Object> getCouponList(HttpServletRequest request) {
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
@@ -174,9 +181,10 @@ public class MobileMemberAssetController extends BaseController {
     }
 
     /**
-     * 获取会员余额
+     * 获取会员余额金额
      * @return
      */
+    @ApiOperation(value = "获取会员余额剩余金额")
     @GetMapping(value = "/getMemberBalance")
     public HashMap<String, Object> getMemberBalance(){
         HashMap<String, Object> retMap = MessageUtils.success();
@@ -184,6 +192,24 @@ public class MobileMemberAssetController extends BaseController {
             Member nowMember = SessionUtils.getMember();
             BigDecimal balance = memberAssetsService.getMemberBalanceByMemberId(nowMember.getMemberId());
             retMap.put("balance", balance);
+        } catch (Exception e){
+            retMap = MessageUtils.error();
+        }
+        return retMap;
+    }
+
+    /**
+     * 获取会员积分数量
+     * @return
+     */
+    @ApiOperation(value = "获取会员积分数量")
+    @GetMapping(value = "/getMemberPoints")
+    public HashMap<String, Object> getMemberPoints(){
+        HashMap<String, Object> retMap = MessageUtils.success();
+        try {
+            Member nowMember = SessionUtils.getMember();
+            BigDecimal points = memberAssetsService.getMemberPointsByMemberId(nowMember.getMemberId());
+            retMap.put("points", points);
         } catch (Exception e){
             retMap = MessageUtils.error();
         }

@@ -6,6 +6,9 @@ import com.chengshi.shop.model.member.MemberAddress;
 import com.chengshi.shop.service.member.MemberAddressService;
 import com.chengshi.shop.util.MessageUtils;
 import com.chengshi.shop.util.SessionUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -18,6 +21,7 @@ import java.util.List;
  * @author 徐新龙
  * @version 2016年12月5日 下午2:27:40
  */
+@Api(value = "address", description = "会员收货地址相关接口")
 @RestController
 @RequestMapping(value = "/mobile/address")
 public class MobileMemberAddressController extends BaseController {
@@ -30,6 +34,8 @@ public class MobileMemberAddressController extends BaseController {
      * @param memberAddress
      * @return
      */
+    @ApiOperation(value = "保存收货地址信息")
+    @ApiImplicitParam(name = "memberAddress", required = true, value = "收货地址", paramType = "path", dataType = "MemberAddress")
     @PostMapping(value = "/saveAddress")
     public HashMap<String, Object> saveAddress(@ModelAttribute("MemberAddress") MemberAddress memberAddress) {
         HashMap<String, Object> retMap = MessageUtils.success();
@@ -48,6 +54,7 @@ public class MobileMemberAddressController extends BaseController {
      *
      * @return
      */
+    @ApiOperation(value = "获取会员收货地址列表")
     @GetMapping(value = "/getAddressList")
     public HashMap<String, Object> getAddressList() {
         HashMap<String, Object> retMap = MessageUtils.success();
@@ -67,7 +74,9 @@ public class MobileMemberAddressController extends BaseController {
      * @param addressId
      * @return
      */
-    @RequestMapping(value = "/getAddressDetail")
+    @ApiOperation(value = "获取收货地址详情")
+    @ApiImplicitParam(name = "addressId", required = true, value = "收货地址Id", paramType = "query", dataType = "int")
+    @GetMapping(value = "/getAddressDetail")
     public HashMap<String, Object> getAddressDetail(@RequestParam Integer addressId) {
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
@@ -86,6 +95,8 @@ public class MobileMemberAddressController extends BaseController {
      * @param addressId
      * @return
      */
+    @ApiOperation(value = "删除收货地址")
+    @ApiImplicitParam(name = "addressId", required = true, value = "收货地址Id", paramType = "query", dataType = "int")
     @PostMapping(value = "/deleteAddress")
     public HashMap<String, Object> deleteAddress(@RequestParam Integer addressId) {
         HashMap<String, Object> retMap = MessageUtils.success();
@@ -103,6 +114,8 @@ public class MobileMemberAddressController extends BaseController {
      * @param addressId
      * @return
      */
+    @ApiOperation(value = "设置为默认收货地址")
+    @ApiImplicitParam(name = "addressId", required = true, value = "收货地址Id", paramType = "query", dataType = "int")
     @PostMapping(value = "/changeDefaultAddress")
     public HashMap<String, Object> changeDefaultAddress(@RequestParam Integer addressId) {
         HashMap<String, Object> retMap = MessageUtils.success();

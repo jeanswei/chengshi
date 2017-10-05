@@ -120,10 +120,8 @@ public class OrderSaveServiceImpl implements OrderSaveService {
             String[] id_numArray = id_num.split("-");
             Integer productId = Integer.parseInt(id_numArray[0]);
             Integer productNum = Integer.parseInt(id_numArray[1]);
-            String cartkey = "cart:" + orderInputBean.getMemberId();
-            String cartItemkey = "cartItem:" + orderInputBean.getMemberId() + ":" + productId;
             //根据memberId 和 传入的货品的id 批量删除购物车中的货品
-            cartService.batchDelInCartPart(orderInputBean.getMemberId(), cartkey, cartItemkey, productId.toString());
+            cartService.batchDelInCart(orderInputBean.getMemberId(), productId.toString());
             //减去库存
             productMapper.subProductStore(productId, productNum);
 
@@ -180,7 +178,7 @@ public class OrderSaveServiceImpl implements OrderSaveService {
             orderItem.setGoodsName(outGoods.getGoodsName());
             orderItem.setSpecView(outGoods.getSpecView());
             orderItem.setPrice(outGoods.getPrice());
-            orderItem.setQuantity(outGoods.getProductNum());
+            orderItem.setProductNum(outGoods.getProductNum());
             orderItem.setTotalAmount(outGoods.getTradeAmount());
             orderItemMapper.insertSelective(orderItem);
         }
@@ -291,7 +289,7 @@ public class OrderSaveServiceImpl implements OrderSaveService {
         // 销量数量统计
         List<OrderItem> orderItemList = orderItemMapper.getListByOrderId(order.getOrderId());
         for (OrderItem orderItem : orderItemList) {
-            goodsMapper.addSaleCount(orderItem.getGoodsId(), orderItem.getQuantity());
+            goodsMapper.addSaleCount(orderItem.getGoodsId(), orderItem.getProductNum());
         }
 
         //赠送订单优惠券

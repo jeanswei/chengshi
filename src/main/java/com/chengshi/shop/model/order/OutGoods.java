@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 /**
  * 有效商品对象
  *
- * @author yuanrs
- * @date 创建时间：2015年10月12日 下午2:39:51 *
+ * @author xuxinlong
+ * @version 2017年10月1日 下午2:39:51
  */
 public class OutGoods implements Serializable {
     private static final long serialVersionUID = -6672471404872378793L;
@@ -17,8 +17,10 @@ public class OutGoods implements Serializable {
     private Integer goodsId;
     // 货品Id
     private Integer productId;
-    // 标题（商品上架名称）
+    // 商品名称
     private String goodsName;
+    // 规格
+    private String specView;
     // 购物车商品图片
     private String goodsImage;
     // 货品库存
@@ -35,8 +37,7 @@ public class OutGoods implements Serializable {
     private Boolean isValid;
     // 商品金额总计
     private BigDecimal tradeAmount = BigDecimal.ZERO;
-    //规格
-    private String specView;
+
 
     @Override
     public String toString() {

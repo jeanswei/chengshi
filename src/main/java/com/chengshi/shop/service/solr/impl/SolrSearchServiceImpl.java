@@ -13,7 +13,6 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrInputDocument;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +32,7 @@ public class SolrSearchServiceImpl implements SolrSearchService {
     private GoodsMapper goodsMapper;
     @Resource
     private GoodsProductMapper goodsProductMapper;
-    @Autowired
+    @Resource
     private SolrClient client;
 
     /**
@@ -113,7 +112,7 @@ public class SolrSearchServiceImpl implements SolrSearchService {
         doc.addField("goodsId", goods.getGoodsId());
         doc.addField("goodsName", goods.getGoodsName());
         //找到价格最小的货品
-        GoodsProduct product = goodsProductMapper.getMinProductByGoodsId(goods.getGoodsId());
+        GoodsProduct product = goodsProductMapper.getFirstProductByGoodsId(goods.getGoodsId());
         doc.addField("mktprice", product.getMarktPrice().floatValue());
         doc.addField("price", product.getPrice().floatValue());
         if (StringUtils.isNotBlank(goods.getKeywords())) {

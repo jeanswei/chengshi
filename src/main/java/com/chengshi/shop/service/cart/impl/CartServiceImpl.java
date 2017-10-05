@@ -21,6 +21,7 @@ import com.chengshi.shop.util.NumericUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -55,7 +56,8 @@ public class CartServiceImpl implements CartService {
     private PromotionService promotionService;
     @Resource
     private OrderSaveService orderSaveService;
-
+    @Value("${img_url}")
+    private String IMG_URL;
 
     @Autowired
     public CartServiceImpl(StringRedisTemplate stringRedisTemplate) {
@@ -68,30 +70,12 @@ public class CartServiceImpl implements CartService {
      * @param memberId
      */
     @Override
-    public int getCartItemsCountByMember(Integer memberId) {
-        Cart cart = getCartByMember(memberId);
-        if (cart != null) {
-            String items = cart.getProductIds();
-            if (items == null || items.equals(""))
-                return 0;
-            else
-                return items.split(",").length;
+    public int getCartNumByMemberId(Integer memberId) {
+        String cartValue = vopCart.get("cart:" + memberId);
+        if (cartValue != null) {
+            return cartValue.split(",").length;
         }
         return 0;
-    }
-
-    /**
-     * 根据会员Id获取其对应的购物车
-     *
-     * @param memberId
-     * @return
-     */
-    @Override
-    public Cart getCartByMember(Integer memberId) {
-        Cart cart = new Cart();
-        String cartValue = vopCart.get("cart:" + memberId);
-        cart.setProductIds(cartValue);
-        return cart;
     }
 
     /**
@@ -99,7 +83,6 @@ public class CartServiceImpl implements CartService {
      *
      * @param memberId
      * @return
-     * @throws Exception
      */
     @Override
     public List<CartItem> getCartItemsByMember(Integer memberId) {
@@ -110,24 +93,24 @@ public class CartServiceImpl implements CartService {
             String prefix = "cartItem:" + memberId + ":";
             for (String productId : cartValue.split(",")) {
                 String cartItemValue = vopCartItem.get(prefix + productId);
-                String num = "";
-                String chooseType = "";
+                String count = "";
+                String isChoose = "";
                 if (cartItemValue != null && !cartItemValue.equals("")) {
-                    num = cartItemValue.split(",")[0];
-                    chooseType = cartItemValue.split(",")[1];
+                    count = cartItemValue.split(",")[0];
+                    isChoose = cartItemValue.split(",")[1];
                 }
                 CartItem cartItem = new CartItem();
                 cartItem.setMemberId(memberId);
                 cartItem.setProductId(Integer.parseInt(productId));
-                if (num != null && !num.equals("")) {
-                    cartItem.setProductNum(Integer.parseInt(num));
+                if (count != null && !count.equals("")) {
+                    cartItem.setProductNum(Integer.parseInt(count));
                 } else {
                     cartItem.setProductNum(0);
                 }
-                if (chooseType != null && !chooseType.equals("")) {
-                    cartItem.setChooseType(Byte.parseByte(chooseType));
+                if (isChoose != null && !isChoose.equals("")) {
+                    cartItem.setIsChoose(Boolean.valueOf(isChoose));
                 } else {
-                    cartItem.setChooseType((byte) 1);
+                    cartItem.setIsChoose(true);
                 }
                 cartItemList.add(cartItem);
             }
@@ -139,57 +122,51 @@ public class CartServiceImpl implements CartService {
      * 添加商品到购物车
      *
      * @param memberId
-     * @param productIdAndNum
+     * @param productId
+     * @param productNum
      * @return
-     * @throws Exception
      */
     @Override
-    public HashMap<String, Object> addItemToCart(Integer memberId, String productIdAndNum) {
+    public HashMap<String, Object> addItemToCart(Integer memberId, Integer productId, Integer productNum) {
         HashMap<String, Object> retMap = new HashMap<>();
         retMap.put("status", "y");
         String cartKey = "cart:" + memberId;
-        for (String ids : productIdAndNum.split(",")) {
-            String productId = ids.split("-")[0];
-            String num = ids.split("-")[1];
 
-            String cartItemKey = "cartItem:" + memberId + ":";
-            String cartValue = vopCart.get(cartKey);
-            String chooseType = "1";//默认选中
+        String cartItemKey = "cartItem:" + memberId + ":";
+        String cartValue = vopCart.get(cartKey);
 
-            // 如果还不存在购物车 则新建个
-            if (cartValue == null) {
-                cartValue = productId;
-                //对购物车对应数据的设置
-                vopCart.set(cartKey, cartValue);
-                //将添加的商品加入购物车
-                String cartItemValue = num + "," + chooseType;
-                cartItemKey = cartItemKey + productId;
+        // 如果还不存在购物车 则新建个
+        if (cartValue == null) {
+            cartValue = productId.toString();
+            //对购物车对应数据的设置
+            vopCart.set(cartKey, cartValue);
+            //将添加的商品加入购物车
+            String cartItemValue = productNum + "," + true;
+            cartItemKey = cartItemKey + productId;
+            vopCartItem.set(cartItemKey, cartItemValue);
+        } else {
+            cartItemKey = cartItemKey + productId;
+            String cartItemValue = vopCartItem.get(cartItemKey);
+            // 购物车中还没有对应的商品 将商品加入购物车 并将商品的id追加到购物车productIds中
+            if (cartItemValue == null) {
+                cartItemValue = productNum + "," + true;
                 vopCartItem.set(cartItemKey, cartItemValue);
+                if (cartValue.equals(""))
+                    cartValue = productId.toString();
+                else
+                    cartValue = cartValue + "," + productId;
+                vopCart.set(cartKey, cartValue);
             } else {
-                cartItemKey = cartItemKey + productId;
-                String cartItemValue = vopCartItem.get(cartItemKey);
-                // 购物车中还没有对应的商品 将商品加入购物车 并将商品的id追加到购物车productIds中
-                if (cartItemValue == null) {
-                    cartItemValue = num + "," + chooseType;
-                    vopCartItem.set(cartItemKey, cartItemValue);
-                    if (cartValue.equals(""))
-                        cartValue = productId;
-                    else
-                        cartValue = cartValue + "," + productId;
-                    vopCart.set(cartKey, cartValue);
-                } else {
-                    String count = cartItemValue.split(",")[0];
-                    String choseType = cartItemValue.split(",")[1];
-                    // 购物车中有对应的商品，直接修改数量
-                    Integer temp = Integer.parseInt(count);
-                    temp += Integer.valueOf(num);
-                    cartItemValue = temp.toString() + "," + choseType;
-                    vopCartItem.set(cartItemKey, cartItemValue);
-                }
+                String count = cartItemValue.split(",")[0];
+                String isChoose = cartItemValue.split(",")[1];
+                // 购物车中有对应的商品，直接修改数量
+                Integer temp = Integer.parseInt(count);
+                temp += productNum;
+                cartItemValue = temp.toString() + "," + isChoose;
+                vopCartItem.set(cartItemKey, cartItemValue);
             }
         }
-        String cartValue = vopCart.get(cartKey);
-        retMap.put("cartNum", cartValue.split(",").length);
+        retMap.put("cartNum", vopCart.get(cartKey).split(",").length);
         return retMap;
     }
 
@@ -198,12 +175,11 @@ public class CartServiceImpl implements CartService {
      * 根据memberId 和 传入的货品的id 批量删除购物车中的货品
      *
      * @param memberId   memberId 会员Id
-     * @param cartkey
      * @param productIds
-     * @throws Exception
      */
     @Override
-    public void batchDelInCart(Integer memberId, String cartkey, String productIds) {
+    public void batchDelInCart(Integer memberId, String productIds) {
+        String cartkey = "cart:" + memberId;
         String prefix = "cartItem:" + memberId + ":";
         List<String> keys = new ArrayList<>();
         // 批量生产keys 在商品前加上 cartItem:memberId:productId
@@ -214,9 +190,9 @@ public class CartServiceImpl implements CartService {
         stringRedisTemplate.delete(keys);
 
         String cartValue = vopCart.get(cartkey);
-        Collection<String> disjunction = disjunction(cartValue, productIds);
+        Collection disjunction = disjunction(cartValue, productIds);
         StringBuilder sb = new StringBuilder();
-        for (String aDisjunction : disjunction) {
+        for (Object aDisjunction : disjunction) {
             sb.append(aDisjunction).append(",");
         }
         int len = sb.length();
@@ -228,47 +204,16 @@ public class CartServiceImpl implements CartService {
     }
 
     /**
-     * 删除购物车对应的数据
-     *
-     * @param memberId
-     * @param cartKey
-     * @param cartItemkey
-     * @param productId
-     * @throws Exception
-     */
-    @Override
-    public void batchDelInCartPart(Integer memberId, String cartKey, String cartItemkey, String productId) {
-        List<String> keys = new ArrayList<>();
-        // 批量生产keys 在商品前加上 cartItem:memberId:productId
-        keys.add(cartItemkey);
-        // 批量删除商品
-        stringRedisTemplate.delete(keys);
-        String cartValue = vopCart.get(cartKey);
-        Collection<String> disjunction = disjunction(cartValue, productId);
-        StringBuilder sb = new StringBuilder();
-        for (String aDisjunction : disjunction) {
-            sb.append(aDisjunction).append(",");
-        }
-        int len = sb.length();
-        if (len > 0)
-            cartValue = sb.substring(0, len - 1);
-        else
-            cartValue = sb.toString();
-        vopCart.set(cartKey, cartValue);
-    }
-
-    /**
-     * 根据memberId 删除对应的购物车
+     * 根据memberId清空对应的购物车商品
      *
      * @param memberId
      */
     @Override
-    public void deleteCart(Integer memberId) {
+    public void emptyCartGoods(Integer memberId) {
         String key = "cart:" + memberId;
         String cartValue = vopCart.get(key);
         // 删除购物车里的所有商品
-        batchDelInCart(memberId, key, cartValue);
-
+        batchDelInCart(memberId, cartValue);
         stringRedisTemplate.delete(key);
     }
 
@@ -277,15 +222,15 @@ public class CartServiceImpl implements CartService {
      * HashMap包括cartGoodsList和Cart，直接作为返回结果。
      *
      * @param cartItem
-     * @throws Exception
      */
     @Override
     public HashMap<String, Object> changeCartItemToCartGoods(List<CartItem> cartItem, Integer memberId) {
         HashMap<String, Object> retMap = new HashMap<>();
         Cart cart = new Cart();
         if (cartItem == null || cartItem.isEmpty()) {
+            cart.setMemberId(memberId);
             retMap.put("cartGoodsList", new ArrayList<CartGoods>());
-            retMap.put("cart", new Cart());
+            retMap.put("cart", cart);
             return retMap;// 如果还没有购物车 请买家去购物 添加购物车
         }
         //计算购物车商品总价
@@ -293,7 +238,7 @@ public class CartServiceImpl implements CartService {
         //优惠金额
         BigDecimal promotionMoney = BigDecimal.ZERO;
 
-        byte isChooseAll = 1;
+        Boolean isChooseAll = true;
         //商品按活动分类
         HashMap<Integer, HashMap<String, Object>> promotionMap = new HashMap<>();
         //遍历cartItem
@@ -303,25 +248,25 @@ public class CartServiceImpl implements CartService {
             GoodsProduct product = goodsProductMapper.selectByPrimaryKey(cItem.getProductId());
             Goods goods = goodsMapper.selectByPrimaryKey(product.getGoodsId());
             if (goods.getIsDelete() || product.getIsDelete()) {
-                cGoods.setIsValid(0);
+                cGoods.setIsValid(false);
                 cGoods.setNoValReason("商品已失效");
-                cGoods.setChooseType((byte) 0);
+                cGoods.setIsChoose(false);
             } else if (!goods.getIsOnSale()) {
-                cGoods.setIsValid(0);
+                cGoods.setIsValid(false);
                 cGoods.setNoValReason("商品已下架");
-                cGoods.setChooseType((byte) 0);
+                cGoods.setIsChoose(false);
             } else if (cItem.getProductNum() > product.getStore()) {
-                cGoods.setIsValid(2);
+                cGoods.setIsValid(false);
                 cGoods.setNoValReason("库存不足");
-                cGoods.setChooseType((byte) 0);
+                cGoods.setIsChoose(false);
             } else {
-                cGoods.setIsValid(1);
-                cGoods.setChooseType(cItem.getChooseType());
+                cGoods.setIsValid(true);
+                cGoods.setIsChoose(cItem.getIsChoose());
             }
             cGoods.setGoodsId(goods.getGoodsId());
             cGoods.setProductId(product.getProductId());
             cGoods.setGoodsName(goods.getGoodsName());
-            cGoods.setGoodsImage(goods.getGoodsImg());
+            cGoods.setGoodsImage(IMG_URL + goods.getGoodsImg());
             cGoods.setMarktPrice(product.getMarktPrice());
             cGoods.setPrice(product.getPrice());
             cGoods.setProductNum(cItem.getProductNum());
@@ -330,17 +275,17 @@ public class CartServiceImpl implements CartService {
             cGoods.setSpecView(product.getSpecView());
 
             //无效的商品无法勾选
-            if (cItem.getChooseType() == 1 && cGoods.getIsValid() != 1) {
+            if (cItem.getIsChoose() && !cGoods.getIsValid()) {
                 String cartItemKey = "cartItem:" + memberId + ":" + cItem.getProductId();
-                String cartItemValue = "" + cItem.getProductNum() + ",0";
+                String cartItemValue = "" + cItem.getProductNum() + "," + false;
                 vopCartItem.set(cartItemKey, cartItemValue);
-                cGoods.setChooseType((byte) 0);
+                cGoods.setIsChoose(false);
             }
             //计算勾选商品的金额
-            if (cGoods.getChooseType() == 1) {
+            if (cGoods.getIsValid()) {
                 totalMoney = totalMoney.add(cGoods.getTotalMoney());
             } else {
-                isChooseAll = 0;
+                isChooseAll = false;
             }
             //将同一活动下商品归类
             Promotion promotion = promotionService.getPromotionByGoodsId(product.getGoodsId());
@@ -400,13 +345,11 @@ public class CartServiceImpl implements CartService {
         cart.setPromotionMoney(promotionMoney);
         cart.setTradeMoney(totalMoney.subtract(promotionMoney));
         cart.setIsChooseAll(isChooseAll);
-        String cartValue = vopCart.get("cart:" + memberId);
-        cart.setProductIds(cartValue);
         retMap.put("cart", cart);
         retMap.put("cartGoodsList", mapList);
 
         HashSet<HashMap<String, Object>> couponMapList = new HashSet<>();
-        for (Integer goodsId : goodsIdList){
+        for (Integer goodsId : goodsIdList) {
             List<Coupon> couponList = couponService.getCanGetCouponList(goodsId);
             for (Coupon coupon : couponList) {
                 HashMap<String, Object> map = new HashMap<>();
@@ -423,9 +366,9 @@ public class CartServiceImpl implements CartService {
                 map.put("totalCount", coupon.getTotalCount());
                 int hasCount = couponService.getHasCountByCouponId(memberId, coupon.getCouponId());
                 //是否可以继续领取
-                map.put("canGet", 1);
+                map.put("canGet", true);
                 if (coupon.getLimitNum() != 0 && coupon.getLimitNum() - hasCount <= 0) {
-                    map.put("canGet", 0);
+                    map.put("canGet", false);
                 }
                 couponMapList.add(map);
             }
@@ -441,7 +384,6 @@ public class CartServiceImpl implements CartService {
      * @param cartItem
      * @param memberId
      * @return
-     * @throws Exception
      */
     @Override
     public HashMap<String, Object> generateOrderInfo(List<CartItem> cartItem, Integer memberId) {
@@ -464,7 +406,7 @@ public class CartServiceImpl implements CartService {
         //判断使用支付方式
         HashMap<String, Object> assetMap = new HashMap<>();
         HashMap<String, Object> map = new HashMap<>();
-        BigDecimal pointsCount = memberAssetsService.getPointsByMemberId(memberId);
+        BigDecimal pointsCount = memberAssetsService.getMemberPointsByMemberId(memberId);
         map.put("name", "积分");//积分
         map.put("value", NumericUtil.formatBigNum(pointsCount.toString()));//积分余额
         map.put("instruction", "积分抵用规则：100积分=1元");//积分使用说明
@@ -487,24 +429,21 @@ public class CartServiceImpl implements CartService {
      *
      * @param memberId
      * @param productId
-     * @param chooseType
      * @return
-     * @throws Exception
      */
     @Override
-    public HashMap<String, Object> changeChooseType(Integer memberId, String productId, String chooseType) {
-        HashMap<String, Object> retMap = new HashMap<>();
-
+    public void changeChoose(Integer memberId, Integer productId) {
         String cartItemKey = "cartItem:" + memberId + ":" + productId;
         String cartItemValue = vopCartItem.get(cartItemKey);
 
         String count = cartItemValue.split(",")[0];
-        cartItemValue = count + "," + chooseType;
-
+        String isChoose = cartItemValue.split(",")[1];
+        if (Boolean.valueOf(isChoose)) {
+            cartItemValue = count + "," + false;
+        } else {
+            cartItemValue = count + "," + true;
+        }
         vopCartItem.set(cartItemKey, cartItemValue);
-
-        retMap.put("status", "y");
-        return retMap;
     }
 
     /**
@@ -512,24 +451,18 @@ public class CartServiceImpl implements CartService {
      *
      * @param memberId
      * @param productId
-     * @param count
+     * @param productNum
      * @return
-     * @throws Exception
      */
     @Override
-    public HashMap<String, Object> changeProductNum(Integer memberId, String productId, String count) {
-        HashMap<String, Object> retMap = new HashMap<>();
-
+    public void changeQuantity(Integer memberId, Integer productId, Integer productNum) {
         String cartItemKey = "cartItem:" + memberId + ":" + productId;
         String cartItemValue = vopCartItem.get(cartItemKey);
 
-        String chooseType = cartItemValue.split(",")[1];
-        cartItemValue = count + "," + chooseType;
+        String isChoose = cartItemValue.split(",")[1];
+        cartItemValue = productNum + "," + isChoose;
 
         vopCartItem.set(cartItemKey, cartItemValue);
-
-        retMap.put("status", "y");
-        return retMap;
     }
 
     /**
@@ -538,14 +471,10 @@ public class CartServiceImpl implements CartService {
      * @param memberId
      * @param allType
      * @return
-     * @throws Exception
      */
     @Override
-    public HashMap<String, Object> chooseAll(Integer memberId, String allType) {
-        HashMap<String, Object> retMap = new HashMap<>();
-
+    public void chooseAll(Integer memberId, Boolean allType) {
         String cartValue = vopCart.get("cart:" + memberId);
-
         if (cartValue != null && !"".equals(cartValue)) {//普通商品
             String prefix = "cartItem:" + memberId + ":";
             String[] productIdArr = cartValue.split(",");
@@ -556,52 +485,6 @@ public class CartServiceImpl implements CartService {
                 vopCartItem.set(prefix + productId, cartItemValue);
             }
         }
-
-        retMap.put("status", "y");
-        return retMap;
-    }
-
-    /* 操作redis */
-
-    /**
-     * 保存购物车
-     *
-     * @param key       redis里的key值
-     * @param cartValue redis里的value
-     */
-    @Override
-    public void saveCart(String key, String cartValue) {
-        vopCart.set(key, cartValue);
-    }
-
-
-    /**
-     * 保存商品到购物车
-     *
-     * @param key
-     * @param cartItemValue
-     */
-    @Override
-    public void saveCartItem(String key, String cartItemValue) {
-        vopCartItem.set(key, cartItemValue);
-    }
-
-    /**
-     * @param key 根据key值到redis中获取对应的商品
-     * @return
-     */
-    @Override
-    public String getCartByKey(String key) {
-        return vopCart.get(key);
-    }
-
-    /**
-     * @param key 根据key值到redis中获取对应的购物车
-     * @return
-     */
-    @Override
-    public String getCartItemByKey(String key) {
-        return vopCartItem.get(key);
     }
 
     /**
@@ -611,7 +494,7 @@ public class CartServiceImpl implements CartService {
      * @param s2 子集
      * @return 补集
      */
-    private Collection<String> disjunction(String s1, String s2) {
+    private Collection disjunction(String s1, String s2) {
         List<String> l1 = Arrays.asList(StringUtils.split(s1, ','));
         List<String> l2 = Arrays.asList(StringUtils.split(s2, ','));
         return CollectionUtils.subtract(l1, l2);

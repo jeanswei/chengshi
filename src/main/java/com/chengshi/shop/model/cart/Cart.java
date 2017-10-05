@@ -33,20 +33,9 @@ public class Cart {
     private BigDecimal promotionMoney = BigDecimal.ZERO;
 
     /**
-     * 加入购物车的货品productId，逗号隔开
+     * 是否全选
      */
-    private String productIds;
-
-    //是否全选
-    private Byte isChooseAll;
-
-    public String getProductIds() {
-        return productIds;
-    }
-
-    public void setProductIds(String productIds) {
-        this.productIds = productIds;
-    }
+    private Boolean isChooseAll = false;
 
     @Override
     public String toString() {
@@ -69,11 +58,11 @@ public class Cart {
         this.promotionMoney = promotionMoney;
     }
 
-    public Byte getIsChooseAll() {
+    public Boolean getIsChooseAll() {
         return isChooseAll;
     }
 
-    public void setIsChooseAll(Byte isChooseAll) {
+    public void setIsChooseAll(Boolean isChooseAll) {
         this.isChooseAll = isChooseAll;
     }
 
