@@ -60,8 +60,7 @@ public class MobileMemberInfoController extends BaseController {
                     waitDelivery++;
                 } else if (order.getStatus().intValue() == EnumUtil.ORDER_STATUS.待收货.getValue()) {
                     waitReceipt++;
-                } else if (order.getStatus().intValue() == EnumUtil.ORDER_STATUS.交易成功.getValue()
-                        && !order.getIsEvaluate()) {
+                } else if (order.getStatus().intValue() == EnumUtil.ORDER_STATUS.待评价.getValue()) {
                     waitEvaluate++;
                 }
             }

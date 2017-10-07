@@ -147,7 +147,6 @@ public class OrderSaveServiceImpl implements OrderSaveService {
         order.setCreateTime(new Date());//创建时间
         order.setAutoCloseTime(new Date(order.getCreateTime().getTime() + Integer.valueOf(shopConfigService.getConfig("ORDER_AUTO_CLOSE_TIME")) * 60 * 1000));//订单失效时间
         order.setMarkText(orderInputBean.getMarkText());
-        order.setIsEvaluate(false);//设置评价标志
         order.setOrderNum(orderService.getOrderNum());//订单编号 前台展示给用户
         MemberAddress memberAddress = memberAddressMapper.selectByPrimaryKey(orderInputBean.getAddressId());
         order.setConsignee(memberAddress.getName());
@@ -433,7 +432,8 @@ public class OrderSaveServiceImpl implements OrderSaveService {
     public HashMap<String, Object> delOrder(Integer orderId) {
         HashMap<String, Object> retMap = new HashMap<>();
         Order order = orderMapper.selectByPrimaryKey(orderId);
-        if (order.getStatus().intValue() == EnumUtil.ORDER_STATUS.交易成功.getValue() || order.getStatus().intValue() == EnumUtil.ORDER_STATUS.交易关闭.getValue()) {
+        if (order.getStatus().intValue() == EnumUtil.ORDER_STATUS.交易成功.getValue()
+                || order.getStatus().intValue() == EnumUtil.ORDER_STATUS.交易关闭.getValue()) {
             //删除订单
             order.setIsDelete(true);
             orderMapper.updateByPrimaryKeySelective(order);

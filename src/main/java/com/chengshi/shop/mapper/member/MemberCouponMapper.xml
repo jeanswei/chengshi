@@ -211,7 +211,7 @@
     <select id="getCanUseCommonCouponList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from hm_member_coupon
+        from cs_member_coupon
         where member_id = #{memberId,jdbcType=INTEGER}
         and coupon_type = 1
         and status = 1
@@ -223,7 +223,7 @@
     </select>
     <select id="getCouponNum" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         SELECT count(1)
-        FROM hm_member_coupon
+        FROM cs_member_coupon
         WHERE member_id = #{memberId,jdbcType=INTEGER}
               AND status = 1
     <![CDATA[
@@ -235,7 +235,7 @@
     <select id="getCanUseCouponList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from hm_member_coupon
+        from cs_member_coupon
         where member_id = #{memberId,jdbcType=INTEGER}
         and status = 1
         <![CDATA[
@@ -247,7 +247,7 @@
     <select id="getSpecificCouponList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from hm_member_coupon
+        from cs_member_coupon
         where member_id = #{memberId,jdbcType=INTEGER}
         and status = 1
         and coupon_type = 2
@@ -260,7 +260,7 @@
     <select id="getHasCountByCouponId" resultType="java.lang.Integer">
         SELECT count(1)
         FROM
-            hm_member_coupon
+            cs_member_coupon
         WHERE member_id = #{memberId,jdbcType=INTEGER}
               AND coupon_id = #{couponId,jdbcType=INTEGER}
     </select>

@@ -32,7 +32,7 @@ public class EnumUtil extends EnumUtils {
      * 订单状态
      */
     public enum ORDER_STATUS {
-        待付款(1), 待审核(2), 待发货(3), 待收货(4), 已退款(9), 交易成功(10), 交易关闭(11);
+        待付款(1), 待审核(2), 待发货(3), 待收货(4), 待评价(6), 已退款(9), 交易成功(10), 交易关闭(11);
         private Integer value;
 
         ORDER_STATUS(Integer value) {

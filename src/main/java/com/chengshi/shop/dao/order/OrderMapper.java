@@ -33,10 +33,10 @@ public interface OrderMapper {
      * 查询用户拥有的订单
      *
      * @param memberId
-     * @param type     0全部,1.待付款订单,2.待发货订单,3.待收货订单,4.待评价,5.关闭订单
+     * @param status
      * @return
      */
-    List<Order> getListByMemberId(@Param("memberId") Integer memberId, @Param("type") Byte type);
+    List<Order> getListByMemberId(@Param("memberId") Integer memberId, @Param("status") Byte status);
 
     /**
      * 获取订单列表数据

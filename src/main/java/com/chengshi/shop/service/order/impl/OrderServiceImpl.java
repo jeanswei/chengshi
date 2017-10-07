@@ -177,15 +177,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
-     * 查询用户拥有的订单(加类型)
+     * 查询用户拥有的订单
      *
      * @param memberId
-     * @param type
+     * @param status
      * @return
      */
     @Override
-    public List<Order> getListByMemberId(Integer memberId, Byte type) {
-        return orderMapper.getListByMemberId(memberId, type);
+    public List<Order> getListByMemberId(Integer memberId, Byte status) {
+        return orderMapper.getListByMemberId(memberId, status);
     }
 
     /**
@@ -224,12 +224,9 @@ public class OrderServiceImpl implements OrderService {
         saveOrderHistory(order, opName, "确认收货");
 
         // 更新主订单状态
-        order.setStatus(EnumUtil.ORDER_STATUS.交易成功.getValue().byteValue());
+        order.setStatus(EnumUtil.ORDER_STATUS.待评价.getValue().byteValue());
         order.setFinishTime(new Date());
         orderMapper.updateByPrimaryKeySelective(order);
-
-        saveOrderHistory(order, opName, "交易成功");
-
     }
 
 
@@ -257,41 +254,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getOverdueOrder() {
         return orderMapper.getOverdueOrder();
-    }
-
-    /**
-     * 根据订单获取前台适用的订单状态
-     *
-     * @param order
-     * @return
-     */
-    @Override
-    public Map<? extends String, ?> getOrderStatus(Order order) {
-        Map<String, Object> map = new HashMap<>();
-        /* 1。待付款 2.待发货 3.待收货 4.待评价 5.交易完成 6.订单关闭9.已退款 */
-        if (order.getStatus().intValue() == EnumUtil.ORDER_STATUS.待付款.getValue()) {
-            map.put("statusS", "待付款");
-            map.put("status", 1);
-        } else if (order.getStatus().intValue() == EnumUtil.ORDER_STATUS.待发货.getValue()) {
-            map.put("statusS", "待发货");
-            map.put("status", 2);
-        } else if (order.getStatus().intValue() == EnumUtil.ORDER_STATUS.待收货.getValue()) {
-            map.put("statusS", "待收货");
-            map.put("status", 3);
-        } else if (order.getStatus().intValue() == EnumUtil.ORDER_STATUS.交易成功.getValue() && !order.getIsEvaluate()) {
-            map.put("statusS", "待评价");
-            map.put("status", 4);
-        } else if (order.getStatus().intValue() == EnumUtil.ORDER_STATUS.交易成功.getValue() && order.getIsEvaluate()) {
-            map.put("statusS", "交易成功");
-            map.put("status", 5);
-        } else if (order.getStatus().intValue() == EnumUtil.ORDER_STATUS.交易关闭.getValue()) {
-            map.put("statusS", "交易关闭");
-            map.put("status", 6);
-        } else if (order.getStatus().intValue() == EnumUtil.ORDER_STATUS.已退款.getValue()) {
-            map.put("statusS", "已退款");
-            map.put("status", 9);
-        }
-        return map;
     }
 
     /**

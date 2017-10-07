@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50711
 File Encoding         : 65001
 
-Date: 2017-09-30 16:10:02
+Date: 2017-10-06 08:30:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -84,7 +84,7 @@ CREATE TABLE `cs_admin_user` (
 -- ----------------------------
 -- Records of cs_admin_user
 -- ----------------------------
-INSERT INTO `cs_admin_user` VALUES ('1', 'admin', '21218CCA77804D2BA1922C33E0151105', '18305113589', '1023544696@qq.com', '2017-08-18 08:09:49', '2017-09-27 08:51:59', '192.168.2.161', '1');
+INSERT INTO `cs_admin_user` VALUES ('1', 'admin', '21218CCA77804D2BA1922C33E0151105', '18305113589', '1023544696@qq.com', '2017-08-18 08:09:49', '2017-10-05 09:04:02', '192.168.2.161', '1');
 INSERT INTO `cs_admin_user` VALUES ('12', 'xuxinlong', '21218CCA77804D2BA1922C33E0151105', '18305113589', '1023544696@qq.com', '2017-08-18 00:29:43', '2017-08-19 15:25:33', '192.168.2.161', '1');
 INSERT INTO `cs_admin_user` VALUES ('13', 'fvwee', '', '', '', '2017-08-18 00:33:53', '0000-00-00 00:00:00', '', '2');
 INSERT INTO `cs_admin_user` VALUES ('14', '贩夫贩妇e、11111', '888888', '11111111111111111111', '111111111111111111111111111111', '2017-08-18 08:41:31', '0000-00-00 00:00:00', '', '2');
@@ -748,8 +748,7 @@ CREATE TABLE `cs_order_item` (
   `spec_view` varchar(255) NOT NULL DEFAULT '' COMMENT '规格',
   `total_amount` decimal(20,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '商品总金额',
   `price` decimal(20,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '商品的价格',
-  `quantity` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '购买数量',
-  `return_quantity` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '退货数量',
+  `product_num` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '购买数量',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '未发货(1), 已发货(2), 退款中(3), 确认收货(4), 已退款(5)',
   PRIMARY KEY (`order_item_id`),
   UNIQUE KEY `INDEX_ITEM_ID` (`order_item_id`),
@@ -1100,7 +1099,7 @@ CREATE TABLE `cs_shop_config` (
   `create_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`config_id`),
   UNIQUE KEY `key` (`key`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COMMENT='商城基本信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COMMENT='商城配置表';
 
 -- ----------------------------
 -- Records of cs_shop_config

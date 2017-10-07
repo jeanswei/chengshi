@@ -177,9 +177,9 @@
         <![CDATA[
               AND (a.num - (SELECT IFNULL(sum(num), 0) +
                                    (SELECT IFNULL(sum(num), 0)
-                                    FROM hm_order_return
+                                    FROM cs_order_return
                                     WHERE order_items_id = a.order_items_id AND type = 2 AND `status` <> 2)
-                            FROM hm_order_return
+                            FROM cs_order_return
                             WHERE order_items_id = a.order_items_id AND type = 1 AND `status` = 0) > 0)
 	          ]]>
         ORDER BY a.order_items_id DESC

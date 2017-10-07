@@ -55,14 +55,14 @@ public class GoodsEvaluateServiceImpl implements GoodsEvaluateService {
         for (GoodsEvaluate goodsEvaluate : evaluateList) {
             goodsEvaluate.setMemberId(memberId);
             goodsEvaluate.setCreateTime(new Date());
-            if (order.getStatus() == EnumUtil.ORDER_STATUS.交易成功.getValue().byteValue() && !order.getIsEvaluate()) {
+            if (order.getStatus() == EnumUtil.ORDER_STATUS.待评价.getValue().byteValue()) {
                 goodsEvaluate.setCreateTime(new Date());
                 goodsEvaluateMapper.insertSelective(goodsEvaluate);
                 //增加商品评价数量
                 goodsService.addEvaluateCount(goodsEvaluate.getGoodsId(), 1);
             }
         }
-        order.setIsEvaluate(true);
+        order.setStatus(EnumUtil.ORDER_STATUS.交易成功.getValue().byteValue());
         orderService.updateByPrimaryKeySelective(order);
     }
 }

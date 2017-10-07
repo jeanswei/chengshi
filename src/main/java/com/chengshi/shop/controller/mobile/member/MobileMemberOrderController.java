@@ -13,6 +13,8 @@ import com.chengshi.shop.util.SessionUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,25 +48,25 @@ public class MobileMemberOrderController extends BaseController {
      * 获取我的订单列表的ajax请求
      *
      * @param request
-     * @param type
+     * @param status
      * @return
      */
-    @RequestMapping(value = "/getOrderList")
-    public HashMap<String, Object> getOrderList(HttpServletRequest request, @RequestParam Byte type) {
+    @ApiOperation(value = "获取会员订单列表,可以通过status过滤，不传则为全部订单")
+    @ApiImplicitParam(name = "status", value = "订单状态", paramType = "query", dataType = "byte")
+    @GetMapping(value = "/getOrderList")
+    public HashMap<String, Object> getOrderList(HttpServletRequest request, @RequestParam(required = false) Byte status) {
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
             List<HashMap<String, Object>> orderList = new ArrayList<>();
             Member nowMember = SessionUtils.getMember();
-            Integer memberId = nowMember.getMemberId();
-            // 0全部,1.待付款订单,2.待发货订单,3.待收货订单,4.待评价,5.关闭订单
             PageHelper.startPage(request);
-            List<Order> list = orderService.getListByMemberId(memberId, type);
+            List<Order> list = orderService.getListByMemberId(nowMember.getMemberId(), status);
 
             for (Order order : list) {
                 HashMap<String, Object> map = new HashMap<>();
                 map.put("orderId", order.getOrderId());
                 map.put("orderNum", order.getOrderNum());
-                map.putAll(orderService.getOrderStatus(order));
+                map.put("status", order.getStatus());
                 map.put("totalAmount", order.getTotalAmount().add(order.getFare()));
                 map.put("tradeAmount", order.getTotalAmount().add(order.getFare()).subtract(order.getPayed()));
 
@@ -102,7 +104,9 @@ public class MobileMemberOrderController extends BaseController {
      * @param orderId
      * @return
      */
-    @RequestMapping(value = "/getOrderDetail")
+    @ApiOperation(value = "获取会员订单详情信息")
+    @ApiImplicitParam(name = "orderId", value = "订单id", paramType = "query", dataType = "int", required = true)
+    @GetMapping(value = "/getOrderDetail")
     public HashMap<String, Object> getOrderDetail(@RequestParam Integer orderId) {
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
@@ -113,7 +117,7 @@ public class MobileMemberOrderController extends BaseController {
                 orderBaseMap.put("orderId", order.getOrderId());
                 orderBaseMap.put("orderNum", order.getOrderNum());
                 //订单状态
-                orderBaseMap.putAll(orderService.getOrderStatus(order));
+                orderBaseMap.put("status", order.getStatus());
 
                 orderBaseMap.put("createTime", DateFormatUtil.formatDate(order.getCreateTime(), DateFormatUtil.FULL_DATE_FORMAT));
                 orderBaseMap.put("goodsAmount", order.getTotalAmount());
@@ -165,6 +169,8 @@ public class MobileMemberOrderController extends BaseController {
      * @param orderId
      * @return
      */
+    @ApiOperation(value = "获取会员订单下的子订单列表")
+    @ApiImplicitParam(name = "orderId", value = "订单id", paramType = "query", dataType = "int", required = true)
     @GetMapping(value = "/getOrderItemList")
     public HashMap<String, Object> getOrderItemList(@RequestParam Integer orderId) {
         HashMap<String, Object> retMap = MessageUtils.success();

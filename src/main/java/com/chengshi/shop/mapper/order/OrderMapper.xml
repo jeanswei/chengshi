@@ -15,7 +15,6 @@
         <result column="finish_time" property="finishTime" jdbcType="TIMESTAMP"/>
         <result column="mark_text" property="markText" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="TINYINT"/>
-        <result column="is_evaluate" property="isEvaluate" jdbcType="BIT"/>
         <result column="consignee" property="consignee" jdbcType="VARCHAR"/>
         <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
         <result column="address" property="address" jdbcType="VARCHAR"/>
@@ -26,7 +25,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         order_id, order_num, member_id, total_amount, fare, payed, create_time, auto_close_time,
-        pay_time, auto_finish_time, finish_time, mark_text, status, is_evaluate, consignee,
+        pay_time, auto_finish_time, finish_time, mark_text, status, consignee,
         mobile, address, express_code, express_num, is_sign, is_delete
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -36,25 +35,25 @@
         where order_id = #{orderId,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        delete from cs_order
-        where order_id = #{orderId,jdbcType=INTEGER}
+        DELETE FROM cs_order
+        WHERE order_id = #{orderId,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.chengshi.shop.model.order.Order">
-        insert into cs_order (order_id, order_num, member_id,
-        total_amount, fare, payed,
-        create_time, auto_close_time, pay_time,
-        auto_finish_time, finish_time, mark_text,
-        status, is_evaluate, consignee,
-        mobile, address, express_code,
-        express_num, is_sign, is_delete
+        INSERT INTO cs_order (order_id, order_num, member_id,
+                              total_amount, fare, payed,
+                              create_time, auto_close_time, pay_time,
+                              auto_finish_time, finish_time, mark_text,
+                              status, consignee,
+                              mobile, address, express_code,
+                              express_num, is_sign, is_delete
         )
-        values (#{orderId,jdbcType=INTEGER}, #{orderNum,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER},
-        #{totalAmount,jdbcType=DECIMAL}, #{fare,jdbcType=DECIMAL}, #{payed,jdbcType=DECIMAL},
-        #{createTime,jdbcType=TIMESTAMP}, #{autoCloseTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP},
-        #{autoFinishTime,jdbcType=TIMESTAMP}, #{finishTime,jdbcType=TIMESTAMP}, #{markText,jdbcType=VARCHAR},
-        #{status,jdbcType=TINYINT}, #{isEvaluate,jdbcType=BIT}, #{consignee,jdbcType=VARCHAR},
-        #{mobile,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{expressCode,jdbcType=VARCHAR},
-        #{expressNum,jdbcType=VARCHAR}, #{isSign,jdbcType=TINYINT}, #{isDelete,jdbcType=BIT}
+        VALUES (#{orderId,jdbcType=INTEGER}, #{orderNum,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER},
+                                             #{totalAmount,jdbcType=DECIMAL}, #{fare,jdbcType=DECIMAL}, #{payed,jdbcType=DECIMAL},
+                                             #{createTime,jdbcType=TIMESTAMP}, #{autoCloseTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP},
+                                             #{autoFinishTime,jdbcType=TIMESTAMP}, #{finishTime,jdbcType=TIMESTAMP}, #{markText,jdbcType=VARCHAR},
+                #{status,jdbcType=TINYINT}, #{consignee,jdbcType=VARCHAR},
+                #{mobile,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{expressCode,jdbcType=VARCHAR},
+                #{expressNum,jdbcType=VARCHAR}, #{isSign,jdbcType=TINYINT}, #{isDelete,jdbcType=BIT}
         )
     </insert>
     <insert id="insertSelective" parameterType="com.chengshi.shop.model.order.Order">
@@ -98,9 +97,6 @@
             </if>
             <if test="status != null">
                 status,
-            </if>
-            <if test="isEvaluate != null">
-                is_evaluate,
             </if>
             <if test="consignee != null">
                 consignee,
@@ -164,9 +160,6 @@
             <if test="status != null">
                 #{status,jdbcType=TINYINT},
             </if>
-            <if test="isEvaluate != null">
-                #{isEvaluate,jdbcType=BIT},
-            </if>
             <if test="consignee != null">
                 #{consignee,jdbcType=VARCHAR},
             </if>
@@ -229,9 +222,6 @@
             <if test="status != null">
                 status = #{status,jdbcType=TINYINT},
             </if>
-            <if test="isEvaluate != null">
-                is_evaluate = #{isEvaluate,jdbcType=BIT},
-            </if>
             <if test="consignee != null">
                 consignee = #{consignee,jdbcType=VARCHAR},
             </if>
@@ -270,7 +260,6 @@
             finish_time      = #{finishTime,jdbcType=TIMESTAMP},
             mark_text        = #{markText,jdbcType=VARCHAR},
             status           = #{status,jdbcType=TINYINT},
-            is_evaluate      = #{isEvaluate,jdbcType=BIT},
             consignee        = #{consignee,jdbcType=VARCHAR},
             mobile           = #{mobile,jdbcType=VARCHAR},
             address          = #{address,jdbcType=VARCHAR},
@@ -282,40 +271,24 @@
     </update>
     <select id="getOrderByOrderNum" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT *
-        FROM hm_order
+        FROM cs_order
         WHERE order_num = #{orderNum,jdbcType=VARCHAR}
         LIMIT 1
     </select>
     <select id="getListByMemberId" resultMap="BaseResultMap">
         SELECT * FROM cs_order
         WHERE member_id = #{memberId,jdbcType=INTEGER}
-        <choose>
-            <when test="type ==1">
-                and (status =1 or status =2)
-            </when>
-            <when test="type ==2">
-                and status =3
-            </when>
-            <when test="type ==3">
-                and status =4
-            </when>
-            <when test="type ==4">
-                and status =10 and is_evaluate = 0
-            </when>
-            <when test="type ==5">
-                and status =11
-            </when>
-            <otherwise>
-                and is_delete = 0
-            </otherwise>
-        </choose>
+        <if test="status!=null and status !='' ">
+            and status = #{status}
+        </if>
+        and is_delete = 0
         ORDER BY order_id DESC
     </select>
     <select id="getOrderList" parameterType="java.util.HashMap" resultMap="BaseResultMap">
         SELECT a.*,b.name memberName FROM cs_order a, cs_member b
         <where>
-            AND a.member_id=b.member_id
-            <if test="status!=null and status!='' and status!=0">
+            AND a.member_id = b.member_id
+            <if test="status!=null and status!='' ">
                 AND a.status=#{status,jdbcType=INTEGER}
             </if>
             <if test="orderNum!=null and orderNum!=''">
@@ -338,8 +311,10 @@
         <![CDATA[ and auto_close_time< now() ]]>
     </select>
     <select id="getCanReceiptOrder" resultMap="BaseResultMap">
-        SELECT * FROM cs_order
+        SELECT *
+        FROM cs_order
         WHERE `status` = 4
-        <![CDATA[ and auto_finish_time< now() ]]>
+        <![CDATA[ AND auto_finish_time < now()
+        ]]>
     </select>
 </mapper>

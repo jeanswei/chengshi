@@ -66,11 +66,11 @@ public interface OrderService {
     List<Order> getListByMemberId(Integer memberId);
 
     /**
-     * 查询用户拥有的订单(加类型)
+     * 查询用户拥有的订单
      * @param memberId
      * @return
      */
-    List<Order> getListByMemberId(Integer memberId, Byte type);
+    List<Order> getListByMemberId(Integer memberId, Byte status);
 
     /**
      * 查询订单历史记录
@@ -98,13 +98,6 @@ public interface OrderService {
      * @return
      */
     List<Order> getOverdueOrder();
-
-    /**
-     * 根据订单获取前台适用的订单状态
-     * @param order
-     * @return
-     */
-    Map<? extends String,?> getOrderStatus(Order order);
 
     /**
      * 商家开始发货

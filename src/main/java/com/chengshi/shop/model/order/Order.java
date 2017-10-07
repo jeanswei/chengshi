@@ -30,8 +30,6 @@ public class Order {
 
     private Byte status;
 
-    private Boolean isEvaluate;
-
     private String consignee;
 
     private String mobile;
@@ -148,14 +146,6 @@ public class Order {
 
     public void setStatus(Byte status) {
         this.status = status;
-    }
-
-    public Boolean getIsEvaluate() {
-        return isEvaluate;
-    }
-
-    public void setIsEvaluate(Boolean isEvaluate) {
-        this.isEvaluate = isEvaluate;
     }
 
     public String getConsignee() {
