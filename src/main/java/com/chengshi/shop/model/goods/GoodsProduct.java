@@ -23,7 +23,7 @@ public class GoodsProduct {
     private String specIdAndValueId;
 
     /*************************/
-    private List<String> specValueList;
+    private List<GoodsProductSpec> specValueList;
 
     public Integer getProductId() {
         return productId;
@@ -97,11 +97,11 @@ public class GoodsProduct {
         this.specIdAndValueId = specIdAndValueId;
     }
 
-    public List<String> getSpecValueList() {
+    public List<GoodsProductSpec> getSpecValueList() {
         return specValueList;
     }
 
-    public void setSpecValueList(List<String> specValueList) {
+    public void setSpecValueList(List<GoodsProductSpec> specValueList) {
         this.specValueList = specValueList;
     }
 }

@@ -49,13 +49,6 @@ public class MobileGoodsController {
      */
     @ApiOperation(value = "获取商品详细信息")
     @ApiImplicitParam(name = "goodsId", value = "商品ID", paramType = "query", required = true, dataType = "int")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Successful — 请求已完成"),
-            @ApiResponse(code = 400, message = "请求中有语法问题，或不能满足请求"),
-            @ApiResponse(code = 401, message = "未授权客户机访问数据"),
-            @ApiResponse(code = 404, message = "服务器找不到给定的资源；文档不存在"),
-            @ApiResponse(code = 500, message = "服务器不能完成请求")
-    })
     @GetMapping(value = "goods")
     public HashMap<String, Object> goods(@RequestParam Integer goodsId) {
         HashMap<String, Object> retMap = MessageUtils.success("查询成功");

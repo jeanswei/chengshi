@@ -125,8 +125,8 @@
             spec_image    = #{specImage,jdbcType=VARCHAR}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
-    <select id="getSpecValueListByProductId" resultType="java.lang.String">
-        SELECT spec_value FROM cs_goods_product_spec
+    <select id="getSpecValueListByProductId" resultMap="BaseResultMap">
+        SELECT * FROM cs_goods_product_spec
         WHERE product_id = #{productId,jdbcType=INTEGER}
     </select>
     <delete id="deleteProductSpecByGoodsId" parameterType="java.lang.Integer">

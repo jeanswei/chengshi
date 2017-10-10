@@ -4,6 +4,7 @@ import com.chengshi.shop.dao.goods.GoodsProductSpecMapper;
 import com.chengshi.shop.dao.goods.GoodsSpecMapper;
 import com.chengshi.shop.dao.goods.GoodsSpecValueMapper;
 import com.chengshi.shop.model.goods.GoodsProduct;
+import com.chengshi.shop.model.goods.GoodsProductSpec;
 import com.chengshi.shop.model.goods.GoodsSpec;
 import com.chengshi.shop.model.goods.GoodsSpecValue;
 import com.chengshi.shop.service.goods.GoodsSpecService;
@@ -123,7 +124,7 @@ public class GoodsSpecServiceImpl implements GoodsSpecService {
      * @return
      */
     @Override
-    public List<String> getSpecValueListByProductId(Integer productId) {
+    public List<GoodsProductSpec> getSpecValueListByProductId(Integer productId) {
         return goodsProductSpecMapper.getSpecValueListByProductId(productId);
     }
 }

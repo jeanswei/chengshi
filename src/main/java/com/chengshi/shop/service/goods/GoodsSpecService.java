@@ -1,5 +1,6 @@
 package com.chengshi.shop.service.goods;
 
+import com.chengshi.shop.model.goods.GoodsProductSpec;
 import com.chengshi.shop.model.goods.GoodsSpec;
 import com.chengshi.shop.model.goods.GoodsSpecValue;
 
@@ -66,5 +67,5 @@ public interface GoodsSpecService {
      * @param productId
      * @return
      */
-    List<String> getSpecValueListByProductId(Integer productId);
+    List<GoodsProductSpec> getSpecValueListByProductId(Integer productId);
 }

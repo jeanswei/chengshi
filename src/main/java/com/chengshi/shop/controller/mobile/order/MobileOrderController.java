@@ -49,7 +49,7 @@ public class MobileOrderController extends BaseController {
     @ApiOperation(value = "提交订单")
     @ApiImplicitParam(name = "orderInputBean", value = "订单信息组合实体类", required = true, dataType = "OrderInputBean")
     @PostMapping(value = "/addOrderList")
-    public HashMap<String, Object> addOrderList(@ModelAttribute("orderInputBean") OrderInputBean orderInputBean) {
+    public HashMap<String, Object> addOrderList(@RequestBody OrderInputBean orderInputBean) {
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
             // 获得当前登陆用户
@@ -68,6 +68,8 @@ public class MobileOrderController extends BaseController {
      * @param orderId
      * @return
      */
+    @ApiOperation(value = "取消订单")
+    @ApiImplicitParam(name = "orderId", value = "订单id", required = true, paramType = "query", dataType = "int")
     @PostMapping(value = "/cancelOrder")
     public HashMap<String, Object> cancelOrder(@RequestParam Integer orderId) {
         HashMap<String, Object> retMap = MessageUtils.success("取消订单成功");
@@ -90,6 +92,8 @@ public class MobileOrderController extends BaseController {
      * @param orderId
      * @return
      */
+    @ApiOperation(value = "删除订单")
+    @ApiImplicitParam(name = "orderId", value = "订单id", required = true, paramType = "query", dataType = "int")
     @PostMapping(value = "/delOrder")
     public HashMap<String, Object> delOrder(@RequestParam Integer orderId) {
         HashMap<String, Object> retMap = MessageUtils.success();
@@ -108,8 +112,10 @@ public class MobileOrderController extends BaseController {
      * @param orderInputBean
      * @return
      */
+    @ApiOperation(value = "提交订单")
+    @ApiImplicitParam(name = "orderInputBean", value = "订单信息组合实体类", required = true, dataType = "OrderInputBean")
     @GetMapping(value = "/countOrder")
-    public HashMap<String, Object> countOrder(@ModelAttribute("orderInputBean") OrderInputBean orderInputBean) {
+    public HashMap<String, Object> countOrder(@RequestBody OrderInputBean orderInputBean) {
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
             // 获得当前登陆用户
@@ -128,6 +134,8 @@ public class MobileOrderController extends BaseController {
      * @param orderId
      * @return
      */
+    @ApiOperation(value = "订单确认收货")
+    @ApiImplicitParam(name = "orderId", value = "订单id", required = true, paramType = "query", dataType = "int")
     @PostMapping(value = "/saveReceipt")
     public HashMap<String, Object> saveReceipt(@RequestParam Integer orderId) {
         HashMap<String, Object> retMap = MessageUtils.success();
@@ -144,6 +152,7 @@ public class MobileOrderController extends BaseController {
      *
      * @return
      */
+    @ApiOperation(value = "获取订单可用支付方式")
     @GetMapping(value = "/getPaymentList")
     public HashMap<String, Object> getPaymentList() {
         HashMap<String, Object> retMap = MessageUtils.success();
@@ -161,7 +170,9 @@ public class MobileOrderController extends BaseController {
      * @param orderId
      * @return
      */
-    @RequestMapping(value = "balancePay")
+    @ApiOperation(value = "订单使用余额支付")
+    @ApiImplicitParam(name = "orderId", value = "订单id", required = true, paramType = "query", dataType = "int")
+    @PostMapping(value = "balancePay")
     public HashMap<String, Object> balancePay(@RequestParam Integer orderId) {
         HashMap<String, Object> retMap = MessageUtils.success("支付成功");
         try {
@@ -183,7 +194,9 @@ public class MobileOrderController extends BaseController {
      * @param orderId
      * @return
      */
-    @RequestMapping(value = "checkBalancePay")
+    @ApiOperation(value = "检查余额是否够支付订单")
+    @ApiImplicitParam(name = "orderId", value = "订单id", required = true, paramType = "query", dataType = "int")
+    @GetMapping(value = "checkBalancePay")
     public HashMap<String, Object> checkBalancePay(@RequestParam Integer orderId) {
         HashMap<String, Object> retMap = MessageUtils.success();
         try {

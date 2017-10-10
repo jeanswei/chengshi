@@ -115,7 +115,7 @@
 								<#list goods.productList as product>
                                 <tr>
 									<#list product.specValueList as specValue>
-                                        <td>${specValue}</td>
+                                        <td>${specValue.specValue}</td>
 									</#list>
                                     <td>
                                         <div class="input-group">
