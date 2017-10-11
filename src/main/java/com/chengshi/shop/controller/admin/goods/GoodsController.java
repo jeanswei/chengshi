@@ -11,7 +11,6 @@ import com.chengshi.shop.service.goods.GoodsSpecService;
 import com.chengshi.shop.util.MessageUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,7 +26,7 @@ import java.util.List;
  * @version 2017年09月04日
  */
 @RestController
-@RequestMapping(value = "admin")
+@RequestMapping(value = "admin/goods")
 public class GoodsController {
     @Resource
     private GoodsService goodsService;
@@ -37,12 +36,6 @@ public class GoodsController {
     private GoodsImageService goodsImageService;
     @Resource
     private GoodsProductService goodsProductService;
-
-
-    @Value("${img_url}")
-    private String IMG_URL;
-    @Value("${SMALL}")
-    private String SMALL_IMG;
 
     /**
      * 获取商品列表
@@ -57,9 +50,6 @@ public class GoodsController {
         HashMap<String, Object> inMap = new HashMap<>();
         inMap.put("isOnSale", request.getParameter("isOnSale"));
         List<Goods> goodsList = goodsService.getGoodsList(inMap);
-        for (Goods goods : goodsList){
-            goods.setThumbnail(IMG_URL + goods.getGoodsImg() + SMALL_IMG);
-        }
         return new PageInfo<>(goodsList);
     }
 
@@ -85,9 +75,6 @@ public class GoodsController {
         if (goodsId != null) {
             goods = goodsService.getGoodsByGoodsId(goodsId);
             List<GoodsImage> imageList = goodsImageService.getImageList(goodsId);
-            for (GoodsImage image : imageList){
-                image.setThumbnail(IMG_URL + image.getImgUrl() + SMALL_IMG);
-            }
             goods.setImageList(imageList);
 
             List<GoodsSpec> specList = goodsSpecService.getSpecListByGoodsId(goodsId);

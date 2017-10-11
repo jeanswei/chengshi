@@ -13,8 +13,8 @@
 <script>
     var dg = $('#dataGrid').bootstrapTable({
         method: "get",//请求方式
-        url: "/admin/goods/getGoodsList",//数据源
-        uniqueId: "goodsId",
+        url: "/admin/index/getAdList",//数据源
+        uniqueId: "adId",
         dataField: "list",
         search: true,
         pagination: true,//是否分页
@@ -28,67 +28,42 @@
                 checkbox: true
             },
             {
-                title: "商品图片",
-                field: "goodsImg",
+                title: "广告标题",
+                field: "title"
+            },
+            {
+                title: "广告图",
+                field: "imgUrl",
                 formatter: function (val) {
-                    return "<img class=\"img-thumbnail\"  style='width: 60px;height: 60px' src=\""+val+"?x-oss-process=image/resize,m_pad,h_60,w_60,limit_0\">"
+                    return "<img class=\"img-thumbnail\"  style='width: 120px;height: 60px' src=\""+val+"?x-oss-process=image/resize,m_pad,h_60,w_120,limit_0\">"
                 }
             },
             {
-                title: "商品名称",
-                field: "goodsName"
+                title: "广告链接",
+                field: "linkUrl"
             },
             {
-                title: "销售价",
-                field: "price"
+                title: "开始时间",
+                field: "startTime"
             },
             {
-                title: "库存",
-                field: "store"
+                title: "结束时间",
+                field: "endTime"
             },
             {
-                title: "创建时间",
-                field: "createTime"
-            },
-            {
-                title: "状态",
-                field: "isOnSale",
-                formatter: function (val){
-                    if (val){
-                        return "在售中";
-                    } else {
-                        return "未出售";
-                    }
-                }
-            },
-            {
-                title: "操作",
-                field: "",
-                align: "center",
-                formatter: function (val, row) {
-                    if (row.isOnSale){
-                        return "<button class=\"btn btn-link\" onclick=\"sale(" + row.userId + ")\" type=\"button\"><i class=\"icon " +
-                                "icon-double-angle-down\"></i>下架</button>";
-                    } else {
-                        return "<button class=\"btn btn-link\" onclick=\"sale(" + row.userId + ")\" type=\"button\"><i class=\"icon " +
-                                "icon-double-angle-up\"></i>上架</button>";
-                    }
-                }
+                title: "排序",
+                field: "sort"
             }
         ]
     });
 
-    var dlg = new $.zui.ModalTrigger({
-        backdrop: 'static'
-    });
-
     function add() {
-        location.href = "/admin/goods/goodsForm";
+        location.href = '/admin/index/adForm';
     }
 
     function update() {
         var rows = dg.bootstrapTable('getSelections');
-        location.href = "/admin/goods/goodsForm?goodsId=" + rows[0].goodsId;
+        location.href = "/admin/index/adForm?adId=" + rows[0].adId;
     }
 
     function del() {
@@ -101,7 +76,7 @@
                 if (result) {
                     $.ajax({
                         type: 'post',
-                        url: '/admin/goods/deleteGoods?goodsId=' + rows[0].goodsId,
+                        url: '/admin/index/deleteAd?adId=' + rows[0].adId,
                         success: function (data) {
                             successTip(data, dg);
                         }
@@ -110,7 +85,7 @@
             }
         })
     }
-    
+
 </script>
 </body>
 </html>

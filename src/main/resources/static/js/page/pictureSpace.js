@@ -166,7 +166,7 @@ $(function () {
         fileData = JSON.stringify(fileData);
         var data = {fileData: fileData};
         $.ajax({
-            url: "/admin/savePicture.do",
+            url: "/admin/picture/savePicture.do",
             type: "post",
             data: data,
             success: function () {
@@ -186,7 +186,7 @@ $(function () {
         var pictureData;
         $.ajax({
             type: "get",
-            url: "/admin/getPictureList.do",
+            url: "/admin/picture/getPictureList.do",
             data: {pageNumber: num, pageSize: 12, albumId: $('.list-navbar.active').attr('data-id')},
             async: false,
             success: function (data) {
@@ -203,7 +203,7 @@ $(function () {
             html += "<div class=\"col-lg-2 col-md-2 col-sm-3 col-xs-6\">" +
                     "   <div class=\"card\">" +
                     "       <div class=\"media-wrapper\">" +
-                    "           <img src=\"" + item.thumbnail + "\">" +
+                    "           <img src=\"" + item.picUrl + "?x-oss-process=image/resize,m_pad,h_150,w_150,limit_0\">" +
                     "       </div>" +
                     "       <div class=\"card-heading text-muted checkbox\">" +
                     "           <label>" +

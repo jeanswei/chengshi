@@ -11,13 +11,13 @@
                     <form id="infoFrom" class="form-horizontal" data-toggle="validator">
                         <input type="hidden" name="menuId" value="${menu.menuId!}">
                         <div class="form-group">
-                            <label class="col-md-2 control-label required">菜单名称</label>
+                            <label class="col-md-2 control-label required">菜单名称：</label>
                             <div class="col-md-4">
                                 <input type="text" name="name" value="${menu.name!}" placeholder="请输入菜单名称" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label required">父级菜单</label>
+                            <label class="col-md-2 control-label required">父级菜单：</label>
                             <div class="col-md-4">
                                 <select name="pid" value="${menu.pid!}" class="form-control">
                                     <option value="0">父级菜单</option>
@@ -32,15 +32,15 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label">菜单链接</label>
+                            <label class="col-md-2 control-label">菜单链接：</label>
                             <div class="col-md-4">
                                 <input type="text" name="menuUrl" value="${menu.menuUrl!}" placeholder="请输入菜单链接" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label">排序</label>
+                            <label class="col-md-2 control-label">排序：</label>
                             <div class="col-md-4">
-                                <input type="text" name="sortNo" value="${menu.sortNo!}" placeholder="请输入排序" class="form-control">
+                                <input type="text" name="sortNo" value="${menu.sortNo!}" placeholder="请输入排序号" class="form-control">
                             </div>
                         </div>
                     </form>

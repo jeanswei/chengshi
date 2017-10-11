@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class MobileGoodsController {
 
     /**
      * 商品信息
+     *
      * @param goodsId
      * @return
      */
@@ -54,7 +56,7 @@ public class MobileGoodsController {
         HashMap<String, Object> retMap = MessageUtils.success("查询成功");
         try {
             Goods goods = goodsService.getGoodsByGoodsId(goodsId);
-            if (goods.getIsDelete()){
+            if (goods.getIsDelete()) {
                 return MessageUtils.error("商品已失效");
             }
             //图片
@@ -66,13 +68,28 @@ public class MobileGoodsController {
             goods.setGoodsImg(IMG_URL + goods.getGoodsImg());
             //货品
             List<GoodsProduct> productList = goodsProductService.getProductList(goodsId);
-            for (GoodsProduct goodsProduct : productList){
-                goodsProduct.setSpecValueList(goodsSpecService.getSpecValueListByProductId(goodsProduct.getProductId()));
+            BigDecimal maxPrice = BigDecimal.ZERO;
+            BigDecimal minPrice = BigDecimal.ZERO;
+            Integer store = 0;
+            for (int i = 0; i < productList.size(); i++) {
+                productList.get(i).setSpecValueList(goodsSpecService.getSpecValueListByProductId(productList.get(i).getProductId()));
+                BigDecimal price = productList.get(i).getPrice();
+                if (i == 0) {
+                    minPrice = price;
+                    maxPrice = price;
+                }
+                if (price.compareTo(maxPrice) > 0) {
+                    maxPrice = price;
+                }
+                if (price.compareTo(minPrice) < 0) {
+                    minPrice = price;
+                }
+                store += productList.get(i).getStore();
             }
             goods.setProductList(productList);
-            goods.setMarktPrice(productList.get(0).getMarktPrice());
-            goods.setPrice(productList.get(0).getPrice());
-            goods.setStore(productList.get(0).getStore());
+            goods.setMaxPrice(maxPrice);
+            goods.setMinPrice(minPrice);
+            goods.setStore(store);
             //规格
             List<GoodsSpec> specList = goodsSpecService.getSpecListByGoodsId(goodsId);
             goods.setSpecList(specList);

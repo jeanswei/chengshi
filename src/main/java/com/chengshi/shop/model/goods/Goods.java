@@ -47,11 +47,9 @@ public class Goods {
 
     private List<GoodsSpec> specList = new ArrayList<>();
 
-    private String thumbnail;
+    private BigDecimal maxPrice;
 
-    private BigDecimal marktPrice;
-
-    private BigDecimal price;
+    private BigDecimal minPrice;
 
     private Integer Store;
 
@@ -199,14 +197,6 @@ public class Goods {
         this.imageList = imageList;
     }
 
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
     public List<GoodsProduct> getProductList() {
         return productList;
     }
@@ -223,20 +213,20 @@ public class Goods {
         this.specList = specList;
     }
 
-    public BigDecimal getMarktPrice() {
-        return marktPrice;
+    public BigDecimal getMaxPrice() {
+        return maxPrice;
     }
 
-    public void setMarktPrice(BigDecimal marktPrice) {
-        this.marktPrice = marktPrice;
+    public void setMaxPrice(BigDecimal maxPrice) {
+        this.maxPrice = maxPrice;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getMinPrice() {
+        return minPrice;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setMinPrice(BigDecimal minPrice) {
+        this.minPrice = minPrice;
     }
 
     public Integer getStore() {

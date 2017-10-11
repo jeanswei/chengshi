@@ -11,19 +11,19 @@
                     <form id="infoFrom" class="form-horizontal" data-toggle="validator">
                         <input type="hidden" name="userId" value="${user.userId!}">
                         <div class="form-group">
-                            <label class="col-md-2 control-label required">用户名</label>
+                            <label class="col-md-2 control-label required">用户名：</label>
                             <div class="col-md-4">
                                 <input type="text" name="userName" value="${user.userName!}" placeholder="请输入用户名" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label">联系号码</label>
+                            <label class="col-md-2 control-label">联系号码：</label>
                             <div class="col-md-4">
                                 <input type="tel" name="mobile" value="${user.mobile!}" placeholder="请输入手机号码" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label">邮箱</label>
+                            <label class="col-md-2 control-label">邮箱：</label>
                             <div class="col-md-4">
                                 <input type="email" name="email" value="${user.email!}" placeholder="请输入邮箱地址" class="form-control">
                             </div>

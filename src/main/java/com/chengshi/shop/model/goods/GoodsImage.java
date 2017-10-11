@@ -9,9 +9,6 @@ public class GoodsImage {
 
     private Integer sort;
 
-    /**********************/
-    private String thumbnail;
-
     public Integer getImgId() {
         return imgId;
     }
@@ -42,13 +39,5 @@ public class GoodsImage {
 
     public void setSort(Integer sort) {
         this.sort = sort;
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
     }
 }

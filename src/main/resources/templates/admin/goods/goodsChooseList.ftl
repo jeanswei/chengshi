@@ -16,7 +16,7 @@
 <script type="text/javascript">
     var goodsGrid = $('#goods-grid').bootstrapTable({
         method: "get",//请求方式
-        url: "/admin/getGoodsList?isOnSale=1",//数据源
+        url: "/admin/goods/getGoodsList?isOnSale=1",//数据源
         uniqueId: "goodsId",
         dataField: "list",
         search: true,
@@ -31,7 +31,7 @@
             },
             {
                 title: "商品图片",
-                field: "thumbnail",
+                field: "goodsImg",
                 formatter: function (val) {
                     return "<img class=\"img-thumbnail\"  width=\"60px\" height=\"60px\" src=\"" + val + "\">"
                 }

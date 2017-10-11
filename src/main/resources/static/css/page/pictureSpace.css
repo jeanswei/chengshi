@@ -50,3 +50,7 @@ a.list-navbar:focus {
     line-height: 250px;
     text-align: center;
 }
+
+.card>.media-wrapper{
+    min-height: 95px;
+}

@@ -3,9 +3,7 @@ package com.chengshi.shop.controller.admin.coupon;
 import com.chengshi.shop.controller.common.BaseController;
 import com.chengshi.shop.model.coupon.Coupon;
 import com.chengshi.shop.model.coupon.CouponGoods;
-import com.chengshi.shop.model.goods.Goods;
 import com.chengshi.shop.service.coupon.CouponService;
-import com.chengshi.shop.service.goods.GoodsService;
 import com.chengshi.shop.util.MessageUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -22,12 +20,10 @@ import java.util.List;
  * @version 2017年09月11日
  */
 @RestController
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "/admin/coupon")
 public class CouponController extends BaseController{
     @Resource
     private CouponService couponService;
-    @Resource
-    private GoodsService goodsService;
 
 
 

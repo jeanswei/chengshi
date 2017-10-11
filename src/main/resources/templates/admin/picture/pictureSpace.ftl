@@ -39,4 +39,7 @@
 <script>
     var isEditor = "${isEditor!}";
 </script>
+<link href="/css/page/pictureSpace.css" rel="stylesheet">
+<script type="text/javascript" src="/lib/uploader/plupload.full.min.js"></script>
+<script type="text/javascript" src="/lib/uploader/oss-fileupload.js"></script>
 <script type="text/javascript" src="/js/page/pictureSpace.js"></script>

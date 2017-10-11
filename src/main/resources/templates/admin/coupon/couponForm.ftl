@@ -197,11 +197,11 @@
         submitHandler: function (form) {
             $(form).ajaxSubmit({
                 type: 'POST',
-                url: '/admin/saveCoupon',
+                url: '/admin/coupon/saveCoupon',
                 success: function (data) {
                     successTip(data);
                     if (data.errorCode == 'y') {
-                        setTimeout("location.href = '/admin/couponList'", 1000);
+                        setTimeout("location.href = '/admin/coupon/couponList'", 1000);
                     }
                 }
             });
@@ -213,12 +213,12 @@
     });
 
     function addCouponGoods() {
-        dlg.show({remote: '/admin/goodsChooseList'});
+        dlg.show({remote: '/admin/coupon/goodsChooseList'});
     }
 
     var dg = $('#dataGrid').bootstrapTable({
         method: "get",//请求方式
-        url: "/admin/getCouponGoodsList?couponId=${coupon.couponId!}",//数据源
+        url: "/admin/coupon/getCouponGoodsList?couponId=${coupon.couponId!}",//数据源
         uniqueId: "id",
         dataField: "list",
         queryParamsType: "",

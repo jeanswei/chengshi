@@ -17,9 +17,6 @@ public class AlbumPicture {
 
     private Date createTime;
 
-    /************************/
-    private String thumbnail;
-
     public Integer getPicId() {
         return picId;
     }
@@ -74,13 +71,5 @@ public class AlbumPicture {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
     }
 }

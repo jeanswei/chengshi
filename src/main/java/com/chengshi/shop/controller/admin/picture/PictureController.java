@@ -24,15 +24,10 @@ import java.util.List;
  * @version 2017年09月06日
  */
 @RestController
-@RequestMapping(value = "admin")
+@RequestMapping(value = "admin/picture")
 public class PictureController {
     @Resource
     private PictureService pictureService;
-
-    @Value("${img_url}")
-    private String IMAGEURL;
-    @Value("${SMALL}")
-    private String SMALLIMG;
 
     /**
      * 图片空间
@@ -108,9 +103,6 @@ public class PictureController {
     public PageInfo<AlbumPicture> getPictureList(@RequestParam Integer pageNumber, @RequestParam Integer pageSize, @RequestParam Integer albumId) {
         PageHelper.startPage(pageNumber, pageSize);
         List<AlbumPicture> pictureList = pictureService.getPictureList(albumId);
-        for (AlbumPicture picture : pictureList) {
-            picture.setThumbnail(IMAGEURL + picture.getPicUrl() + SMALLIMG);
-        }
         return new PageInfo<>(pictureList);
     }
 }

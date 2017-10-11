@@ -8,7 +8,7 @@ function init() {
     $('.select2.spec').select2({
         language: "zh-CN",
         ajax: {
-            url: "/admin/getSpecList",
+            url: "/admin/spec/getSpecList",
             type: "get",
             dataType: 'json',
             delay: 250,
@@ -31,7 +31,7 @@ function init() {
         createTag: function (params) {
             var id = params.term, text = params.term;
             $.ajax({
-                url: "/admin/saveSpec",
+                url: "/admin/spec/saveSpec",
                 type: "post",
                 data: {specName: text},
                 async: false,
@@ -106,7 +106,7 @@ function init() {
             maximumSelectionLength: 10,
             language: "zh-CN",
             ajax: {
-                url: "/admin/getSpecValueList?specId=" + specId,
+                url: "/admin/spec/getSpecValueList?specId=" + specId,
                 type: "get",
                 dataType: 'json',
                 delay: 250,
@@ -129,7 +129,7 @@ function init() {
             createTag: function (params) {
                 var id = params.term, text = params.term;
                 $.ajax({
-                    url: "/admin/saveSpecValue",
+                    url: "/admin/spec/saveSpecValue",
                     type: "post",
                     data: {specId: specId, specValue: text},
                     async: false,
@@ -192,11 +192,11 @@ $("#infoFrom").validate({
         $("input[name='goodsDesc']").val(editor.txt.html());
         $(form).ajaxSubmit({
             type: 'POST',
-            url: '/admin/saveGoods',
+            url: '/admin/goods/saveGoods',
             success: function (data) {
                 successTip(data);
                 if (data.errorCode == 'y') {
-                    setTimeout("location.href = '/admin/goodsList'", 1000);
+                    setTimeout("location.href = '/admin/goods/goodsList'", 1000);
                 }
             }
         });
@@ -209,7 +209,7 @@ var dlg = new $.zui.ModalTrigger({
 
 //打开图片空间
 $(".open-picture-space").on("click", function () {
-    dlg.show({remote: '/admin/pictureSpace'});
+    dlg.show({remote: '/admin/picture/pictureSpace'});
 });
 
 function returnPicture(pictureData) {
@@ -278,7 +278,7 @@ var step = {
             $.each(arrayTitle, function (index, item) {
                 str += '<th>' + item + '</th>';
             });
-            str += '<th>市场价</th><th>销售价</th><th>库存</th>';
+            str += '<th>销售价</th><th>库存</th>';
             trHead.append(str);
             var tbody = $('<tbody></tbody>');
             tbody.appendTo(table);
@@ -295,8 +295,6 @@ var step = {
                     specIdAndValueId += ";" + values.split(";")[1] + ':' + values.split(";")[2];
                     specView += " " + values.split(";")[3];
                 });
-                str += '<td><div class="input-group"><input type="number" name="productList[' + index + '].marktPrice" required money="true" ' +
-                    'placeholder="请输入" class="form-control"><span class="input-group-addon">元</span></div></td>';
                 str += '<td><div class="input-group"><input type="number" name="productList[' + index + '].price" required money="true" ' +
                     'placeholder="请输入" class="form-control"><span class="input-group-addon">元</span></div></td>';
                 str += '<td><div class="input-group"><input type="number" name="productList[' + index + '].store" required digits="true" ' +
@@ -308,7 +306,7 @@ var step = {
             });
         } else {
             // 创建表头
-            trHead.append('<th>规格</th><th>市场价</th><th>销售价</th><th>库存</th>');
+            trHead.append('<th>规格</th><th>销售价</th><th>库存</th>');
             var tbody = $('<tbody></tbody>');
             tbody.appendTo(table);
             //创建行
@@ -316,8 +314,6 @@ var step = {
             tr.appendTo(tbody);
             var str = '';
             str += '<td>默认</td>';
-            str += '<td><div class="input-group"><input type="number" name="productList[0].marktPrice" required money="true" ' +
-                'placeholder="请输入" class="form-control"><span class="input-group-addon">元</span></div></td>';
             str += '<td><div class="input-group"><input type="number" name="productList[0].price" required money="true" ' +
                 'placeholder="请输入" class="form-control"><span class="input-group-addon">元</span></div></td>';
             str += '<td><div class="input-group"><input type="number" name="productList[0].store" required digits="true" ' +
@@ -451,12 +447,12 @@ $("#process").mergeCell({
 });
 
 $('.w-e-menu i.w-e-icon-image').parent().on('click', function () {
-    dlg.show({remote: '/admin/pictureSpace?isEditor=1'});
+    dlg.show({remote: '/admin/picture/pictureSpace?isEditor=1'});
 });
 
 function returnEditorPicture(pictureData) {
     $.each(pictureData, function (index, item) {
-        editor.txt.append('<img src="' + item.thumbnail.substr(0, item.thumbnail.indexOf("?")) + '">')
+        editor.txt.append('<img src="' + item.imgUrl + '">')
     });
     dlg.close();
 }

@@ -89,7 +89,7 @@ function set_upload_param(up, file) {
             suffix = get_suffix(filename);
             calculate_object_name(filename);
             fileData = up.getOption("fileData");
-            fileData.push({albumId: $.trim($('.list-navbar.active').attr('data-id')), picName: file.name, picUrl: "/" + g_object_name, picType: suffix.replace(".", ""), picSize: file.size});
+            fileData.push({albumId: $.trim($('.list-navbar.active').attr('data-id')), picName: file.name, picUrl: host + "/" + g_object_name, picType: suffix.replace(".", ""), picSize: file.size});
         }
 
         new_multipart_params = {

@@ -16,7 +16,7 @@ import java.util.List;
  * @version 2017年09月22日
  */
 @RestController
-@RequestMapping(value = "admin")
+@RequestMapping(value = "admin/spec")
 public class GoodsSpecController {
     @Resource
     private GoodsSpecService goodsSpecService;

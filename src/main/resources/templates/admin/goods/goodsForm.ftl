@@ -1,6 +1,5 @@
 <#include "/admin/common/header.ftl">
 <link href="/css/page/goods.css" rel="stylesheet">
-<link href="/css/page/pictureSpace.css" rel="stylesheet">
 <link href="/lib/select2/css/select2.css" rel="stylesheet"/>
 <link href="/lib/datatable/zui.datatable.min.css" rel="stylesheet">
 <body>
@@ -35,7 +34,7 @@
 						<#if goods.imageList??>
 							<#list goods.imageList as image>
                                 <div class="file-thumb">
-                                    <img src="${image.thumbnail}" class="img-thumbnail">
+                                    <img src="${image.imgUrl}?x-oss-process=image/resize,m_pad,h_150,w_150,limit_0" class="img-thumbnail">
                                     <input type="hidden" name="imageList[${image_index}].imgUrl" value="${image.imgUrl}">
                                     <input type="hidden" name="imageList[${image_index}].imgId" value="${image.imgId}">
                                     <div onclick="deleteFile(this)" class="delete-file"><i class="icon icon-trash text-danger"></i></div>
@@ -91,7 +90,7 @@
                         <button class="btn btn-primary add-spec" type="button"><i class="icon icon-plus"></i>添加规格</button>
                         <div class="alert alert-warning">
                             提示：添加/删除规格后将影响原有规格值数据
-                            <span class="text-red">（市场价、销售价、库存等数据将清零）</span>
+                            <span class="text-red">（销售价、库存等数据将清零）</span>
                             ，请谨慎操作。
                         </div>
                     </div>
@@ -106,7 +105,6 @@
 								<#list goods.specList as spec>
                                     <th>${spec.specName}</th>
 								</#list>
-                                <th>市场价</th>
                                 <th>销售价</th>
                                 <th>库存</th>
                             </tr>
@@ -117,12 +115,6 @@
 									<#list product.specValueList as specValue>
                                         <td>${specValue.specValue}</td>
 									</#list>
-                                    <td>
-                                        <div class="input-group">
-                                            <input type="number" name="productList[${product_index}].marktPrice" value="${product.marktPrice}" required="" money="true" placeholder="请输入" class="form-control">
-                                            <span class="input-group-addon">元</span>
-                                        </div>
-                                    </td>
                                     <td>
                                         <div class="input-group">
                                             <input type="number" name="productList[${product_index}].price" value="${product.price}" required="" money="true" placeholder="请输入" class="form-control">
@@ -147,7 +139,6 @@
                             <thead>
                             <tr>
                                 <th>规格</th>
-                                <th>市场价</th>
                                 <th>销售价</th>
                                 <th>库存</th>
                             </tr>
@@ -155,14 +146,6 @@
                             <tbody>
                                 <tr>
                                     <td>默认</td>
-                                    <td>
-                                        <div class="input-group">
-                                            <input type="number" name="productList[0].marktPrice" <#if (goods.productList?size>0)> value="${goods.productList[0].marktPrice}"</#if> required="" money="true"
-                                                   placeholder="请输入"
-                                                   class="form-control">
-                                            <span class="input-group-addon">元</span>
-                                        </div>
-                                    </td>
                                     <td>
                                         <div class="input-group">
                                             <input type="number" name="productList[0].price" <#if (goods.productList?size>0)> value="${goods.productList[0].price}"</#if> required="" money="true" placeholder="请输入" class="form-control">
@@ -221,8 +204,6 @@
 </form>
 <#include "/admin/common/footer.ftl">
 <script type="text/javascript" src="/lib/wangEditor/wangEditor.min.js"></script>
-<script type="text/javascript" src="/lib/uploader/plupload.full.min.js"></script>
-<script type="text/javascript" src="/lib/uploader/oss-fileupload.js"></script>
 <script type="text/javascript" src="/lib/select2/js/select2.full.min.js"></script>
 <script type="text/javascript" src="/lib/select2/js/i18n/zh-CN.js"></script>
 <script type="text/javascript" src="/lib/datatable/zui.datatable.min.js"></script>

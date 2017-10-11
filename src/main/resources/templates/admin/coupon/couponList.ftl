@@ -13,7 +13,7 @@
 <script>
     var dg = $('#dataGrid').bootstrapTable({
         method: "get",//请求方式
-        url: "/admin/getCouponList",//数据源
+        url: "/admin/coupon/getCouponList",//数据源
         uniqueId: "couponId",
         dataField: "list",
         search: true,
@@ -87,17 +87,13 @@
         ]
     });
 
-    var dlg = new $.zui.ModalTrigger({
-        backdrop: 'static'
-    });
-
     function add() {
-        location.href = "/admin/couponForm";
+        location.href = "/admin/coupon/couponForm";
     }
 
     function update() {
         var rows = dg.bootstrapTable('getSelections');
-        location.href = "/admin/couponForm?couponId=" + rows[0].couponId;
+        location.href = "/admin/coupon/couponForm?couponId=" + rows[0].couponId;
     }
 
     function del() {
@@ -110,7 +106,7 @@
                 if (result) {
                     $.ajax({
                         type: 'post',
-                        url: '/admin/deleteCoupon?couponId=' + rows[0].couponId,
+                        url: '/admin/coupon/deleteCoupon?couponId=' + rows[0].couponId,
                         success: function (data) {
                             successTip(data, dg);
                         }
