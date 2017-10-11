@@ -9,8 +9,9 @@ import com.chengshi.shop.service.goods.GoodsProductService;
 import com.chengshi.shop.service.goods.GoodsService;
 import com.chengshi.shop.service.goods.GoodsSpecService;
 import com.chengshi.shop.util.MessageUtils;
-import io.swagger.annotations.*;
-import org.springframework.beans.factory.annotation.Value;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,9 +41,6 @@ public class MobileGoodsController {
     @Resource
     private GoodsSpecService goodsSpecService;
 
-    @Value("${img_url}")
-    private String IMG_URL;
-
     /**
      * 商品信息
      *
@@ -62,10 +60,10 @@ public class MobileGoodsController {
             //图片
             List<GoodsImage> imageList = goodsImageService.getImageList(goodsId);
             for (GoodsImage image : imageList) {
-                image.setImgUrl(IMG_URL + image.getImgUrl());
+                image.setImgUrl(image.getImgUrl());
             }
             goods.setImageList(imageList);
-            goods.setGoodsImg(IMG_URL + goods.getGoodsImg());
+            goods.setGoodsImg(goods.getGoodsImg());
             //货品
             List<GoodsProduct> productList = goodsProductService.getProductList(goodsId);
             BigDecimal maxPrice = BigDecimal.ZERO;

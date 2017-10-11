@@ -56,8 +56,6 @@ public class CartServiceImpl implements CartService {
     private PromotionService promotionService;
     @Resource
     private OrderSaveService orderSaveService;
-    @Value("${img_url}")
-    private String IMG_URL;
 
     @Autowired
     public CartServiceImpl(StringRedisTemplate stringRedisTemplate) {
@@ -266,7 +264,7 @@ public class CartServiceImpl implements CartService {
             cGoods.setGoodsId(goods.getGoodsId());
             cGoods.setProductId(product.getProductId());
             cGoods.setGoodsName(goods.getGoodsName());
-            cGoods.setGoodsImage(IMG_URL + goods.getGoodsImg());
+            cGoods.setGoodsImage(goods.getGoodsImg());
             cGoods.setMarktPrice(product.getMarktPrice());
             cGoods.setPrice(product.getPrice());
             cGoods.setProductNum(cItem.getProductNum());

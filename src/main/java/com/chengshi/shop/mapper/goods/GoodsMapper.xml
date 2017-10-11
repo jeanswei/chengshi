@@ -259,7 +259,7 @@
         WHERE goods_id = #{goodsId,jdbcType=INTEGER}
     </update>
     <select id="getGoodsList" resultMap="BaseResultMap">
-        SELECT a.*, b.markt_price marktPrice, b.price, b.store
+        SELECT a.*, b.price, b.store
         FROM cs_goods a
         LEFT JOIN cs_goods_product b
         ON a.goods_id = b.goods_id

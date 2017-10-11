@@ -51,6 +51,8 @@ public class Goods {
 
     private BigDecimal minPrice;
 
+    private BigDecimal price;
+
     private Integer Store;
 
     public Integer getGoodsId() {
@@ -227,6 +229,14 @@ public class Goods {
 
     public void setMinPrice(BigDecimal minPrice) {
         this.minPrice = minPrice;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public Integer getStore() {
