@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chengshi.shop.dao.index.IndexFloorMapper">
+    <resultMap id="BaseResultMap" type="com.chengshi.shop.model.index.IndexFloor">
+        <id column="floor_id" property="floorId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="floor_img" property="floorImg" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        floor_id, name, goods_id, floor_img, sort, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+            a.*,
+            b.goods_name goodsName
+        FROM cs_index_floor a, cs_goods b
+        WHERE a.goods_id = b.goods_id
+              AND floor_id = #{floorId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM cs_index_floor
+        WHERE floor_id = #{floorId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.chengshi.shop.model.index.IndexFloor">
+        INSERT INTO cs_index_floor (floor_id, name, goods_id,
+                                    floor_img, sort, create_time
+        )
+        VALUES (#{floorId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER},
+                #{floorImg,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.chengshi.shop.model.index.IndexFloor">
+        insert into cs_index_floor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="floorId != null">
+                floor_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="floorImg != null">
+                floor_img,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="floorId != null">
+                #{floorId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="floorImg != null">
+                #{floorImg,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chengshi.shop.model.index.IndexFloor">
+        update cs_index_floor
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="floorImg != null">
+                floor_img = #{floorImg,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where floor_id = #{floorId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chengshi.shop.model.index.IndexFloor">
+        UPDATE cs_index_floor
+        SET name        = #{name,jdbcType=VARCHAR},
+            goods_id    = #{goodsId,jdbcType=INTEGER},
+            floor_img   = #{floorImg,jdbcType=VARCHAR},
+            sort        = #{sort,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        WHERE floor_id = #{floorId,jdbcType=INTEGER}
+    </update>
+    <select id="getFloorList" resultMap="BaseResultMap">
+        SELECT
+            a.*,
+            b.goods_name goodsName
+        FROM cs_index_floor a, cs_goods b
+        WHERE a.goods_id = b.goods_id
+        ORDER BY sort
+    </select>
+</mapper>

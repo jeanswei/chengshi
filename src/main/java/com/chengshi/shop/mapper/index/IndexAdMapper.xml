@@ -128,9 +128,9 @@
     <select id="getValidAdList" resultMap="BaseResultMap">
         SELECT *
         FROM cs_index_ad
-        WHERE start_time > now()
-      <![CDATA[ AND end_time < now() ]]>
-      ORDER BY sort
+        WHERE <![CDATA[ start_time < now()
+              AND end_time > now() ]]>
+        ORDER BY sort
     </select>
     <select id="getIndexAdList" resultMap="BaseResultMap">
         SELECT *
