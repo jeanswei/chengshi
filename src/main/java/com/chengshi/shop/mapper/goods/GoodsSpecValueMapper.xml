@@ -86,5 +86,6 @@
         WHERE spec_id = #{specId,jdbcType=INTEGER}
         and goods_id = #{goodsId,jdbcType=INTEGER}
         GROUP BY spec_value_id
+        ORDER BY id
     </select>
 </mapper>

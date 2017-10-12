@@ -128,7 +128,6 @@
     <select id="getSpecValueListByProductId" resultMap="BaseResultMap">
         SELECT * FROM cs_goods_product_spec
         WHERE product_id = #{productId,jdbcType=INTEGER}
-        ORDER BY spec_id
     </select>
     <delete id="deleteProductSpecByGoodsId" parameterType="java.lang.Integer">
         DELETE FROM cs_goods_product_spec

@@ -72,5 +72,6 @@
         SELECT * FROM cs_goods_product_spec
         WHERE goods_id = #{goodsId,jdbcType=INTEGER}
         GROUP BY spec_id
+        ORDER BY id
     </select>
 </mapper>
