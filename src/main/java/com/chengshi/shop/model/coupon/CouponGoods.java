@@ -1,9 +1,5 @@
 package com.chengshi.shop.model.coupon;
 
-import com.chengshi.shop.model.goods.Goods;
-
-import java.math.BigDecimal;
-
 public class CouponGoods {
     private Integer id;
 
@@ -14,9 +10,7 @@ public class CouponGoods {
     /******************/
     private String goodsName;
 
-    private BigDecimal price;
-
-    private Integer store;
+    private String goodsImg;
 
     public Integer getId() {
         return id;
@@ -50,19 +44,11 @@ public class CouponGoods {
         this.goodsName = goodsName;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public String getGoodsImg() {
+        return goodsImg;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Integer getStore() {
-        return store;
-    }
-
-    public void setStore(Integer store) {
-        this.store = store;
+    public void setGoodsImg(String goodsImg) {
+        this.goodsImg = goodsImg;
     }
 }

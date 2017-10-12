@@ -1,12 +1,12 @@
 package com.chengshi.shop.controller.admin;
 
 import com.alibaba.fastjson.JSON;
+import com.chengshi.shop.controller.common.BaseController;
 import com.chengshi.shop.model.admin.AdminMenu;
 import com.chengshi.shop.model.admin.AdminUser;
 import com.chengshi.shop.service.admin.SystemService;
 import com.chengshi.shop.util.MessageUtils;
 import com.chengshi.shop.util.SessionUtils;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -29,7 +29,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/admin")
-public class SystemController {
+public class SystemController extends BaseController {
     @Resource
     private SystemService systemService;
 
@@ -126,13 +126,11 @@ public class SystemController {
     /**
      * 获取管理后台用户列表
      *
-     * @param pageNumber
-     * @param pageSize
      * @return
      */
     @GetMapping(value = "/getUserList")
-    public PageInfo<AdminUser> getUserList(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
-        PageHelper.startPage(pageNumber, pageSize);
+    public PageInfo<AdminUser> getUserList() {
+        this.startPage();
         List<AdminUser> userList = systemService.getUserList();
         return new PageInfo<>(userList);
     }
@@ -304,6 +302,7 @@ public class SystemController {
 
     /**
      * 保存用户菜单权限
+     *
      * @param userId
      * @return
      */

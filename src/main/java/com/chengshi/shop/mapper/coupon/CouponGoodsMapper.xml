@@ -72,8 +72,7 @@
         SELECT
             *,
             b.goods_name goodsName,
-            b.price,
-            b.store
+            b.goods_img goodsImg
         FROM cs_coupon_goods a, cs_goods b
         WHERE a.goods_id = b.goods_id
               AND a.coupon_id = #{couponId,jdbcType=INTEGER}

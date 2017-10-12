@@ -13,8 +13,8 @@
 <script>
     var dg = $('#dataGrid').bootstrapTable({
         method: "get",//请求方式
-        url: "/admin/goods/getGoodsList",//数据源
-        uniqueId: "goodsId",
+        url: "/admin/index/getFloorList",//数据源
+        uniqueId: "floorId",
         dataField: "list",
         search: true,
         pagination: true,//是否分页
@@ -28,63 +28,38 @@
                 checkbox: true
             },
             {
-                title: "商品图片",
-                field: "goodsImg",
+                title: "楼层名称",
+                field: "name"
+            },
+            {
+                title: "楼层图",
+                field: "floorImg",
                 formatter: function (val) {
-                    return "<img class=\"img-thumbnail\"  style='width: 60px;height: 60px' src=\""+val+"?x-oss-process=image/resize,m_pad,h_60,w_60,limit_0\">"
+                    return "<img class=\"img-thumbnail\"  style='width: 120px;height: 60px' src=\""+val+"?x-oss-process=image/resize,m_pad,h_60,w_120,limit_0\">"
                 }
             },
             {
-                title: "商品名称",
+                title: "商品名",
                 field: "goodsName"
-            },
-            {
-                title: "销售价",
-                field: "price"
-            },
-            {
-                title: "库存",
-                field: "store"
             },
             {
                 title: "创建时间",
                 field: "createTime"
             },
             {
-                title: "状态",
-                field: "isOnSale",
-                formatter: function (val){
-                    if (val){
-                        return "在售中";
-                    } else {
-                        return "未出售";
-                    }
-                }
-            },
-            {
-                title: "操作",
-                field: "",
-                align: "center",
-                formatter: function (val, row) {
-                    if (row.isOnSale){
-                        return "<button class=\"btn btn-link\" onclick=\"sale(" + row.userId + ")\" type=\"button\"><i class=\"icon " +
-                                "icon-double-angle-down\"></i>下架</button>";
-                    } else {
-                        return "<button class=\"btn btn-link\" onclick=\"sale(" + row.userId + ")\" type=\"button\"><i class=\"icon " +
-                                "icon-double-angle-up\"></i>上架</button>";
-                    }
-                }
+                title: "排序",
+                field: "sort"
             }
         ]
     });
 
     function add() {
-        location.href = "/admin/goods/goodsForm";
+        location.href = '/admin/index/floorForm';
     }
 
     function update() {
         var rows = dg.bootstrapTable('getSelections');
-        location.href = "/admin/goods/goodsForm?goodsId=" + rows[0].goodsId;
+        location.href = "/admin/index/floorForm?floorId=" + rows[0].floorId;
     }
 
     function del() {
@@ -97,7 +72,7 @@
                 if (result) {
                     $.ajax({
                         type: 'post',
-                        url: '/admin/goods/deleteGoods?goodsId=' + rows[0].goodsId,
+                        url: '/admin/index/deleteFloor?floorId=' + rows[0].floorId,
                         success: function (data) {
                             successTip(data, dg);
                         }
@@ -106,7 +81,7 @@
             }
         })
     }
-    
+
 </script>
 </body>
 </html>

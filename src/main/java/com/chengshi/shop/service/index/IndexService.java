@@ -1,6 +1,7 @@
 package com.chengshi.shop.service.index;
 
 import com.chengshi.shop.model.index.IndexAd;
+import com.chengshi.shop.model.index.IndexFloor;
 
 import java.util.List;
 
@@ -41,4 +42,29 @@ public interface IndexService {
      * @param indexAd
      */
     void saveIndexAd(IndexAd indexAd);
+
+    /**
+     * 获取首页有效的楼层
+     * @return
+     */
+    List<IndexFloor> getFloorList();
+
+    /**
+     * 查询首页楼层
+     * @param floorId
+     * @return
+     */
+    IndexFloor getIndexFloorByFloorId(Integer floorId);
+
+    /**
+     * 删除楼层
+     * @param floorId
+     */
+    void deleteIndexFloor(Integer floorId);
+
+    /**
+     * 保存首页楼层
+     * @param indexFloor
+     */
+    void saveIndexFloor(IndexFloor indexFloor);
 }

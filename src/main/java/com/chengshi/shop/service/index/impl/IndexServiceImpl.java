@@ -1,7 +1,9 @@
 package com.chengshi.shop.service.index.impl;
 
 import com.chengshi.shop.dao.index.IndexAdMapper;
+import com.chengshi.shop.dao.index.IndexFloorMapper;
 import com.chengshi.shop.model.index.IndexAd;
+import com.chengshi.shop.model.index.IndexFloor;
 import com.chengshi.shop.service.index.IndexService;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,9 @@ import java.util.List;
 public class IndexServiceImpl implements IndexService {
     @Resource
     private IndexAdMapper indexAdMapper;
+    @Resource
+    private IndexFloorMapper indexFloorMapper;
+
 
     /**
      * 获取首页有效的广告列表
@@ -73,6 +78,52 @@ public class IndexServiceImpl implements IndexService {
         } else {
             indexAd.setCreateTime(new Date());
             indexAdMapper.insertSelective(indexAd);
+        }
+    }
+
+    /**
+     * 获取首页有效的楼层
+     *
+     * @return
+     */
+    @Override
+    public List<IndexFloor> getFloorList() {
+        return indexFloorMapper.getFloorList();
+    }
+
+    /**
+     * 查询首页楼层
+     *
+     * @param floorId
+     * @return
+     */
+    @Override
+    public IndexFloor getIndexFloorByFloorId(Integer floorId) {
+        return indexFloorMapper.selectByPrimaryKey(floorId);
+    }
+
+    /**
+     * 删除楼层
+     *
+     * @param floorId
+     */
+    @Override
+    public void deleteIndexFloor(Integer floorId) {
+        indexFloorMapper.deleteByPrimaryKey(floorId);
+    }
+
+    /**
+     * 保存首页楼层
+     *
+     * @param indexFloor
+     */
+    @Override
+    public void saveIndexFloor(IndexFloor indexFloor) {
+        if (indexFloor.getFloorId() !=null){
+            indexFloorMapper.updateByPrimaryKeySelective(indexFloor);
+        } else {
+            indexFloor.setCreateTime(new Date());
+            indexFloorMapper.insertSelective(indexFloor);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.chengshi.shop.controller.mobile.index;
 
 import com.chengshi.shop.model.index.IndexAd;
+import com.chengshi.shop.model.index.IndexFloor;
 import com.chengshi.shop.service.index.IndexService;
 import com.chengshi.shop.util.MessageUtils;
 import io.swagger.annotations.Api;
@@ -18,7 +19,7 @@ import java.util.List;
  * @author xuxinlong
  * @version 2017年10月11日
  */
-@Api(value = "商城首页相关接口")
+@Api(description = "商城首页相关接口")
 @RestController
 @RequestMapping("/mobile/index")
 public class MobileIndexController {
@@ -35,27 +36,27 @@ public class MobileIndexController {
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
             List<IndexAd> adList = indexService.getValidAdList();
-            retMap.put("adList", adList);
+            retMap.put("list", adList);
         } catch (Exception e){
             retMap = MessageUtils.error();
         }
         return retMap;
     }
 
-//    /**
-//     * 获取首页楼层列表
-//     * @return
-//     */
-//    @ApiOperation(value = "获取首页楼层列表")
-//    @GetMapping("/getFloorList")
-//    public HashMap<String, Object> getFloorList(){
-//        HashMap<String, Object> retMap = MessageUtils.success();
-//        try {
-//            List<IndexFloor> floorList = indexService.getValidFloorList();
-//            retMap.put("floorList", floorList);
-//        } catch (Exception e){
-//            retMap = MessageUtils.error();
-//        }
-//        return retMap;
-//    }
+    /**
+     * 获取首页楼层列表
+     * @return
+     */
+    @ApiOperation(value = "获取首页楼层列表")
+    @GetMapping("/getFloorList")
+    public HashMap<String, Object> getFloorList(){
+        HashMap<String, Object> retMap = MessageUtils.success();
+        try {
+            List<IndexFloor> floorList = indexService.getFloorList();
+            retMap.put("list", floorList);
+        } catch (Exception e){
+            retMap = MessageUtils.error();
+        }
+        return retMap;
+    }
 }

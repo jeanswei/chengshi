@@ -87,6 +87,7 @@ public class MobileGoodsController {
             goods.setProductList(productList);
             goods.setMaxPrice(maxPrice);
             goods.setMinPrice(minPrice);
+            goods.setPrice(minPrice);
             goods.setStore(store);
             //规格
             List<GoodsSpec> specList = goodsSpecService.getSpecListByGoodsId(goodsId);

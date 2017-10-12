@@ -1,5 +1,6 @@
 package com.chengshi.shop.controller.admin.goods;
 
+import com.chengshi.shop.controller.common.BaseController;
 import com.chengshi.shop.model.goods.Goods;
 import com.chengshi.shop.model.goods.GoodsImage;
 import com.chengshi.shop.model.goods.GoodsProduct;
@@ -9,7 +10,6 @@ import com.chengshi.shop.service.goods.GoodsProductService;
 import com.chengshi.shop.service.goods.GoodsService;
 import com.chengshi.shop.service.goods.GoodsSpecService;
 import com.chengshi.shop.util.MessageUtils;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,7 +27,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "admin/goods")
-public class GoodsController {
+public class GoodsController extends BaseController{
     @Resource
     private GoodsService goodsService;
     @Resource
@@ -39,16 +39,14 @@ public class GoodsController {
 
     /**
      * 获取商品列表
-     *
-     * @param pageNumber
-     * @param pageSize
+     * @param request
      * @return
      */
     @GetMapping(value = "getGoodsList")
-    public PageInfo<Goods> getGoodsList(HttpServletRequest request, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
-        PageHelper.startPage(pageNumber, pageSize);
+    public PageInfo<Goods> getGoodsList(HttpServletRequest request) {
         HashMap<String, Object> inMap = new HashMap<>();
         inMap.put("isOnSale", request.getParameter("isOnSale"));
+        this.startPage();
         List<Goods> goodsList = goodsService.getGoodsList(inMap);
         return new PageInfo<>(goodsList);
     }

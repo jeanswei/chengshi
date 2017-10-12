@@ -270,6 +270,9 @@
             <if test="isOnSale !=null and isOnSale!='' ">
                 and a.is_on_sale = #{isOnSale,jdbcType=BIT}
             </if>
+            <if test="catId!=null and catId!=''">
+                and a.cat_id = #{catId,jdbcType=SMALLINT}
+            </if>
             and a.is_delete = 0
             and b.is_delete = 0
         </where>

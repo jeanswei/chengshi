@@ -33,7 +33,7 @@
                 title: "商品图片",
                 field: "goodsImg",
                 formatter: function (val) {
-                    return "<img class=\"img-thumbnail\"  width=\"60px\" height=\"60px\" src=\"" + val + "\">"
+                    return "<img class=\"img-thumbnail\"  style='width: 60px;height: 60px' src=\"" + val + "?x-oss-process=image/resize,m_pad,h_60,w_60,limit_0\">"
                 }
             },
             {

@@ -1,13 +1,12 @@
 package com.chengshi.shop.controller.admin.picture;
 
 import com.alibaba.fastjson.JSON;
+import com.chengshi.shop.controller.common.BaseController;
 import com.chengshi.shop.model.picture.AlbumFolder;
 import com.chengshi.shop.model.picture.AlbumPicture;
 import com.chengshi.shop.service.picture.PictureService;
 import com.chengshi.shop.util.MessageUtils;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,7 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "admin/picture")
-public class PictureController {
+public class PictureController extends BaseController {
     @Resource
     private PictureService pictureService;
 
@@ -95,13 +94,12 @@ public class PictureController {
     /**
      * 获取图片列表
      *
-     * @param pageNumber
-     * @param pageSize
+     * @param albumId
      * @return
      */
     @GetMapping(value = "getPictureList")
-    public PageInfo<AlbumPicture> getPictureList(@RequestParam Integer pageNumber, @RequestParam Integer pageSize, @RequestParam Integer albumId) {
-        PageHelper.startPage(pageNumber, pageSize);
+    public PageInfo<AlbumPicture> getPictureList(@RequestParam Integer albumId) {
+        this.startPage();
         List<AlbumPicture> pictureList = pictureService.getPictureList(albumId);
         return new PageInfo<>(pictureList);
     }

@@ -213,7 +213,7 @@
     });
 
     function addCouponGoods() {
-        dlg.show({remote: '/admin/coupon/goodsChooseList'});
+        dlg.show({remote: '/admin/goods/goodsChooseList'});
     }
 
     var dg = $('#dataGrid').bootstrapTable({
@@ -230,16 +230,15 @@
                 visible: false
             },
             {
+                title: "商品图片",
+                field: "goodsImg",
+                formatter: function (val) {
+                    return "<img class=\"img-thumbnail\"  style='width: 60px;height: 60px' src=\""+val+"?x-oss-process=image/resize,m_pad,h_60,w_60,limit_0\">"
+                }
+            },
+            {
                 title: "商品名称",
                 field: "goodsName"
-            },
-            {
-                title: "销售价",
-                field: "price"
-            },
-            {
-                title: "库存",
-                field: "store"
             },
             {
                 title: "操作",
@@ -269,9 +268,8 @@
             if (flag) {
                 dg.bootstrapTable('append', {
                     goodsId: item.goodsId,
-                    goodsName: item.goodsName,
-                    price: item.price,
-                    store: item.store
+                    goodsImg: item.goodsImg,
+                    goodsName: item.goodsName
                 })
             }
         });
