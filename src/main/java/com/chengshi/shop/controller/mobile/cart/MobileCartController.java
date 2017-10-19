@@ -63,8 +63,8 @@ public class MobileCartController extends BaseController {
      */
     @ApiOperation(value = "添加商品到购物车")
     @ApiImplicitParams({
-            @ApiImplicitParam(name ="productId", value = "货品ID", required = true, paramType = "query", dataType = "int"),
-            @ApiImplicitParam(name ="productNum", value = "货品数量", required = true, paramType = "query", dataType = "int")
+            @ApiImplicitParam(name = "productId", value = "货品ID", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "productNum", value = "货品数量", required = true, paramType = "query", dataType = "int")
     })
     @PostMapping(value = "addCartGoods")
     public HashMap<String, Object> addCartGoods(@RequestParam Integer productId, @RequestParam Integer productNum) {
@@ -110,12 +110,8 @@ public class MobileCartController extends BaseController {
         try {
             //获得当前登陆用户
             Member nowMember = SessionUtils.getMember();
-            List<CartItem> cartItemList = cartService.getCartItemsByMember(nowMember.getMemberId());
-            /*
-             将List<CartItem>装换为一个HashMap，
-             HashMap包括cartGoodsList和Cart，直接作为返回结果。
-             */
-            HashMap<String, Object> cartInfo = cartService.changeCartItemToCartGoods(cartItemList, nowMember.getMemberId());
+
+            HashMap<String, Object> cartInfo = this.getCartInfo(nowMember.getMemberId());
             retMap.putAll(cartInfo);
         } catch (Exception e) {
             retMap = MessageUtils.error();
@@ -130,7 +126,7 @@ public class MobileCartController extends BaseController {
      * @param productIds
      * @return
      */
-    @ApiOperation(value = "获取购物车商品列表")
+    @ApiOperation(value = "批量删除购物车中的商品")
     @ApiImplicitParam(name = "productIds", value = "货品Id，多个以逗号隔开", paramType = "query", dataType = "String", required = true)
     @PostMapping(value = "/deleteCartGoods")
     public HashMap<String, Object> deleteCartGoods(@RequestParam String productIds) {
@@ -139,12 +135,8 @@ public class MobileCartController extends BaseController {
             //获得当前登陆用户
             Member nowMember = SessionUtils.getMember();
             cartService.batchDelInCart(nowMember.getMemberId(), productIds);
-            List<CartItem> cartItem = cartService.getCartItemsByMember(nowMember.getMemberId());
-            /*
-             将List<CartItem>装换为一个HashMap，
-             HashMap包括cartGoodsList和Cart，直接作为返回结果。
-             */
-            HashMap<String, Object> cartInfo = cartService.changeCartItemToCartGoods(cartItem, nowMember.getMemberId());
+
+            HashMap<String, Object> cartInfo = this.getCartInfo(nowMember.getMemberId());
             retMap.putAll(cartInfo);
         } catch (Exception e) {
             retMap = MessageUtils.error();
@@ -158,8 +150,8 @@ public class MobileCartController extends BaseController {
      * @return
      */
     @ApiOperation(value = "购物车去结算")
-    @PostMapping(value = "/settleAccount")
-    public HashMap<String, Object> settleAccount() {
+    @PostMapping(value = "/settleCart")
+    public HashMap<String, Object> settleCart() {
         HashMap<String, Object> retMap = MessageUtils.success();
         try {
             //获得当前登陆用户
@@ -198,14 +190,10 @@ public class MobileCartController extends BaseController {
         try {
             //获得当前登陆用户
             Member nowMember = SessionUtils.getMember();
-            //购物车选中的商品的shopProductId和chooseType
+            //改变购物车里勾选状态
             cartService.changeChoose(nowMember.getMemberId(), productId);
-            List<CartItem> cartItem = cartService.getCartItemsByMember(nowMember.getMemberId());
-            /*
-             将List<CartItem>装换为一个HashMap，
-             HashMap包括cartGoodsList和Cart，直接作为返回结果。
-             */
-            HashMap<String, Object> cartInfo = cartService.changeCartItemToCartGoods(cartItem, nowMember.getMemberId());
+
+            HashMap<String, Object> cartInfo = this.getCartInfo(nowMember.getMemberId());
             retMap.putAll(cartInfo);
         } catch (Exception e) {
             retMap = MessageUtils.error();
@@ -232,15 +220,10 @@ public class MobileCartController extends BaseController {
         try {
             //获得当前登陆用户
             Member nowMember = SessionUtils.getMember();
-            Integer memberId = nowMember.getMemberId();
-            //购物车选中的商品的shopProductId和count
-            cartService.changeQuantity(memberId, productId, productNum);
-            List<CartItem> cartItem = cartService.getCartItemsByMember(memberId);
-            /*
-             将List<CartItem>装换为一个HashMap，
-             HashMap包括cartGoodsList和Cart，直接作为返回结果。
-             */
-            HashMap<String, Object> cartInfo = cartService.changeCartItemToCartGoods(cartItem, memberId);
+            //改变购物车里商品数量
+            cartService.changeProductNum(nowMember.getMemberId(), productId, productNum);
+
+            HashMap<String, Object> cartInfo = this.getCartInfo(nowMember.getMemberId());
             retMap.putAll(cartInfo);
         } catch (Exception e) {
             retMap = MessageUtils.error();
@@ -261,18 +244,25 @@ public class MobileCartController extends BaseController {
         try {
             // 获得当前登陆用户
             Member nowMember = SessionUtils.getMember();
-            // 购物车选中的商品的goodsId和count
+            // 购物车选中的商品全部选中或取消选中
             cartService.chooseAll(nowMember.getMemberId(), isChooseAll);
-            List<CartItem> cartItem = cartService.getCartItemsByMember(nowMember.getMemberId());
-            /*
-              将List<CartItem>装换为一个HashMap，
-              HashMap包括cartGoodsList和Cart，直接作为返回结果。
-             */
-            HashMap<String, Object> cartInfo = cartService.changeCartItemToCartGoods(cartItem, nowMember.getMemberId());
+
+            HashMap<String, Object> cartInfo = this.getCartInfo(nowMember.getMemberId());
             retMap.putAll(cartInfo);
         } catch (Exception e) {
             retMap = MessageUtils.error();
         }
         return retMap;
+    }
+
+    /**
+     * 将购物车商品封装
+     *
+     * @param memberId
+     * @return
+     */
+    private HashMap<String, Object> getCartInfo(Integer memberId) {
+        List<CartItem> cartItemList = cartService.getCartItemsByMember(memberId);
+        return cartService.changeCartItemToCartGoods(cartItemList, memberId);
     }
 }

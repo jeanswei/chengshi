@@ -1,7 +1,6 @@
 package com.chengshi.shop.service.cart;
 
 
-import com.chengshi.shop.model.cart.Cart;
 import com.chengshi.shop.model.cart.CartItem;
 
 import java.util.HashMap;
@@ -17,14 +16,14 @@ public interface CartService {
 
     /**
      * 查询会员购物车商品的数目
-     *
      * @param memberId
+     * @return
      */
     int getCartNumByMemberId(Integer memberId);
 
     /**
      * 根据会员获取购物车列表
-     *
+     * @param memberId
      * @return
      */
     List<CartItem> getCartItemsByMember(Integer memberId);
@@ -54,11 +53,10 @@ public interface CartService {
     void emptyCartGoods(Integer memberId);
 
     /**
-     * 将List<CartItem>装换为一个HashMap，
-     * HashMap包括cartGoodsList和Cart，直接作为返回结果。
-     *
+     * 将List<CartItem>封装为一个HashMap
      * @param cartItem
      * @param memberId
+     * @return
      */
     HashMap<String, Object> changeCartItemToCartGoods(List<CartItem> cartItem, Integer memberId);
 
@@ -88,7 +86,7 @@ public interface CartService {
      * @param productNum
      * @return
      */
-    void changeQuantity(Integer memberId, Integer productId, Integer productNum);
+    void changeProductNum(Integer memberId, Integer productId, Integer productNum);
 
     /**
      * 购物车全选

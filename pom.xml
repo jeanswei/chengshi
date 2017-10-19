@@ -138,6 +138,7 @@
             <artifactId>alipay-sdk-java</artifactId>
             <version>20170725114550</version>
         </dependency>
+        <!--swagger接口文档-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>

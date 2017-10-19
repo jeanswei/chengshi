@@ -15,13 +15,13 @@ import com.chengshi.shop.service.coupon.CouponService;
 import com.chengshi.shop.service.member.MemberAssetsService;
 import com.chengshi.shop.service.order.OrderSaveService;
 import com.chengshi.shop.service.promotion.PromotionService;
+import com.chengshi.shop.service.system.ShopConfigService;
 import com.chengshi.shop.util.DateFormatUtil;
 import com.chengshi.shop.util.EnumUtil;
 import com.chengshi.shop.util.NumericUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -56,6 +56,9 @@ public class CartServiceImpl implements CartService {
     private PromotionService promotionService;
     @Resource
     private OrderSaveService orderSaveService;
+    @Resource
+    private ShopConfigService shopConfigService;
+
 
     @Autowired
     public CartServiceImpl(StringRedisTemplate stringRedisTemplate) {
@@ -93,19 +96,19 @@ public class CartServiceImpl implements CartService {
                 String cartItemValue = vopCartItem.get(prefix + productId);
                 String count = "";
                 String isChoose = "";
-                if (cartItemValue != null && !cartItemValue.equals("")) {
+                if (cartItemValue != null && !"".equals(cartItemValue)) {
                     count = cartItemValue.split(",")[0];
                     isChoose = cartItemValue.split(",")[1];
                 }
                 CartItem cartItem = new CartItem();
                 cartItem.setMemberId(memberId);
                 cartItem.setProductId(Integer.parseInt(productId));
-                if (count != null && !count.equals("")) {
+                if (count != null && !"".equals(count)) {
                     cartItem.setProductNum(Integer.parseInt(count));
                 } else {
                     cartItem.setProductNum(0);
                 }
-                if (isChoose != null && !isChoose.equals("")) {
+                if (isChoose != null && !"".equals(isChoose)) {
                     cartItem.setIsChoose(Boolean.valueOf(isChoose));
                 } else {
                     cartItem.setIsChoose(true);
@@ -149,10 +152,11 @@ public class CartServiceImpl implements CartService {
             if (cartItemValue == null) {
                 cartItemValue = productNum + "," + true;
                 vopCartItem.set(cartItemKey, cartItemValue);
-                if (cartValue.equals(""))
+                if ("".equals(cartValue)) {
                     cartValue = productId.toString();
-                else
+                } else {
                     cartValue = cartValue + "," + productId;
+                }
                 vopCart.set(cartKey, cartValue);
             } else {
                 String count = cartItemValue.split(",")[0];
@@ -194,10 +198,11 @@ public class CartServiceImpl implements CartService {
             sb.append(aDisjunction).append(",");
         }
         int len = sb.length();
-        if (len > 0)
+        if (len > 0) {
             cartValue = sb.substring(0, len - 1);
-        else
+        } else {
             cartValue = sb.toString();
+        }
         vopCart.set(cartkey, cartValue);
     }
 
@@ -229,7 +234,7 @@ public class CartServiceImpl implements CartService {
             cart.setMemberId(memberId);
             retMap.put("cartGoodsList", new ArrayList<CartGoods>());
             retMap.put("cart", cart);
-            return retMap;// 如果还没有购物车 请买家去购物 添加购物车
+            return retMap;
         }
         //计算购物车商品总价
         BigDecimal totalMoney = BigDecimal.ZERO;
@@ -405,16 +410,20 @@ public class CartServiceImpl implements CartService {
         HashMap<String, Object> assetMap = new HashMap<>();
         HashMap<String, Object> map = new HashMap<>();
         BigDecimal pointsCount = memberAssetsService.getMemberPointsByMemberId(memberId);
-        map.put("name", "积分");//积分
-        map.put("value", NumericUtil.formatBigNum(pointsCount.toString()));//积分余额
-        map.put("instruction", "积分抵用规则：100积分=1元");//积分使用说明
+        map.put("name", "积分");
+        //积分余额
+        map.put("value", NumericUtil.formatBigNum(pointsCount.toString()));
+        //积分使用说明
+        map.put("instruction", "积分抵用规则：" + shopConfigService.getConfig("POINTS_RATIO") + "积分=1元");
         assetMap.put("score", map);
 
         HashMap<String, Object> map1 = new HashMap<>();
-        map1.put("name", "优惠券");//优惠券
+        map1.put("name", "优惠券");
         List<HashMap<String, Object>> couponList = couponService.getCanUseCouponList(memberId, totalMoney.subtract(promotionMoney), cartGoodsList);
-        map1.put("value", couponList.size());//优惠券数量
-        map1.put("instruction", "优惠券抵用规则：每笔订单仅可使用一张优惠券，使用后优惠券自动失效，订单取消或退款概不退回");//优惠券使用说明
+        //优惠券数量
+        map1.put("value", couponList.size());
+        //优惠券使用说明
+        map1.put("instruction", "优惠券抵用规则：每笔订单仅可使用一张优惠券，使用后优惠券自动失效，订单取消或退款概不退回");
         map1.put("couponList", couponList);
         assetMap.put("coupon", map1);
         retMap.put("payInfo", assetMap);
@@ -453,7 +462,7 @@ public class CartServiceImpl implements CartService {
      * @return
      */
     @Override
-    public void changeQuantity(Integer memberId, Integer productId, Integer productNum) {
+    public void changeProductNum(Integer memberId, Integer productId, Integer productNum) {
         String cartItemKey = "cartItem:" + memberId + ":" + productId;
         String cartItemValue = vopCartItem.get(cartItemKey);
 
@@ -473,7 +482,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public void chooseAll(Integer memberId, Boolean allType) {
         String cartValue = vopCart.get("cart:" + memberId);
-        if (cartValue != null && !"".equals(cartValue)) {//普通商品
+        if (cartValue != null && !"".equals(cartValue)) {
             String prefix = "cartItem:" + memberId + ":";
             String[] productIdArr = cartValue.split(",");
             for (String productId : productIdArr) {

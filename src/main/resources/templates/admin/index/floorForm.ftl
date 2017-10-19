@@ -31,10 +31,10 @@
         height: 120px !important;
     }
 
-	.goods-name{
+    .goods-name {
         height: 32px;
         line-height: 32px;
-	}
+    }
 </style>
 <body>
 <form id="infoFrom" class="form-horizontal" data-toggle="validator">
@@ -136,6 +136,15 @@
             var floorImg = $("input[name='floorImg']").val();
             if (floorImg == "") {
                 new $.zui.Messager('提示消息：请上传楼层图', {
+                    icon: 'exclamation-sign',
+                    type: 'danger',
+                    time: 1000
+                }).show();
+                return;
+            }
+            var goodsId = $("input[name='goodsId']").val();
+            if (goodsId == "") {
+                new $.zui.Messager('提示消息：请关联楼层商品', {
                     icon: 'exclamation-sign',
                     type: 'danger',
                     time: 1000

@@ -1,5 +1,6 @@
 package com.chengshi.shop.controller.admin.goods;
 
+import com.chengshi.shop.controller.common.BaseController;
 import com.chengshi.shop.model.goods.GoodsSpec;
 import com.chengshi.shop.model.goods.GoodsSpecValue;
 import com.chengshi.shop.service.goods.GoodsSpecService;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "admin/spec")
-public class GoodsSpecController {
+public class GoodsSpecController extends BaseController {
     @Resource
     private GoodsSpecService goodsSpecService;
 
